@@ -1,13 +1,12 @@
 package ar.unlam.materia;
 
 public class Alumno {
-	private Integer codigo_alumno;
+	
 	private String nombre;
 	private String apellido;
 	private Integer dni;
 
-	public Alumno(Integer codigo_alumno,Integer dni, String apellido, String nombre) {
-		this.codigo_alumno=codigo_alumno;
+	public Alumno(Integer dni, String apellido, String nombre) {
 		this.nombre=nombre;
 		this.apellido=apellido;
 		this.dni=dni;
@@ -38,12 +37,5 @@ public class Alumno {
 		this.nombre = nombre;
 	}
 
-	public Integer getCodigo_alumno() {
-		return codigo_alumno;
-	}
-
-	public void setCodigo_alumno(Integer codigo_alumno) {
-		this.codigo_alumno = codigo_alumno;
-	}
 
 }

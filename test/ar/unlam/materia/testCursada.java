@@ -9,7 +9,7 @@ public class testCursada {
 	@Test
 	public void queSePuedaCrearUnaCursada() {
 
-		Alumno alumno = new Alumno(1, 22, "Juan", "perez");
+		Alumno alumno = new Alumno(22, "Juan", "perez");
 		Materia materia = new Materia("pb2", 2);
 		Nota nota = new Nota();
 		Cursada cursada = new Cursada(alumno, materia, nota);
@@ -23,7 +23,7 @@ public class testCursada {
 	@Test
 	public void queSePuedaAsiganarUnValorEntreUnoYDiezaUnaNotaDeUnaCursada() {
 
-		Alumno alumno = new Alumno(1, 22, "Juan", "perez");
+		Alumno alumno = new Alumno(22, "Juan", "perez");
 		Materia materia = new Materia("pb2", 2);
 		Nota nota = new Nota();
 		Cursada cursada = new Cursada(alumno, materia, nota);

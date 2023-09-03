@@ -2,13 +2,15 @@ package ar.unlam.materia;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
+
 import org.junit.Test;
 
 public class TestUniversidad {
 
 	@Test
 	public void queSePuedaIngresarAlumno() {
-		Alumno alumno = new Alumno(1, 12341, "Flores", "Gonzalo");
+		Alumno alumno = new Alumno(12341, "Flores", "Gonzalo");
 		Universidad unlam = new Universidad();
 		boolean exitoso = false;
 
@@ -26,23 +28,24 @@ public class TestUniversidad {
 		exitoso = unlam.registrarMaterias(pb2);
 
 		assertTrue(exitoso);
+
 	}
 
 	@Test
-	public void queEncuentreAlumnoEnUnlam() {
-		Integer codigo_alumno = 1;
+	public void queEncuentreAlumnoEnUnlamPorDni() {
+		Integer dni = 444444;
 		Universidad unlam = new Universidad();
-		Alumno alumno = new Alumno(codigo_alumno, 21311, "Flores", "Gonzalo");
+		Alumno alumno = new Alumno(dni, "Flores", "Gonzalo");
 		Alumno alumnoEncontrado = null;
 		unlam.registrarAlumno(alumno);
 
-		alumnoEncontrado = unlam.buscarAlumnoRegistrado(codigo_alumno);
+		alumnoEncontrado = unlam.buscarAlumnoRegistrado(dni);
 
 		assertNotNull(alumnoEncontrado);
 	}
 
 	@Test
-	public void queSeEncuentreMateriaEnUnlam() {
+	public void queSeEncuentreMateriaEnUnlamPorCodigo() {
 		Integer codigo_materia = 1;
 		Materia pb2 = new Materia("pb2", codigo_materia);
 		Materia m_encontrada = null;
@@ -57,9 +60,9 @@ public class TestUniversidad {
 
 	@Test
 	public void queSePuedaCrearCursada() {
-		Integer codigo_alumno = 1, codigo_materia = 1;
+		Integer dni = 1, codigo_materia = 1;
 		Universidad unlam = new Universidad();
-		Alumno alumno = new Alumno(codigo_alumno, 12412, "Flores", "Gonzalo");
+		Alumno alumno = new Alumno(dni, "Flores", "Gonzalo");
 		Materia pb2 = new Materia("pb2", codigo_materia);
 		Cursada cursada1 = new Cursada(alumno, pb2);
 		boolean exito = false;
@@ -74,34 +77,36 @@ public class TestUniversidad {
 
 	@Test
 	public void queSePuedaEncontrarCursadasPorMateria() {
-		Materia pb2 = new Materia("pb2", 1);
-		Alumno alumno = new Alumno(1, 23121, "Flores", "Gonzalo");
-		Alumno alumno1 = new Alumno(2, 1, "f", "g");
+		Integer cod_materia = 1;
+		Materia pb2 = new Materia("pb2", cod_materia);
+		Alumno alumno = new Alumno(23121, "Flores", "Gonzalo");
+		Alumno alumno1 = new Alumno(1222, "f", "g");
 		Cursada cursada1 = new Cursada(alumno, pb2);
 		Cursada cursada2 = new Cursada(alumno1, pb2);
 		Universidad unlam = new Universidad();
-		Cursada busqueda[] = new Cursada[2];
-		Cursada actuales[] = new Cursada[2];
-		actuales[0] = cursada1;
-		actuales[1] = cursada2;
-		Integer cod_materia = 1;
-
+		ArrayList<Cursada> actual = new ArrayList<>();
+		Boolean cursada1Encontrada = false;
+		Boolean cursada2Encontrada = false;
 		unlam.registrarAlumno(alumno);
 		unlam.registrarAlumno(alumno1);
 		unlam.registrarMaterias(pb2);
 		unlam.inscripcionCursada(cursada1);
 		unlam.inscripcionCursada(cursada2);
-		busqueda = unlam.buscarCursadasPorMateria(cod_materia);
+		actual = unlam.buscarCursadasPorMateria(cod_materia);
+		cursada1Encontrada = actual.contains(cursada1);
+		cursada2Encontrada = actual.contains(cursada2);
 
-		assertEquals(busqueda[0], actuales[0]);
-		assertEquals(busqueda[1], actuales[1]);
+		assertTrue(cursada1Encontrada);
+		assertTrue(cursada2Encontrada);
 
 	}
 
 	@Test
-	public void queSePuedaEncontrarAlumnoEnUnaCursadaPorCodigoAlumno() {
-		Alumno alumno = new Alumno(1, 12412, "Flores", "Gonzalo");
-		Materia pb2 = new Materia("pb2", 1);
+	public void queSePuedaEncontrarAlumnoEnUnaCursadaPorDni() {
+		Integer dni = 777, cod_materia = 1;
+
+		Alumno alumno = new Alumno(dni, "Flores", "Gonzalo");
+		Materia pb2 = new Materia("pb2", cod_materia);
 		Universidad unlam = new Universidad();
 		Cursada cursada = new Cursada(alumno, pb2);
 		Cursada cursadaAlumnoEncontrada = null;
@@ -109,16 +114,17 @@ public class TestUniversidad {
 		unlam.registrarAlumno(alumno);
 		unlam.registrarMaterias(pb2);
 		unlam.inscripcionCursada(cursada);
-		cursadaAlumnoEncontrada = unlam.buscarAlumnoCursada(1, 1);
+		cursadaAlumnoEncontrada = unlam.buscarAlumnoCursada(cod_materia, dni);
 
 		assertNotNull(cursadaAlumnoEncontrada);
 	}
 
 	@Test
 	public void queSePuedaCalificarAlumno() {
+		Integer dni = 777, cod_materia = 1;
 		Universidad unlam = new Universidad();
-		Alumno alumno = new Alumno(1, 45128862, "Flores", "Gonzalo");
-		Materia pb2 = new Materia("pb2", 1);
+		Alumno alumno = new Alumno(dni, "Flores", "Gonzalo");
+		Materia pb2 = new Materia("pb2", cod_materia);
 		Double calificacion = 7.0;
 		Cursada cursada = new Cursada(alumno, pb2);
 		Cursada encontrada = null;
@@ -126,7 +132,7 @@ public class TestUniversidad {
 		unlam.registrarAlumno(alumno);
 		unlam.registrarMaterias(pb2);
 		unlam.inscripcionCursada(cursada);
-		encontrada = unlam.buscarAlumnoCursada(1, 1);
+		encontrada = unlam.buscarAlumnoCursada(cod_materia, dni);
 		encontrada.calificar(calificacion);
 
 		assertEquals(calificacion, encontrada.getNota().getValor());
@@ -134,12 +140,54 @@ public class TestUniversidad {
 	}
 
 	@Test
-	public void queSePuedaObtenerPromedioCalificacionesDeUnaCursada() {
+	public void queSePuedaEncontrarCursadasDeUnAlumno() {
+		Integer dni = 777;
+		Alumno yo = new Alumno(dni, "Flores", "Gonzalo");
 		Materia pb2 = new Materia("pb2", 1);
-		Alumno alumno = new Alumno(1, 2143, "Flores", "Gonzalo");
-		Alumno alumno1 = new Alumno(2, 1234, "f", "g");
-		Alumno alumno2 = new Alumno(3, 6666, "p", "v");
-		Alumno alumno3 = new Alumno(4, 777, "m", "m");
+		Materia pw1 = new Materia("pw1", 2);
+		Materia bdd1 = new Materia("bdd1", 3);
+		Materia kcyo = new Materia("kcyo", 4);
+		Universidad unlam = new Universidad();
+		Cursada cursada1 = new Cursada(yo, pb2);
+		Cursada cursada2 = new Cursada(yo, pw1);
+		Cursada cursada3 = new Cursada(yo, bdd1);
+		Cursada cursada4 = new Cursada(yo, kcyo);
+		ArrayList<Cursada> cursada = new ArrayList<>();
+		Boolean operacion1 = false;
+		Boolean operacion2 = false;
+		Boolean operacion3 = false;
+		Boolean operacion4 = false;
+
+		unlam.registrarAlumno(yo);
+		unlam.registrarMaterias(kcyo);
+		unlam.registrarMaterias(pb2);
+		unlam.registrarMaterias(bdd1);
+		unlam.registrarMaterias(pw1);
+		unlam.inscripcionCursada(cursada1);
+		unlam.inscripcionCursada(cursada2);
+		unlam.inscripcionCursada(cursada3);
+		unlam.inscripcionCursada(cursada4);
+		cursada = unlam.buscarCursadasDeUnAlumno(dni);
+		operacion1 = cursada.contains(cursada1);
+		operacion2 = cursada.contains(cursada2);
+		operacion3 = cursada.contains(cursada3);
+		operacion4 = cursada.contains(cursada4);
+
+		assertTrue(operacion1);
+		assertTrue(operacion2);
+		assertTrue(operacion3);
+		assertTrue(operacion4);
+
+	}
+
+	@Test
+	public void queSePuedaObtenerPromedioCalificacionesDeUnaCursada() {
+		Integer cod_materia = 1;
+		Materia pb2 = new Materia("pb2", cod_materia);
+		Alumno alumno = new Alumno(2143, "Flores", "Gonzalo");
+		Alumno alumno1 = new Alumno(1234, "f", "g");
+		Alumno alumno2 = new Alumno(6666, "p", "v");
+		Alumno alumno3 = new Alumno(777, "m", "m");
 		Nota n1 = new Nota(6.0);
 		Nota n2 = new Nota(4.0);
 		Nota n3 = new Nota(10.0);
@@ -151,7 +199,6 @@ public class TestUniversidad {
 		Universidad unlam = new Universidad();
 		Double promedio_calificaciones_cursada_esperado = 7.25;
 		Double promedio_calificaciones_cursada;
-		Integer cod_materia = 1;
 
 		unlam.registrarAlumno(alumno);
 		unlam.registrarAlumno(alumno1);
@@ -170,7 +217,8 @@ public class TestUniversidad {
 
 	@Test
 	public void queSeObtengaUnaListaDeMateriasAprobadasDeUnAlumno() {
-		Alumno alumno = new Alumno(1, 124, "Flores", "Gonzalo");
+		Integer dni = 777;
+		Alumno alumno = new Alumno(dni, "Flores", "Gonzalo");
 		Double nota1 = 7.0;
 		Double nota2 = 2.0;
 		Double nota3 = 10.0;
@@ -184,8 +232,12 @@ public class TestUniversidad {
 		Cursada cursada2 = new Cursada(alumno, pw1);
 		Cursada cursada3 = new Cursada(alumno, bdd1);
 		Cursada cursada4 = new Cursada(alumno, kcyo);
-		Materia[] listaMaterias = new Materia[100];
-		Integer cod_alumno = 1;
+		ArrayList<Materia> materiasLista = new ArrayList<>();
+
+		Boolean operacion1 = false;
+		Boolean operacion2 = false;
+		Boolean operacion3 = false;
+		Boolean operacion4 = false;
 
 		unlam.registrarAlumno(alumno);
 		unlam.registrarMaterias(pb2);
@@ -201,16 +253,23 @@ public class TestUniversidad {
 		cursada3.calificar(nota3);
 		cursada4.calificar(nota4);
 
-		listaMaterias = unlam.obtengaUnaListaDeMateriasAprobadasDeUnAlumno(cod_alumno);
+		materiasLista = unlam.obtengaUnaListaDeMateriasAprobadasDeUnAlumno(dni);
+		operacion1 = materiasLista.contains(pb2);
+		operacion2 = materiasLista.contains(pw1);
+		operacion3 = materiasLista.contains(bdd1);
+		operacion4 = materiasLista.contains(kcyo);
 
-		assertEquals(pb2, listaMaterias[0]);
-		assertEquals(bdd1, listaMaterias[1]);
+		assertTrue(operacion1);
+		assertTrue(operacion3);
+		assertFalse(operacion2);
+		assertFalse(operacion4);
 
 	}
 
 	@Test
 	public void queSePuedaInscribirSiTieneLasCorrelativasAprobadas() {
-		Alumno alumno = new Alumno(1, 1234, "Flores", "Gonzalo");
+		Integer dni = 777;
+		Alumno alumno = new Alumno(dni, "Flores", "Gonzalo");
 		Universidad unlam = new Universidad();
 		Materia pb2 = new Materia("pb2", 2623);
 		Materia pw1 = new Materia("pw1", 2624);
@@ -225,7 +284,6 @@ public class TestUniversidad {
 		Double nota1 = 7.0;
 		Double nota2 = 8.0;
 		Double nota3 = 10.0;
-		Integer codigo_alumno = 1;
 
 		unlam.registrarAlumno(alumno);
 		unlam.registrarMaterias(pb2);
@@ -239,8 +297,8 @@ public class TestUniversidad {
 		cursada2.calificar(nota2);
 		cursada3.calificar(nota3);
 
-		exitoso = unlam.inscripcionCursadaSiTieneLasCorrelativasAprobadas(codigo_alumno, tw1);
-		Cursada encontrada = unlam.buscarAlumnoCursada(2631, codigo_alumno);
+		exitoso = unlam.inscripcionCursadaSiTieneLasCorrelativasAprobadas(dni, tw1);
+		Cursada encontrada = unlam.buscarAlumnoCursada(2631, dni);
 
 		assertTrue(exitoso);
 		assertNotNull(encontrada);

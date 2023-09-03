@@ -13,10 +13,10 @@ public class TestAlumno {
 		String nombre = "andres";
 		String apellido = "Gomez";
 		Integer dni = 44444;
-		Integer codigo = 1;
+		
 		// ejecucion
 
-		Alumno alumno = new Alumno(codigo, dni, apellido, nombre);
+		Alumno alumno = new Alumno( dni, apellido, nombre);
 
 		// validacion
 

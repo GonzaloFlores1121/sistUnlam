@@ -1,38 +1,35 @@
 package ar.unlam.materia;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+
 public class Universidad {
-	private Materia[] materias;
-	private Alumno[] alumnos;
-	private Cursada[] cursadas;
+	private ArrayList<Materia> materias;
+	private ArrayList<Alumno> alumnos;
+	private ArrayList<Cursada> cursadas;
 
 	public Universidad() {
-		this.materias = new Materia[100];
-		this.alumnos = new Alumno[100];
-		this.cursadas = new Cursada[100];
+		this.materias = new ArrayList<>();
+		this.alumnos = new ArrayList<>();
+		this.cursadas = new ArrayList<>();
 	}
 
 	public boolean registrarMaterias(Materia materia) {
-		for (int i = 0; i < materias.length; i++) {
-			if (materias[i] == null) {
-				materias[i] = materia;
-				return true;
-			}
-		}
-		return false;
+
+		return materias.add(materia);
+
 	}
 
 	public boolean registrarAlumno(Alumno alumno) {
-		for (int i = 0; i < alumnos.length; i++) {
-			if (alumnos[i] == null) {
-				alumnos[i] = alumno;
-				return true;
-			}
-
-		}
-		return false;
+		return alumnos.add(alumno);
 
 	}
 
+	public boolean inscripcionCursada(Cursada cursada) {
+
+		return cursadas.add(cursada);
+
+	}
 	/*
 	 * obtener promdio calificacione
 	 * 
@@ -45,79 +42,81 @@ public class Universidad {
 	 * MATERIA
 	 */
 
-	public void evaluar(Alumno codigoAlumno, Materia codigoMateria, Double nota) {
-		Cursada buscada = buscarAlumnoCursada(codigoMateria.getCodigo_materia(), codigoAlumno.getCodigo_alumno());
+	public void evaluar(Integer cod_materia,Integer dni, Double nota) {
+		Cursada buscada = buscarAlumnoCursada(cod_materia,dni);
 		if (buscada != null) {
 			buscada.calificar(nota);
 		}
 	}
 
-	public Cursada buscarAlumnoCursada(Integer cod_materia, Integer cod_alumno) {
+	public Cursada buscarAlumnoCursada(Integer cod_materia, Integer dni) {
 
 		Cursada encontrada = null;
-		Cursada[] cursadasMateria = buscarCursadasPorMateria(cod_materia);
+
+		ArrayList<Cursada> cursadasMateria = buscarCursadasPorMateria(cod_materia);
 		if (cursadasMateria != null) {
-			for (int i = 0; i < cursadasMateria.length; i++) {
-				if (cursadasMateria[i] != null
-						&& cursadasMateria[i].getAlumno().getCodigo_alumno().equals(cod_alumno)) {
-					encontrada = cursadasMateria[i];
+			for (Cursada cursada : cursadasMateria) {
+				if (cursada.getAlumno().getDni().equals(dni)) {
+					encontrada = cursada;
 				}
+
 			}
 		}
 		return encontrada;
+
 	}
 
-	public Cursada[] buscarCursadasPorMateria(Integer cod_materia) {
-		Cursada[] cursadasMateria = new Cursada[cursadas.length];
-		int posicion = 0;
-		for (int i = 0; i < cursadas.length; i++) {
-			if (cursadas[i] != null && cursadas[i].getMateria().getCodigo_materia().equals(cod_materia)) {
-				cursadasMateria[posicion++] = cursadas[i];
+	public ArrayList<Cursada> buscarCursadasPorMateria(Integer cod_materia) {
+		ArrayList<Cursada> cursada = new ArrayList<>();
+
+		for (Cursada cursada2 : cursadas) {
+			if (cursada2.getMateria().getCodigo_materia().equals(cod_materia)) {
+				cursada.add(cursada2);
 			}
 		}
-		return cursadasMateria;
+
+		return cursada;
 	}
 
-	public Alumno buscarAlumnoRegistrado(Integer codigo_alumno) {
+	public Alumno buscarAlumnoRegistrado(Integer dni) {
 		Alumno encontrado = null;
-		for (int i = 0; i < alumnos.length; i++) {
-			if (alumnos[i] != null && alumnos[i].getCodigo_alumno().equals(codigo_alumno)) {
-				encontrado = alumnos[i];
+		for (Alumno alumno : alumnos) {
+			if (alumno != null && alumno.getDni().equals(dni)) {
+				encontrado = alumno;
 				break;
 			}
 		}
 		return encontrado;
+
 	}
 
 	public Materia buscarMateria(Integer codigo_materia) {
 		Materia m = null;
-		for (int i = 0; i < materias.length; i++) {
-			if (materias[i] != null && materias[i].getCodigo_materia().equals(codigo_materia)) {
-				m = materias[i];
+
+		for (Materia materia : materias) {
+			if (materia != null && materia.getCodigo_materia().equals(codigo_materia)) {
+				m = materia;
 				break;
 			}
 		}
 		return m;
 	}
 
-	public boolean inscripcionCursadaSiTieneLasCorrelativasAprobadas(Integer codigo_alumno, Materia materia) {
-		Materia[] cursadasAlumnoAprobada = obtengaUnaListaDeMateriasAprobadasDeUnAlumno(codigo_alumno);
+	public boolean inscripcionCursadaSiTieneLasCorrelativasAprobadas(Integer dni, Materia materia) {
+		ArrayList<Materia> materiasAlumnoAprobada = obtengaUnaListaDeMateriasAprobadasDeUnAlumno(dni);
 		Integer[] correlativas = materia.getCodigo_materias_correlativas();
 
 		boolean resultado = false;
 		int posicion = 0;
-		if (correlativas != null && cursadasAlumnoAprobada != null) {
-
-			for (int i = 0; i < cursadasAlumnoAprobada.length; i++) {
-				if (cursadasAlumnoAprobada[i] != null
-						&& cursadasAlumnoAprobada[i].getCodigo_materia().equals(correlativas[posicion])) {
+		if (correlativas != null && !materiasAlumnoAprobada.isEmpty()) {
+			for (Materia materias : materiasAlumnoAprobada) {
+				if (materias.getCodigo_materia().equals(correlativas[posicion])) {
 					posicion++;
-
 				}
 			}
 
 			if (posicion == correlativas.length) {
-				Alumno encontrado = buscarAlumnoRegistrado(codigo_alumno);
+				Alumno encontrado = buscarAlumnoRegistrado(dni);
 				Cursada cursada = new Cursada(encontrado, materia);
 				inscripcionCursada(cursada);
 				resultado = true;
@@ -126,57 +125,48 @@ public class Universidad {
 		return resultado;
 	}
 
-	public boolean inscripcionCursada(Cursada cursada) {
-
-		for (int i = 0; i < cursadas.length; i++) {
-			if (cursadas[i] == null) {
-				cursadas[i] = cursada;
-				return true;
-			}
-		}
-		return false;
-	}
-
 	public Double obtenerPromedioCalificacionesDeUnaCursada(Integer cod_materia) {
-		Cursada[] cursadasEncontradas = buscarCursadasPorMateria(cod_materia);
+		ArrayList<Cursada> cursada = buscarCursadasPorMateria(cod_materia);
 		Double promedio = 0.0;
 		Double resultado = 0.0;
-		int cantidad = 0;
-		if (cursadasEncontradas != null) {
-			for (int i = 0; i < cursadasEncontradas.length; i++) {
-				if (cursadasEncontradas[i] != null) {
-					promedio += cursadasEncontradas[i].getNota().getValor();
-					cantidad++;
-				}
+		if (cursada != null) {
+			for (Cursada cursada2 : cursada) {
+				promedio += cursada2.getNota().getValor();
 
 			}
+
 		}
-		resultado = (Double) promedio / cantidad;
+
+		resultado = (Double) promedio / cursada.size();
 		return resultado;
 	}
 
-	public Cursada[] buscarCursadasDeUnAlumno(Integer cod_alumno) {
-		Cursada[] cursadasAlumno = new Cursada[cursadas.length];
-		int posicion = 0;
-		for (int i = 0; i < cursadas.length; i++) {
-			if (cursadas[i] != null && cursadas[i].getAlumno().getCodigo_alumno().equals(cod_alumno)) {
-				cursadasAlumno[posicion++] = cursadas[i];
+	public ArrayList<Cursada> buscarCursadasDeUnAlumno(Integer dni) {
+		ArrayList<Cursada> cursada = new ArrayList<>();
+		if (!cursadas.isEmpty()) {
+			for (Cursada cursada2 : cursadas) {
+				if (cursada2.getAlumno().getDni().equals(dni)) {
+					cursada.add(cursada2);
+				}
+
 			}
 		}
-		return cursadasAlumno;
+		return cursada;
+
 	}
 
-	public Materia[] obtengaUnaListaDeMateriasAprobadasDeUnAlumno(Integer cod_alumno) {
-		Cursada[] cursadasAlumno = buscarCursadasDeUnAlumno(cod_alumno);
-		Materia[] materiasAprobadas = new Materia[materias.length];
-		int posicion = 0;
-		if (cursadasAlumno != null) {
-			for (int i = 0; i < cursadasAlumno.length; i++) {
-				if (cursadasAlumno[i] != null && cursadasAlumno[i].getNota().getValor() >= 7) {
-					materiasAprobadas[posicion++] = cursadasAlumno[i].getMateria();
+	public ArrayList<Materia> obtengaUnaListaDeMateriasAprobadasDeUnAlumno(Integer dni) {
+		ArrayList<Cursada> cursadasAlumno = buscarCursadasDeUnAlumno(dni);
+		ArrayList<Materia> materiasLista = new ArrayList<>();
+
+		if (!cursadasAlumno.isEmpty()) {
+			for (Cursada cursada : cursadasAlumno) {
+				if (cursada.getNota().getValor() >= 7) {
+					materiasLista.add(cursada.getMateria());
 				}
 			}
+
 		}
-		return materiasAprobadas;
+		return materiasLista;
 	}
 }
