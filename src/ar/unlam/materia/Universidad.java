@@ -6,11 +6,14 @@ import java.util.Iterator;
 public class Universidad {
 	private ArrayList<Materia> materias;
 	private ArrayList<Alumno> alumnos;
+	private ArrayList<Profesor> profes;
+	private ArrayList<Curso> cursos;
 
 	public Universidad() {
 		this.materias = new ArrayList<>();
 		this.alumnos = new ArrayList<>();
-
+		this.profes = new ArrayList<>();
+		this.cursos = new ArrayList<>();
 	}
 
 	public void registrarMaterias(Materia materia) {
@@ -48,6 +51,39 @@ public class Universidad {
 			}
 		}
 		return m;
+	}
+
+	public void registrarProfesor(Profesor profe) {
+		if (!profes.contains(profe)) {
+			profes.add(profe);
+		}
+
+	}
+
+	public Profesor buscarProfesorRegistrado(Integer dni) {
+
+		for (Profesor profe : profes) {
+			if (profe.getDni().equals(dni)) {
+				return profe;
+			}
+		}
+		return null;
+	}
+
+	public void registrarCurso(Curso curso) {
+		if (!cursos.contains(curso)) {
+			cursos.add(curso);
+		}
+
+	}
+
+	public Curso buscarCursoPorCodigo(Integer codigo_curso) {
+		for (Curso c : cursos) {
+			if (c.getCodigo_curso().equals(codigo_curso)) {
+				return c;
+			}
+		}
+		return null;
 	}
 
 }
