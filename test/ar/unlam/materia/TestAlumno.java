@@ -13,10 +13,10 @@ public class TestAlumno {
 		String nombre = "andres";
 		String apellido = "Gomez";
 		Integer dni = 44444;
-		
+
 		// ejecucion
 
-		Alumno alumno = new Alumno( dni, apellido, nombre);
+		Alumno alumno = new Alumno(dni, apellido, nombre);
 
 		// validacion
 
@@ -25,6 +25,5 @@ public class TestAlumno {
 		assertEquals(nombre, alumno.getNombre());
 
 	}
-	
 
 }
