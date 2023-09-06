@@ -6,23 +6,24 @@ import java.util.Iterator;
 public class Universidad {
 	private ArrayList<Materia> materias;
 	private ArrayList<Alumno> alumnos;
-	
 
 	public Universidad() {
 		this.materias = new ArrayList<>();
 		this.alumnos = new ArrayList<>();
-		
-	}
-
-	public boolean registrarMaterias(Materia materia) {
-
-		return materias.add(materia);
 
 	}
 
-	public boolean registrarAlumno(Alumno alumno) {
-		return alumnos.add(alumno);
+	public void registrarMaterias(Materia materia) {
+		if (!materias.contains(materia)) {
+			materias.add(materia);
+		}
 
+	}
+
+	public void registrarAlumno(Alumno alumno) {
+		if (!alumnos.contains(alumno)) {
+			alumnos.add(alumno);
+		}
 	}
 
 	public Alumno buscarAlumnoRegistrado(Integer dni) {
@@ -48,6 +49,5 @@ public class Universidad {
 		}
 		return m;
 	}
-
 
 }
