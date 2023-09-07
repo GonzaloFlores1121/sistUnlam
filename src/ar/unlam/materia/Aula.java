@@ -10,4 +10,9 @@ public class Aula {
 		this.capacidadMax = capacidadMax;
 	}
 
+	@Override
+	public String toString() {
+		return "Aula [numero=" + numero + ", capacidadMax=" + capacidadMax + "]";
+	}
+	
 }

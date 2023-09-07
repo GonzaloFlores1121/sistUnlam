@@ -1,19 +1,18 @@
 package ar.unlam.materia;
 
+import java.util.ArrayList;
+import java.util.Objects;
+
 public class Materia {
 	private Integer codigo_materia;
 	private String nombre;
-	private Integer[] codigo_materias_correlativas;
+	private ArrayList<Integer> codigoCorrelativa;
 
 	public Materia(String nombre, Integer codigo) {
 		this.nombre = nombre;
 		this.codigo_materia = codigo;
-	}
+		this.codigoCorrelativa = new ArrayList<>();
 
-	public Materia(Integer codigo_materia, String nombre, Integer[] codigo_materias) {
-		this.codigo_materia = codigo_materia;
-		this.nombre = nombre;
-		this.codigo_materias_correlativas = codigo_materias;
 	}
 
 	public String getNombre() {
@@ -32,12 +31,48 @@ public class Materia {
 		this.codigo_materia = codigo_materia;
 	}
 
-	public Integer[] getCodigo_materias_correlativas() {
-		return codigo_materias_correlativas;
+	public void asignarCorrelativa(Integer codigoCorrelativa) {
+		this.codigoCorrelativa.add(codigoCorrelativa);
 	}
 
-	public void setCodigo_materias_correlativas(Integer[] codigo_materias_correlativas) {
-		this.codigo_materias_correlativas = codigo_materias_correlativas;
+	public ArrayList<Integer> getCodigoCorrelativa() {
+		return codigoCorrelativa;
+	}
+
+	public void removerCorrelativa(Integer codigoCorrelativa) {
+		this.codigoCorrelativa.remove(codigoCorrelativa);
+	}
+	public int cantidadCorrelativas() {
+		return codigoCorrelativa.size();
+				
+				
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(codigo_materia);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Materia other = (Materia) obj;
+		return Objects.equals(codigo_materia, other.codigo_materia);
+	}
+
+	@Override
+	public String toString() {
+		return "Materia [codigo_materia=" + codigo_materia + ", nombre=" + nombre + ", codigoCorrelativa="
+				+ codigoCorrelativa + "]";
+	}
+
+	public void setCodigoCorrelativa(ArrayList<Integer> codigoCorrelativa) {
+		this.codigoCorrelativa = codigoCorrelativa;
 	}
 
 }

@@ -3,21 +3,28 @@ package ar.unlam.materia;
 public class Curso {
 
 	private Integer codigo_curso;
-	private Materia materia;
+	private Comision comision;
 	private Aula aula;
-	private CicloLectivo ciclo;
-	private Horario horario;
 	private AsignacionCursoAlumno asignacionAlumno;
 	private AsignacionCursoProfe asignacionProfe;
 
-	public Curso(Integer codigo_curso, Materia tw1, Aula aula, CicloLectivo ciclo, Horario horario,
-			AsignacionCursoAlumno asignacionAlumno, AsignacionCursoProfe asignacionProfe) {
-
+	public Curso(Integer codigo_curso, Comision comision) {
 		this.codigo_curso = codigo_curso;
-		this.materia = tw1;
+		this.comision = comision;
+	}
+
+	public Curso(Integer codigo_curso, Comision comision, Aula aula) {
+		this.codigo_curso = codigo_curso;
+		this.comision = comision;
 		this.aula = aula;
-		this.ciclo = ciclo;
-		this.horario = horario;
+
+	}
+
+	public Curso(Integer codigo_curso, Comision comision, Aula aula, AsignacionCursoAlumno asignacionAlumno,
+			AsignacionCursoProfe asignacionProfe) {
+		this.comision = comision;
+		this.codigo_curso = codigo_curso;
+		this.aula = aula;
 		this.asignacionAlumno = asignacionAlumno;
 		this.asignacionProfe = asignacionProfe;
 	}
@@ -25,5 +32,27 @@ public class Curso {
 	public Integer getCodigo_curso() {
 		return codigo_curso;
 	}
-	
+
+	public void setAsignacionAlumno(AsignacionCursoAlumno asignacionAlumno) {
+		this.asignacionAlumno = asignacionAlumno;
+	}
+
+	public void setAsignacionProfe(AsignacionCursoProfe asignacionProfe) {
+		this.asignacionProfe = asignacionProfe;
+	}
+
+	@Override
+	public String toString() {
+		return "Curso [codigo_curso=" + codigo_curso + ", comision=" + comision + ", aula=" + aula
+				+ ", asignacionAlumno=" + asignacionAlumno + ", asignacionProfe=" + asignacionProfe + "]";
+	}
+
+	public AsignacionCursoAlumno getAsignacionAlumno() {
+		return asignacionAlumno;
+	}
+
+	public Comision getComision() {
+		return comision;
+	}
+
 }

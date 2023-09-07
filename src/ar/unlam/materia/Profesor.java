@@ -18,4 +18,9 @@ public class Profesor {
 		return dni;
 	}
 
+	@Override
+	public String toString() {
+		return "Profesor [dni=" + dni + ", nombre=" + nombre + ", apellido=" + apellido + ", saldo=" + saldo + "]";
+	}
+
 }
