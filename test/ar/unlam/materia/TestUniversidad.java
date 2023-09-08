@@ -177,6 +177,9 @@ public class TestUniversidad {
 		Curso esperado = null;
 		Universidad unlam = new Universidad();
 
+		
+		unlam.registrarAlumno(alm);
+		unlam.registrarProfesor(profe);
 		unlam.registrarCurso(curso);
 		unlam.registrarAlumno(alm);
 		unlam.registrarProfesor(profe);
