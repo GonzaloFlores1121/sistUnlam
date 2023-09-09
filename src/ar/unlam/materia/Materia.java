@@ -42,7 +42,7 @@ public class Materia {
 	public void removerCorrelativa(Integer codigoCorrelativa) {
 		this.codigoCorrelativa.remove(codigoCorrelativa);
 	}
-	public int cantidadCorrelativas() {
+	public Integer cantidadCorrelativas() {
 		return codigoCorrelativa.size();
 				
 				
@@ -73,6 +73,18 @@ public class Materia {
 
 	public void setCodigoCorrelativa(ArrayList<Integer> codigoCorrelativa) {
 		this.codigoCorrelativa = codigoCorrelativa;
+	}
+
+	public Integer buscarCorrelativa(Integer codigo_materia2) {
+			Integer operacion=0;
+			
+			for (Integer integer : codigoCorrelativa) {
+				if(integer.equals(codigo_materia2)) {
+					operacion=1;
+					return operacion;
+				}
+			}
+		return operacion;
 	}
 
 }

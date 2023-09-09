@@ -16,8 +16,11 @@ public class AsignacionCursoAlumno {
 	}
 	public void calificarParcial1(Double nota) {
 		
+		this.parcial1.asignarValor(nota);
 	}
 	public void calificarParcial2(Double nota) {
+	
+		this.parcial2.asignarValor(nota);
 		
 	}
 	@Override

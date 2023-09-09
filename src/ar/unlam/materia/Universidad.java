@@ -183,9 +183,15 @@ public class Universidad {
 
 	public void evaluarAlumnoCurso(Integer codigoCurso, Integer dniAlumno, Double parcialUno, Double parcialDos) {
 		AsignacionCursoAlumno asignacion = buscarAsignacionAlumnoCurso(codigoCurso, dniAlumno);
-
+		
 		if (asignacion != null) {
+			
+			Nota nota1 =new Nota();
+			asignacion.setParcial1(nota1);
 			asignacion.calificarParcial1(parcialUno);
+			
+			Nota nota2 =new Nota();
+			asignacion.setParcial2(nota2);
 			asignacion.calificarParcial2(parcialDos);
 		}
 
@@ -198,8 +204,7 @@ public class Universidad {
 			for (Curso c : this.cursos) {
 				Integer codigoCurso = c.getCodigo_curso();
 				AsignacionCursoAlumno asignacion = buscarAsignacionAlumnoCurso(codigoCurso, dniAlumno);
-				if (asignacion != null && asignacion.getParcial1().getValor() >= 4
-						&& asignacion.getParcial2().getValor() >= 4) {
+				if (asignacion != null && asignacion.getParcial1().getValor() >= 4	&& asignacion.getParcial2().getValor() >= 4) {
 					lista.add(c.getComision().getMateria());
 				}
 			}
@@ -207,25 +212,28 @@ public class Universidad {
 		return lista;
 	}
 
-	public Boolean inscribirAlumnoCursoSiTieneCorrelativasAprobadas(Integer dniAlumno, Integer codigoMateria) {
+	public Boolean inscribirAlumnoCursoSiTieneCorrelativasAprobadas(Integer dniAlumno, Integer codigoMateriaInscripcion,Comision comision,Integer codigoCurso) {
+		Boolean operacion=false;
 		ArrayList<Materia> lista = listaMateriasAprobadas(dniAlumno);
-		Materia materia = buscarMateria(codigoMateria);
+		Integer cantidad=0;
+		
+		Materia materiaInscripcion = buscarMateria(codigoMateriaInscripcion);
 
-		if (lista != null && materia != null) {
-			ArrayList<Integer> codigoCorrelativa = materia.getCodigoCorrelativa();
-			int posicion = 0;
-			for (int i = 0; i < lista.size(); i++) {
-				if (lista.get(i).getCodigo_materia().equals(codigoCorrelativa.get(posicion))) {
-					posicion++;
-				}
-
+		if (lista != null && materiaInscripcion != null) {
+			for (Materia materia : lista) {
+				 cantidad += materiaInscripcion.buscarCorrelativa(materia.getCodigo_materia());
 			}
-			if (materia.cantidadCorrelativas() == posicion) {
-				Curso curso =new Curso()
+			
+			if(cantidad.equals(materiaInscripcion.cantidadCorrelativas())) {
+				AsignacionCursoAlumno asignacion=new AsignacionCursoAlumno(codigoCurso, dniAlumno);
+				Curso curso =new Curso(codigoCurso,comision,asignacion);
+				registrarCurso(curso);
+				operacion=true;
+				
 			}
 		}
 
-		return null;
+		return operacion;
 	}
 
 }

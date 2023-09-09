@@ -21,6 +21,10 @@ public class Nota {
 		if(valor >=1 && valor<=10)
 		     this.valor=valor;
 	}
+	@Override
+	public String toString() {
+		return "Nota [valor=" + valor + "]";
+	}
 	
 
 	

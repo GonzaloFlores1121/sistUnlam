@@ -8,6 +8,14 @@ public class Curso {
 	private AsignacionCursoAlumno asignacionAlumno;
 	private AsignacionCursoProfe asignacionProfe;
 
+	
+	
+	public Curso(Integer codigo_curso, Comision comision, AsignacionCursoAlumno asignacionAlumno) {
+		this.codigo_curso = codigo_curso;
+		this.comision = comision;
+		this.asignacionAlumno = asignacionAlumno;
+	}
+
 	public Curso(Integer codigo_curso, Comision comision) {
 		this.codigo_curso = codigo_curso;
 		this.comision = comision;
