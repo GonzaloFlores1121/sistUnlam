@@ -8,10 +8,15 @@ public class Comision {
 	private CicloLectivo ciclo;
 	private Materia materia;
 
-	public Comision(Integer id,Turno turno, CicloLectivo ciclo, Materia materia) {
-		this.id=id;
+	public Comision(Integer id, Turno turno, CicloLectivo ciclo, Materia materia) {
+		this.id = id;
 		this.turno = turno;
 		this.ciclo = ciclo;
+		this.materia = materia;
+	}
+
+	public Comision(Integer id, Materia materia) {
+		this.id = id;
 		this.materia = materia;
 	}
 
@@ -32,6 +37,10 @@ public class Comision {
 		return Objects.equals(ciclo, other.ciclo) && Objects.equals(materia, other.materia) && turno == other.turno;
 	}
 
+	public CicloLectivo getCiclo() {
+		return ciclo;
+	}
+
 	@Override
 	public String toString() {
 		return "Comision [id=" + id + ", turno=" + turno + ", ciclo=" + ciclo + ", materia=" + materia + "]";
@@ -41,5 +50,4 @@ public class Comision {
 		return materia;
 	}
 
-	
 }

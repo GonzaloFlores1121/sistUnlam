@@ -165,7 +165,8 @@ public class TestUniversidad {
 		Turno turno = Turno.TURNO_MAÑANA;
 
 		Materia tw1 = new Materia("TALLER WEB1", 2300);
-		Aula aula = new Aula(numero, capacidadMax);
+		Integer capacidadActual = 2;
+		Aula aula = new Aula(numero, capacidadActual, capacidadMax);
 		CicloLectivo ciclo = new CicloLectivo(id_ciclolectivo, fechaFinalizacionCicloLectivo, fechaInicioCicloLectivo,
 				fechaDeInicioInscripcion, fechaFinalizacionInscripcion, cuatri);
 		Comision comision = new Comision(idComision, turno, ciclo, tw1);
@@ -186,6 +187,48 @@ public class TestUniversidad {
 
 		assertEquals(esperado, curso);
 
+	}
+
+	@Test
+	public void queSePuedaAsignarComisionAUnCurso() {
+
+		Universidad unlam = new Universidad();
+		Integer codigoCurso = 1;
+
+		Curso curso = new Curso(codigoCurso);
+		LocalDate fechaInicioCicloLectivo = LocalDate.of(2023, 8, 14);
+		LocalDate fechaFinalizacionCicloLectivo = LocalDate.of(2023, 12, 1);
+		LocalDate fechaDeInicioInscripcion = LocalDate.of(2023, 7, 28);
+		LocalDate fechaFinalizacionInscripcion = LocalDate.of(2023, 7, 29);
+		Cuatrimestre cuatri = Cuatrimestre.PRIMER_CUATRIMESTRE;
+		Turno turno = Turno.TURNO_MAÑANA;
+		Integer idComision = 1;
+		Integer id_ciclolectivo = 1;
+		CicloLectivo ciclo = new CicloLectivo(id_ciclolectivo, fechaFinalizacionCicloLectivo, fechaInicioCicloLectivo,
+				fechaDeInicioInscripcion, fechaFinalizacionInscripcion, cuatri);
+		Materia tw1 = new Materia("TALLER WEB1", 2300);
+		Comision comision = new Comision(idComision, turno, ciclo, tw1);
+		unlam.registrarCurso(curso);
+		unlam.asignarComisionAUnCurso(codigoCurso, comision);
+		Curso encontrado = unlam.buscarCursoPorCodigo(codigoCurso);
+
+		assertNotNull(encontrado);
+	}
+
+	@Test
+	public void queSePuedaAsignarAulaAUnCurso() {
+		Universidad unlam = new Universidad();
+		Integer codigoCurso = 1;
+		Curso curso = new Curso(codigoCurso);
+		Integer numero = 416;
+		Integer capacidadMax = 50;
+		Integer capacidadACtual = 2;
+		Aula aula = new Aula(numero, capacidadACtual, capacidadMax);
+		unlam.registrarCurso(curso);
+		unlam.registrarAula(aula);
+		unlam.asignarAulaACurso(codigoCurso, aula);
+
+		assertNotNull(curso);
 	}
 
 	@Test
@@ -230,30 +273,12 @@ public class TestUniversidad {
 
 	@Test
 	public void queSePuedaInscribirAlumnoAUnCurso() {
-		LocalDate fechaInicioCicloLectivo = LocalDate.of(2023, 8, 14);
-		LocalDate fechaFinalizacionCicloLectivo = LocalDate.of(2023, 12, 1);
-		LocalDate fechaDeInicioInscripcion = LocalDate.of(2023, 7, 28);
-		LocalDate fechaFinalizacionInscripcion = LocalDate.of(2023, 7, 29);
-		Cuatrimestre cuatri = Cuatrimestre.PRIMER_CUATRIMESTRE;
-		Turno turno = Turno.TURNO_MAÑANA;
-
-		Materia tw1 = new Materia("TALLER WEB1", 2300);
-		Integer numero = 266;
-		Integer capacidadMax = 50;
-		Integer idComision = 1;
-		Integer id_ciclolectivo = 1;
-		Aula aula = new Aula(numero, capacidadMax);
-		CicloLectivo ciclo = new CicloLectivo(id_ciclolectivo, fechaFinalizacionCicloLectivo, fechaInicioCicloLectivo,
-				fechaDeInicioInscripcion, fechaFinalizacionInscripcion, cuatri);
-
-		Comision comision = new Comision(idComision, turno, ciclo, tw1);
 		Integer dniAlumno = 412421, codigoCurso = 1;
 		Universidad unlam = new Universidad();
 		Alumno alm = new Alumno(dniAlumno, "F", "G");
-		Curso curso = new Curso(codigoCurso, comision, aula);
+		Curso curso = new Curso(codigoCurso);
 
 		unlam.registrarAlumno(alm);
-		unlam.registrarMaterias(tw1);
 		unlam.registrarCurso(curso);
 
 		Boolean exitoso = unlam.inscribirAlumnoCurso(codigoCurso, dniAlumno);
@@ -262,45 +287,34 @@ public class TestUniversidad {
 	}
 
 	@Test
-	public void queSePuedaInscribirAlumnoAUnCursoSiNoTieneLasCorrelativasAprobadas() {
+	public void queSePuedaInscribirAlumnoAUnCursoSiTieneLasCorrelativasAprobadas() {
 		Integer codigoMateria = 2300;
 		Integer codigoMateria1 = 2626;
 		Integer codigoMateria2 = 2500;
 		Integer codigoMateria3 = 2600;
 		Integer dniAlumno = 412421;
 		Integer codigoCurso = 1, codigoCurso1 = 2, codigoCurso2 = 3, codigoCurso3 = 4;
-		LocalDate fechaInicioCicloLectivo = LocalDate.of(2023, 8, 14);
-		LocalDate fechaFinalizacionCicloLectivo = LocalDate.of(2023, 12, 1);
-		LocalDate fechaDeInicioInscripcion = LocalDate.of(2023, 7, 28);
-		LocalDate fechaFinalizacionInscripcion = LocalDate.of(2023, 7, 29);
 
-		Cuatrimestre cuatri = Cuatrimestre.PRIMER_CUATRIMESTRE;
-		Turno turno = Turno.TURNO_MAÑANA;
 		Materia pb2 = new Materia("Pb2", codigoMateria1);
 		Materia pw1 = new Materia("Pw1", codigoMateria2);
 		Materia bdd1 = new Materia("Bdd1", codigoMateria3);
 		Materia tw1 = new Materia("TALLER WEB1", codigoMateria);
-		Integer numero = 266;
-		Integer capacidadMax = 50;
+
 		Integer idComision1 = 1;
 		Integer idComision2 = 2;
 		Integer idComision3 = 3;
 		Integer idComision4 = 4;
-		Integer id_ciclolectivo = 1;
-		Aula aula = new Aula(numero, capacidadMax);
-		CicloLectivo ciclo = new CicloLectivo(id_ciclolectivo, fechaFinalizacionCicloLectivo, fechaInicioCicloLectivo,
-				fechaDeInicioInscripcion, fechaFinalizacionInscripcion, cuatri);
 
-		Comision comision = new Comision(idComision1, turno, ciclo, pb2);
-		Comision comision1 = new Comision(idComision2, turno, ciclo, pw1);
-		Comision comision2 = new Comision(idComision3, turno, ciclo, bdd1);
-		Comision comision3 = new Comision(idComision4, turno, ciclo, tw1);
+		Comision comision = new Comision(idComision1, pb2);
+		Comision comision1 = new Comision(idComision2, pw1);
+		Comision comision2 = new Comision(idComision3, bdd1);
+		Comision comision3 = new Comision(idComision4, tw1);
 
 		Universidad unlam = new Universidad();
 		Alumno alm = new Alumno(dniAlumno, "F", "G");
-		Curso curso = new Curso(codigoCurso, comision, aula);
-		Curso curso1 = new Curso(codigoCurso1, comision1, aula);
-		Curso curso2 = new Curso(codigoCurso2, comision2, aula);
+		Curso curso = new Curso(codigoCurso, comision);
+		Curso curso1 = new Curso(codigoCurso1, comision1);
+		Curso curso2 = new Curso(codigoCurso2, comision2);
 		Double nota1 = 5.0;
 		Double nota2 = 7.0;
 
@@ -318,10 +332,6 @@ public class TestUniversidad {
 		unlam.inscribirAlumnoCurso(codigoCurso, dniAlumno);
 		unlam.inscribirAlumnoCurso(codigoCurso1, dniAlumno);
 		unlam.inscribirAlumnoCurso(codigoCurso2, dniAlumno);
-//		AsignacionCursoAlumno asignacion=unlam.buscarAsignacionAlumnoCurso(codigoCurso, dniAlumno);
-//		AsignacionCursoAlumno asignacion1=unlam.buscarAsignacionAlumnoCurso(codigoCurso, dniAlumno);
-//		AsignacionCursoAlumno asignacion2=unlam.buscarAsignacionAlumnoCurso(codigoCurso, dniAlumno);
-//		asignacion.setParcial1(null);
 
 		unlam.evaluarAlumnoCurso(codigoCurso, dniAlumno, nota1, nota2);
 		unlam.evaluarAlumnoCurso(codigoCurso1, dniAlumno, nota1, nota2);
@@ -331,6 +341,130 @@ public class TestUniversidad {
 				codigoCurso3);
 
 		assertTrue(operacion);
+
+	}
+
+	@Test
+	public void queNoSePuedaInscribirAlumnoAUnCursoSiNoTieneLasCorrelativasAprobadas() {
+		Integer codigoMateria = 2300;
+		Integer codigoMateria1 = 2626;
+		Integer codigoMateria2 = 2500;
+		Integer codigoMateria3 = 2600;
+		Integer dniAlumno = 412421;
+		Integer codigoCurso = 1, codigoCurso1 = 2, codigoCurso2 = 3, codigoCurso3 = 4;
+
+		Materia pb2 = new Materia("Pb2", codigoMateria1);
+		Materia pw1 = new Materia("Pw1", codigoMateria2);
+		Materia bdd1 = new Materia("Bdd1", codigoMateria3);
+		Materia tw1 = new Materia("TALLER WEB1", codigoMateria);
+		Integer idComision1 = 1;
+		Integer idComision2 = 2;
+		Integer idComision3 = 3;
+		Integer idComision4 = 4;
+
+		Comision comision = new Comision(idComision1, pb2);
+		Comision comision1 = new Comision(idComision2, pw1);
+		Comision comision2 = new Comision(idComision3, bdd1);
+		Comision comision3 = new Comision(idComision4, tw1);
+
+		Universidad unlam = new Universidad();
+		Alumno alm = new Alumno(dniAlumno, "F", "G");
+		Curso curso = new Curso(codigoCurso, comision);
+		Curso curso1 = new Curso(codigoCurso1, comision1);
+		Curso curso2 = new Curso(codigoCurso2, comision2);
+		Double nota1 = 5.0;
+		Double nota2 = 7.0;
+		Double notaerror = 2.0;
+
+		unlam.registrarAlumno(alm);
+		unlam.registrarMaterias(pb2);
+		unlam.registrarMaterias(pw1);
+		unlam.registrarMaterias(bdd1);
+		unlam.registrarMaterias(tw1);
+		unlam.registrarCurso(curso);
+		unlam.registrarCurso(curso1);
+		unlam.registrarCurso(curso2);
+		unlam.agregarCorrelativaAMateria(codigoMateria, codigoMateria1);
+		unlam.agregarCorrelativaAMateria(codigoMateria, codigoMateria2);
+		unlam.agregarCorrelativaAMateria(codigoMateria, codigoMateria3);
+		unlam.inscribirAlumnoCurso(codigoCurso, dniAlumno);
+		unlam.inscribirAlumnoCurso(codigoCurso1, dniAlumno);
+		unlam.inscribirAlumnoCurso(codigoCurso2, dniAlumno);
+
+		unlam.evaluarAlumnoCurso(codigoCurso, dniAlumno, nota1, nota2);
+		unlam.evaluarAlumnoCurso(codigoCurso1, dniAlumno, nota1, nota2);
+		unlam.evaluarAlumnoCurso(codigoCurso2, dniAlumno, nota1, notaerror);
+
+		Boolean operacion = unlam.inscribirAlumnoCursoSiTieneCorrelativasAprobadas(dniAlumno, codigoMateria, comision3,
+				codigoCurso3);
+
+		assertFalse(operacion);
+
+	}
+
+	@Test
+	public void queNoSePuedaInscribirAlumnoAUnCursoSiEstaFueraDeLaFechaDeInscripcion() {
+
+		Integer codigoMateria3 = 2600;
+		Integer dniAlumno = 412421;
+		Integer codigoCurso2 = 3;
+		LocalDate fechaInicioCicloLectivo = LocalDate.of(2023, 8, 14);
+		LocalDate fechaFinalizacionCicloLectivo = LocalDate.of(2023, 12, 1);
+		LocalDate fechaDeInicioInscripcion = LocalDate.of(2023, 7, 28);
+		LocalDate fechaFinalizacionInscripcion = LocalDate.of(2023, 8, 5);
+		LocalDate fechaInscripto = LocalDate.of(2024, 8, 1);
+		Cuatrimestre cuatri = Cuatrimestre.PRIMER_CUATRIMESTRE;
+		Integer id_ciclolectivo = 1;
+		CicloLectivo ciclo = new CicloLectivo(id_ciclolectivo, fechaFinalizacionCicloLectivo, fechaInicioCicloLectivo,
+				fechaDeInicioInscripcion, fechaFinalizacionInscripcion, cuatri);
+		Turno turno = Turno.TURNO_MAÑANA;
+		Integer idComision3 = 3;
+		Materia bdd1 = new Materia("Bdd1", codigoMateria3);
+		Comision comision2 = new Comision(idComision3, turno, ciclo, bdd1);
+
+		Universidad unlam = new Universidad();
+		Alumno alm = new Alumno(dniAlumno, "F", "G");
+		Curso curso2 = new Curso(codigoCurso2, comision2);
+
+		unlam.registrarAlumno(alm);
+
+		unlam.registrarMaterias(bdd1);
+
+		unlam.registrarCurso(curso2);
+
+		Boolean operacion = unlam.inscribirAlumnoCurso(codigoCurso2, dniAlumno, comision2, fechaInscripto);
+
+		assertFalse(operacion);
+
+	}
+
+	@Test
+	public void queNoSePuedaInscribirAlumnoAUnCursoSiEstaElCupoLLeno() {
+		Integer codigoMateria1 = 2626;
+		Integer dniAlumno = 412421;
+		Integer codigoCurso = 1;
+
+		Materia pb2 = new Materia("Pb2", codigoMateria1);
+		Integer numero = 266;
+		Integer capacidadMax = 50;
+		
+		Aula aula = new Aula(numero, 49, capacidadMax);
+
+		Comision comision = new Comision(1, pb2);
+
+		Universidad unlam = new Universidad();
+		Alumno alm = new Alumno(dniAlumno, "F", "G");
+		Curso curso=new Curso(codigoCurso);
+		
+		unlam.registrarAlumno(alm);
+		unlam.registrarMaterias(pb2);
+		unlam.registrarCurso(curso);
+		unlam.asignarComisionAUnCurso(codigoCurso, comision);
+		unlam.asignarAulaACurso(codigoCurso, aula);
+
+		Boolean operacion = unlam.inscribirAlumnoCurso(codigoCurso, dniAlumno, numero);
+
+		assertFalse(operacion);
 
 	}
 

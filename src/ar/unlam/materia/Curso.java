@@ -8,8 +8,10 @@ public class Curso {
 	private AsignacionCursoAlumno asignacionAlumno;
 	private AsignacionCursoProfe asignacionProfe;
 
-	
-	
+	public Curso(Integer codigo_curso) {
+		this.codigo_curso = codigo_curso;
+	}
+
 	public Curso(Integer codigo_curso, Comision comision, AsignacionCursoAlumno asignacionAlumno) {
 		this.codigo_curso = codigo_curso;
 		this.comision = comision;
@@ -61,6 +63,26 @@ public class Curso {
 
 	public Comision getComision() {
 		return comision;
+	}
+
+	public Aula getAula() {
+		return aula;
+	}
+
+	public void setAula(Aula aula) {
+		this.aula = aula;
+	}
+
+	public AsignacionCursoProfe getAsignacionProfe() {
+		return asignacionProfe;
+	}
+
+	public void setCodigo_curso(Integer codigo_curso) {
+		this.codigo_curso = codigo_curso;
+	}
+
+	public void setComision(Comision comision) {
+		this.comision = comision;
 	}
 
 }

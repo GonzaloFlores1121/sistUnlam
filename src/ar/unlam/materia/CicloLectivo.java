@@ -21,6 +21,17 @@ public class CicloLectivo {
 		this.cuatri = cuatri;
 	}
 
+	
+	public LocalDate getFechaDeInicioInscripcion() {
+		return fechaDeInicioInscripcion;
+	}
+
+
+	public LocalDate getFechaFinalizacionInscripcion() {
+		return fechaFinalizacionInscripcion;
+	}
+
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(cuatri, fechaDeInicioInscripcion, fechaFinalizacionCicloLectivo,
