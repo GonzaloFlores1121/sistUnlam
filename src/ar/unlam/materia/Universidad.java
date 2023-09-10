@@ -120,6 +120,20 @@ public class Universidad {
 		return null;
 	}
 
+	public ArrayList<Curso> buscarCursosDeUnAlumno(Integer dniAlumno) {
+		Alumno encontrado = buscarAlumnoRegistrado(dniAlumno);
+		ArrayList<Curso> cursoAlumno = new ArrayList<>();
+		if (encontrado != null) {
+
+			for (Curso curso : cursos) {
+				if (curso.getAsignacionAlumno().getDniAlumno().equals(dniAlumno)) {
+					cursoAlumno.add(curso);
+				}
+			}
+		}
+		return cursoAlumno;
+	}
+
 	public AsignacionCursoAlumno buscarAsignacionAlumnoCurso(Integer codigoCurso, Integer dniAlumno) {
 
 		for (Curso c : this.cursos) {
@@ -174,6 +188,7 @@ public class Universidad {
 		return encontrada;
 	}
 
+	// Metodos de inserción
 	public Boolean agregarCorrelativaAMateria(Integer codigoMateria, Integer codigoMateriaCorrelativa) {
 		Materia materia = buscarMateria(codigoMateria);
 		Materia correlativa = buscarMateria(codigoMateriaCorrelativa);
@@ -197,6 +212,29 @@ public class Universidad {
 		return null;
 	}
 
+	public Boolean asignarComisionAUnCurso(Integer codigoCurso, Comision comision) {
+		Curso curso = buscarCursoPorCodigo(codigoCurso);
+		Comision existe = buscarComisionPorID(comision.getId());
+		Boolean verificar = verificarQueEsteRegistradoMateriaYCiclo(comision.getMateria(), comision.getCiclo());
+
+		if (curso != null && existe != null && verificar) {
+
+			curso.setComision(comision);
+			return true;
+		}
+		return false;
+	}
+
+	public void asignarAulaACurso(Integer codigoCurso, Aula aula) {
+		Curso curso = buscarCursoPorCodigo(codigoCurso);
+		Aula a = buscarAulaPorNumero(aula.getNumero());
+		if (curso != null && a != null) {
+			curso.setAula(aula);
+		}
+
+	}
+
+	
 	// Sobrecargaa de metodos
 	public Boolean inscribirAlumnoCurso(Integer codigoCurso, Integer dniAlumno, Integer numeroAula) {
 		Curso curso = buscarCursoPorCodigo(codigoCurso);
@@ -230,7 +268,7 @@ public class Universidad {
 	// Sobrecargaa de metodos
 	public Boolean inscribirAlumnoCurso(Integer codigoCurso, Integer dniAlumno) {
 		Curso curso = buscarCursoPorCodigo(codigoCurso);
-		Alumno alumno = buscarAlumnoRegistrado(dniAlumno);
+            Alumno alumno = buscarAlumnoRegistrado(dniAlumno);
 		if (curso != null && alumno != null) {
 			AsignacionCursoAlumno asignacion = new AsignacionCursoAlumno(codigoCurso, dniAlumno);
 			curso.setAsignacionAlumno(asignacion);
@@ -285,6 +323,7 @@ public class Universidad {
 
 		return false;
 	}
+
 	public Boolean verificarQueEsteRegistradoMateriaYCiclo(Materia materia, CicloLectivo ciclo) {
 
 		Materia existeMateria = buscarMateria(materia.getCodigo_materia());
@@ -292,7 +331,6 @@ public class Universidad {
 
 		return existeMateria != null && existeCiclo != null;
 	}
-
 
 	// Sobrecargaa de metodos
 	public Boolean inscribirAlumnoCursoSiTieneCorrelativasAprobadas(Integer dniAlumno, Integer codigoMateriaInscripcion,
@@ -400,26 +438,34 @@ public class Universidad {
 		return false;
 	}
 
-	public Boolean asignarComisionAUnCurso(Integer codigoCurso, Comision comision) {
-		Curso curso = buscarCursoPorCodigo(codigoCurso);
-		Comision existe = buscarComisionPorID(comision.getId());
-		Boolean verificar= verificarQueEsteRegistradoMateriaYCiclo(comision.getMateria(), comision.getCiclo());
+	public Boolean inscribirAlumnoCurso(Integer dniAlumno, Integer codigoCurso, Curso inscribirse) {
+		Curso buscado = buscarCursoPorCodigo(codigoCurso);
 
-		if (curso != null && existe != null && verificar) {
+		if (buscado != null) {
+			Boolean verificar = verificarCursosSuperpuestos(dniAlumno, inscribirse);
+			if (!verificar) {
+				registrarCurso(inscribirse);
+				AsignacionCursoAlumno asignacion = new AsignacionCursoAlumno(inscribirse.getCodigo_curso(), dniAlumno);
+				inscribirse.setAsignacionAlumno(asignacion);
+				return true;
 
-			curso.setComision(comision);
-			return true;
+			}
 		}
 		return false;
 	}
 
-	public void asignarAulaACurso(Integer codigoCurso, Aula aula) {
-		Curso curso = buscarCursoPorCodigo(codigoCurso);
-		Aula a = buscarAulaPorNumero(aula.getNumero());
-		if (curso != null && a != null) {
-			curso.setAula(aula);
+	public Boolean verificarCursosSuperpuestos(Integer dniAlumno, Curso inscribirse) {
+		ArrayList<Curso> c = buscarCursosDeUnAlumno(dniAlumno);
+
+		if (c != null) {
+			for (Curso curso : c) {
+				if (curso.getComision().getDia().equals(inscribirse.getComision().getDia())
+						&& curso.getComision().getTurno().equals(inscribirse.getComision().getTurno())) {
+					return true;
+				}
+			}
 		}
+		return false;
 
 	}
-
 }

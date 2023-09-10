@@ -48,16 +48,18 @@ public class TestUniversidad {
 
 		Turno turno = Turno.TURNO_MAÑANA;
 		Materia tw1 = new Materia("TALLER WEB1", 2300);
+
 		CicloLectivo ciclo1 = new CicloLectivo(id_ciclolectivo, fechaFinalizacionCicloLectivo1,
 				fechaInicioCicloLectivo1, fechaDeInicioInscripcion1, fechaFinalizacionInscripcion1, cuatri1);
 
 		Comision comi = new Comision(id_comision, turno, ciclo1, tw1);
-		Comision comi1 = new Comision(1, turno, ciclo1, tw1);
+		Comision comi1 = new Comision(id_comision, turno, ciclo1, tw1);
 		Universidad unlam = new Universidad();
 		Boolean operacion1 = false;
 		Boolean operacion2 = false;
 
 		unlam.registrarMaterias(tw1);
+
 		unlam.registrarCicloLectivo(ciclo1);
 		operacion1 = unlam.registrarComision(comi);
 		operacion2 = unlam.registrarComision(comi1);
@@ -559,6 +561,59 @@ public class TestUniversidad {
 
 		assertFalse(operacion);
 
+	}
+
+	@Test
+	public void queNoPuedaInscribirseAUnCursoPorqueSeSuperponeConOtroCursoYSusHorarios() {
+		Alumno alumno = new Alumno(1234, "f", "g");
+		Integer codigoMateria1 = 2500, codigoCurso = 1, codigoComision = 2626;
+		Materia pb2 = new Materia("Pb2", codigoMateria1);
+		Materia pb1 = new Materia("Pb1", 2300);
+
+		Comision comision = new Comision(codigoComision, pb2, Dia.JUEVES, Turno.TURNO_MAÑANA);
+		Curso curso = new Curso(codigoCurso, comision);
+		Comision comision2 = new Comision(5, pb2, Dia.JUEVES, Turno.TURNO_MAÑANA);
+		Curso inscribirse = new Curso(5, comision2);
+
+		Universidad unlam = new Universidad();
+
+		unlam.registrarAlumno(alumno);
+		unlam.registrarMaterias(pb2);
+		unlam.registrarMaterias(pb1);
+		unlam.registrarCurso(curso);
+		unlam.inscribirAlumnoCurso(codigoCurso, 1234);
+		
+		
+		Boolean operacion=unlam.inscribirAlumnoCurso(1234,codigoCurso,inscribirse);
+		
+		
+		assertFalse(operacion);
+	}
+	@Test
+	public void queSePuedaInscribirAUnCursoPorqueNoSeSuperponeConOtroCursoYSusHorarios() {
+		Alumno alumno = new Alumno(1234, "f", "g");
+		Integer codigoMateria1 = 2500, codigoCurso = 1, codigoComision = 2626;
+		Materia pb2 = new Materia("Pb2", codigoMateria1);
+		Materia pb1 = new Materia("Pb1", 2300);
+
+		Comision comision = new Comision(codigoComision, pb2, Dia.JUEVES, Turno.TURNO_MAÑANA);
+		Curso curso = new Curso(codigoCurso, comision);
+		Comision comision2 = new Comision(5, pb2, Dia.MARTES, Turno.TURNO_MAÑANA);
+		Curso inscribirse = new Curso(5, comision2);
+
+		Universidad unlam = new Universidad();
+
+		unlam.registrarAlumno(alumno);
+		unlam.registrarMaterias(pb2);
+		unlam.registrarMaterias(pb1);
+		unlam.registrarCurso(curso);
+		unlam.inscribirAlumnoCurso(codigoCurso, 1234);
+		
+		
+		Boolean operacion=unlam.inscribirAlumnoCurso(1234,codigoCurso,inscribirse);
+		
+		
+		assertTrue(operacion);
 	}
 
 }

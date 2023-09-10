@@ -84,5 +84,6 @@ public class Curso {
 	public void setComision(Comision comision) {
 		this.comision = comision;
 	}
+	
 
 }

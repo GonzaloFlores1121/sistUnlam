@@ -8,6 +8,7 @@ public class AsignacionCursoAlumno {
 	private Nota parcial2;
 	private Nota recuperatorio;
 
+	
 	public AsignacionCursoAlumno( Integer codigo_curso, Integer dniAlumno) {
 		
 		this.codigo_curso = codigo_curso;
