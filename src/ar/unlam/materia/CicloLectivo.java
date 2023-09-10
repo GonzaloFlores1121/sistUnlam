@@ -54,6 +54,11 @@ public class CicloLectivo {
 				&& Objects.equals(fechaInicioCicloLectivo, other.fechaInicioCicloLectivo)
 				|| Objects.equals(id, other.id);
 	}
+	
+	public Integer getId() {
+		return id;
+	}
+
 
 	@Override
 	public String toString() {

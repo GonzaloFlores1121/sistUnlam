@@ -25,6 +25,17 @@ public class Universidad {
 
 	// Metodos para registrar
 
+	public Boolean registrarComision(Comision comision) {
+		Boolean existe = existeComision(comision);
+		Materia existeMateria = buscarMateria(comision.getMateria().getCodigo_materia());
+		CicloLectivo existeCiclo = buscarCicloLectivoPorID(comision.getCiclo().getId());
+		if (!existe && existeMateria !=null && existeCiclo!=null) {
+			comisiones.add(comision);
+			return true;
+		}
+		return false;
+	}
+
 	public Boolean registrarAula(Aula aula) {
 		Boolean existe = existeAula(aula);
 		if (!existe) {
@@ -78,6 +89,15 @@ public class Universidad {
 	}
 
 //Metodos para buscaar
+	public CicloLectivo buscarCicloLectivoPorID(Integer id) {
+
+		for (CicloLectivo ciclo : ciclosLectivos) {
+			if (ciclo.getId().equals(id)) {
+				return ciclo;
+			}
+		}
+		return null;
+	}
 	public Alumno buscarAlumnoRegistrado(Integer dni) {
 		Alumno encontrado = null;
 		for (Alumno alumno : alumnos) {
@@ -133,6 +153,10 @@ public class Universidad {
 		}
 		return null;
 	}
+
+//	public Comision buscarComisionPorID() {
+//
+//	}
 
 	public Aula buscarAulaPorNumero(Integer numero) {
 		Aula encontrada = null;
