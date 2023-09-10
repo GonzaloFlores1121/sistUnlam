@@ -27,9 +27,9 @@ public class Universidad {
 
 	public Boolean registrarComision(Comision comision) {
 		Boolean existe = existeComision(comision);
-		Materia existeMateria = buscarMateria(comision.getMateria().getCodigo_materia());
-		CicloLectivo existeCiclo = buscarCicloLectivoPorID(comision.getCiclo().getId());
-		if (!existe && existeMateria !=null && existeCiclo!=null) {
+		Boolean verificarCondiciones = verificarQueEsteRegistradoMateriaYCiclo(comision.getMateria(),
+				comision.getCiclo());
+		if (!existe && verificarCondiciones) {
 			comisiones.add(comision);
 			return true;
 		}
@@ -98,6 +98,7 @@ public class Universidad {
 		}
 		return null;
 	}
+
 	public Alumno buscarAlumnoRegistrado(Integer dni) {
 		Alumno encontrado = null;
 		for (Alumno alumno : alumnos) {
@@ -154,9 +155,14 @@ public class Universidad {
 		return null;
 	}
 
-//	public Comision buscarComisionPorID() {
-//
-//	}
+	public Comision buscarComisionPorID(Integer id) {
+		for (Comision comi : comisiones) {
+			if (comi.getId().equals(id)) {
+				return comi;
+			}
+		}
+		return null;
+	}
 
 	public Aula buscarAulaPorNumero(Integer numero) {
 		Aula encontrada = null;
@@ -266,6 +272,7 @@ public class Universidad {
 		return lista;
 	}
 
+	// Verificaciones
 	public Boolean verificarCapacidadAula(Integer numero) {
 
 		Aula a = buscarAulaPorNumero(numero);
@@ -278,6 +285,14 @@ public class Universidad {
 
 		return false;
 	}
+	public Boolean verificarQueEsteRegistradoMateriaYCiclo(Materia materia, CicloLectivo ciclo) {
+
+		Materia existeMateria = buscarMateria(materia.getCodigo_materia());
+		CicloLectivo existeCiclo = buscarCicloLectivoPorID(ciclo.getId());
+
+		return existeMateria != null && existeCiclo != null;
+	}
+
 
 	// Sobrecargaa de metodos
 	public Boolean inscribirAlumnoCursoSiTieneCorrelativasAprobadas(Integer dniAlumno, Integer codigoMateriaInscripcion,
@@ -385,14 +400,17 @@ public class Universidad {
 		return false;
 	}
 
-	public void asignarComisionAUnCurso(Integer codigoCurso, Comision comision) {
+	public Boolean asignarComisionAUnCurso(Integer codigoCurso, Comision comision) {
 		Curso curso = buscarCursoPorCodigo(codigoCurso);
+		Comision existe = buscarComisionPorID(comision.getId());
+		Boolean verificar= verificarQueEsteRegistradoMateriaYCiclo(comision.getMateria(), comision.getCiclo());
 
-		if (curso != null) {
+		if (curso != null && existe != null && verificar) {
 
 			curso.setComision(comision);
+			return true;
 		}
-
+		return false;
 	}
 
 	public void asignarAulaACurso(Integer codigoCurso, Aula aula) {

@@ -19,10 +19,21 @@ public class Comision {
 		this.id = id;
 		this.materia = materia;
 	}
+	
+
+	public Comision(Integer id, CicloLectivo ciclo, Materia materia) {
+		this.id = id;
+		this.ciclo = ciclo;
+		this.materia = materia;
+	}
 
 	@Override
 	public int hashCode() {
 		return Objects.hash(ciclo, materia, turno);
+	}
+
+	public Integer getId() {
+		return id;
 	}
 
 	@Override

@@ -57,6 +57,8 @@ public class TestUniversidad {
 		Boolean operacion1 = false;
 		Boolean operacion2 = false;
 
+		unlam.registrarMaterias(tw1);
+		unlam.registrarCicloLectivo(ciclo1);
 		operacion1 = unlam.registrarComision(comi);
 		operacion2 = unlam.registrarComision(comi1);
 
@@ -287,11 +289,16 @@ public class TestUniversidad {
 				fechaDeInicioInscripcion, fechaFinalizacionInscripcion, cuatri);
 		Materia tw1 = new Materia("TALLER WEB1", 2300);
 		Comision comision = new Comision(idComision, turno, ciclo, tw1);
-		unlam.registrarCurso(curso);
-		unlam.asignarComisionAUnCurso(codigoCurso, comision);
-		Curso encontrado = unlam.buscarCursoPorCodigo(codigoCurso);
+		Boolean operacion = false;
 
-		assertNotNull(encontrado);
+		unlam.registrarCicloLectivo(ciclo);
+		unlam.registrarMaterias(tw1);
+		unlam.registrarCurso(curso);
+		unlam.registrarComision(comision);
+		operacion = unlam.asignarComisionAUnCurso(codigoCurso, comision);
+
+		assertTrue(operacion);
+
 	}
 
 	@Test
@@ -529,7 +536,13 @@ public class TestUniversidad {
 
 		Aula aula = new Aula(numero, 49, capacidadMax);
 
-		Comision comision = new Comision(1, pb2);
+		LocalDate fechaInicioCicloLectivo = LocalDate.of(2023, 8, 14);
+		LocalDate fechaFinalizacionCicloLectivo = LocalDate.of(2023, 12, 1);
+		LocalDate fechaDeInicioInscripcion = LocalDate.of(2023, 7, 28);
+		LocalDate fechaFinalizacionInscripcion = LocalDate.of(2023, 8, 5);
+		CicloLectivo ciclo = new CicloLectivo(1, fechaFinalizacionCicloLectivo, fechaInicioCicloLectivo,
+				fechaDeInicioInscripcion, fechaFinalizacionInscripcion, Cuatrimestre.PRIMER_CUATRIMESTRE);
+		Comision comision = new Comision(1, ciclo, pb2);
 
 		Universidad unlam = new Universidad();
 		Alumno alm = new Alumno(dniAlumno, "F", "G");
@@ -538,6 +551,7 @@ public class TestUniversidad {
 		unlam.registrarAlumno(alm);
 		unlam.registrarMaterias(pb2);
 		unlam.registrarCurso(curso);
+		unlam.registrarCicloLectivo(ciclo);
 		unlam.asignarComisionAUnCurso(codigoCurso, comision);
 		unlam.asignarAulaACurso(codigoCurso, aula);
 
