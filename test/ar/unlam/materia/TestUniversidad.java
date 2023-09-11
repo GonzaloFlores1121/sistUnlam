@@ -425,7 +425,7 @@ public class TestUniversidad {
 		unlam.evaluarAlumnoCurso(codigoCurso1, dniAlumno, nota1, nota2);
 		unlam.evaluarAlumnoCurso(codigoCurso2, dniAlumno, nota1, nota2);
 
-		Boolean operacion = unlam.inscribirAlumnoCursoSiTieneCorrelativasAprobadas(dniAlumno, codigoMateria, comision3,
+		Boolean operacion = unlam.inscribirAlumnoCurso(dniAlumno, codigoMateria, comision3,
 				codigoCurso3);
 
 		assertTrue(operacion);
@@ -483,7 +483,7 @@ public class TestUniversidad {
 		unlam.evaluarAlumnoCurso(codigoCurso1, dniAlumno, nota1, nota2);
 		unlam.evaluarAlumnoCurso(codigoCurso2, dniAlumno, nota1, notaerror);
 
-		Boolean operacion = unlam.inscribirAlumnoCursoSiTieneCorrelativasAprobadas(dniAlumno, codigoMateria, comision3,
+		Boolean operacion = unlam.inscribirAlumnoCurso(dniAlumno, codigoMateria, comision3,
 				codigoCurso3);
 
 		assertFalse(operacion);
