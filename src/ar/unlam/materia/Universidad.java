@@ -234,19 +234,7 @@ public class Universidad {
 
 	}
 
-	// Sobrecargaa de metodos
-	public Boolean inscribirAlumnoCurso(Integer codigoCurso, Integer dniAlumno, Integer numeroAula) {
-		Curso curso = buscarCursoPorCodigo(codigoCurso);
-		Alumno alumno = buscarAlumnoRegistrado(dniAlumno);
-		Aula aula = buscarAulaPorNumero(numeroAula);
-		if (curso != null && alumno != null && aula != null && aula.getCapacidadActual() < aula.getCapacidadMax()) {
-			AsignacionCursoAlumno asignacion = new AsignacionCursoAlumno(codigoCurso, dniAlumno);
-			curso.setAsignacionAlumno(asignacion);
-			return true;
-
-		}
-		return false;
-	}
+	
 
 	public void evaluarAlumnoCurso(Integer codigoCurso, Integer dniAlumno, Double parcialUno, Double parcialDos) {
 		AsignacionCursoAlumno asignacion = buscarAsignacionAlumnoCurso(codigoCurso, dniAlumno);
@@ -279,7 +267,20 @@ public class Universidad {
 		}
 		return lista;
 	}
+	
+	// Sobrecargaa de metodos
+		public Boolean inscribirAlumnoCurso(Integer codigoCurso, Integer dniAlumno, Integer numeroAula) {
+			Curso curso = buscarCursoPorCodigo(codigoCurso);
+			Alumno alumno = buscarAlumnoRegistrado(dniAlumno);
+			Boolean verificarCapacidadAula=verificarCapacidadAula(numeroAula);
+			if (curso != null && alumno != null && verificarCapacidadAula) {
+				AsignacionCursoAlumno asignacion = new AsignacionCursoAlumno(codigoCurso, dniAlumno);
+				curso.setAsignacionAlumno(asignacion);
+				return true;
 
+			}
+			return false;
+		}
 	// Sobrecargaa de metodos
 	public Boolean inscribirAlumnoCurso(Integer codigoCurso, Integer dniAlumno, Comision comision,
 			LocalDate fechaInscripto) {
