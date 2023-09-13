@@ -4,11 +4,13 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class Materia {
+	private static Integer id=0;
 	private Integer codigo_materia;
 	private String nombre;
 	private ArrayList<Integer> codigoCorrelativa;
 
 	public Materia(String nombre, Integer codigo) {
+		this.id=++id;
 		this.nombre = nombre;
 		this.codigo_materia = codigo;
 		this.codigoCorrelativa = new ArrayList<>();

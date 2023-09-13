@@ -7,12 +7,17 @@ public class Alumno {
 	private String nombre;
 	private String apellido;
 	private Integer dni;
+	private static Integer id = 0;
+	
+	
 
 	public Alumno(Integer dni, String apellido, String nombre) {
+		this.id=++id;
 		this.nombre=nombre;
 		this.apellido=apellido;
 		this.dni=dni;
 	}
+	
 
 	public String  getNombre() {
 		// TODO Auto-generated method stub
@@ -56,10 +61,7 @@ public class Alumno {
 		return Objects.equals(dni, other.dni);
 	}
 
-	@Override
-	public String toString() {
-		return "Alumno [nombre=" + nombre + ", apellido=" + apellido + ", dni=" + dni + "]";
-	}
+	
 	
 
 }

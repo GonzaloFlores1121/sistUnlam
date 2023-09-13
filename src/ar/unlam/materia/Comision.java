@@ -3,32 +3,38 @@ package ar.unlam.materia;
 import java.util.Objects;
 
 public class Comision {
-	private Integer id;
+	private Integer codigo;
 	private Dia dia;
 	private Turno turno;
 	private CicloLectivo ciclo;
 	private Materia materia;
+	private static Integer id = 0;
 
-	public Comision(Integer id, Turno turno, CicloLectivo ciclo, Materia materia) {
-		this.id = id;
+	public Comision(Integer codigo, Turno turno, CicloLectivo ciclo, Materia materia) {
+		this.id = ++id;
+		this.codigo = codigo;
 		this.turno = turno;
 		this.ciclo = ciclo;
 		this.materia = materia;
 	}
 
-	public Comision(Integer id,Materia materia ,Dia dia, Turno turno) {
-		this.id = id;
+	public Comision(Integer codigo, Materia materia, Dia dia, Turno turno) {
+		
+		this.id = ++id;
+		this.codigo = codigo;
 		this.dia = dia;
 		this.turno = turno;
 	}
 
-	public Comision(Integer id, Materia materia) {
-		this.id = id;
+	public Comision(Integer codigo, Materia materia) {
+		this.id = ++id;
+		this.codigo = codigo;
 		this.materia = materia;
 	}
 
-	public Comision(Integer id, CicloLectivo ciclo, Materia materia) {
-		this.id = id;
+	public Comision(Integer codigo, CicloLectivo ciclo, Materia materia) {
+		this.id = ++id;
+		this.codigo= codigo;
 		this.ciclo = ciclo;
 		this.materia = materia;
 	}
@@ -41,14 +47,15 @@ public class Comision {
 		return dia;
 	}
 
-	
 	public Turno getTurno() {
 		return turno;
 	}
 
+	
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, materia);
+		return Objects.hash(ciclo, materia, turno);
 	}
 
 	@Override
@@ -60,15 +67,12 @@ public class Comision {
 		if (getClass() != obj.getClass())
 			return false;
 		Comision other = (Comision) obj;
-		return Objects.equals(id, other.id) && Objects.equals(materia, other.materia);
+		return Objects.equals(ciclo, other.ciclo) && Objects.equals(materia, other.materia) && turno == other.turno;
 	}
 
 	public CicloLectivo getCiclo() {
 		return ciclo;
 	}
-
-	
-	
 
 	public Materia getMateria() {
 		return materia;

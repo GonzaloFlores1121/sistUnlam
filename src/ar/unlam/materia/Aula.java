@@ -3,7 +3,7 @@ package ar.unlam.materia;
 import java.util.Objects;
 
 public class Aula {
-
+	private static Integer id=0;
 	private Integer numero;
 	private Integer capacidadActual;
 	private final Integer capacidadMax;
@@ -11,6 +11,7 @@ public class Aula {
 
 
 	public Aula(Integer numero, Integer capacidadActual, Integer capacidadMax) {
+		this.id = ++id;
 		this.numero = numero;
 		this.capacidadActual = capacidadActual;
 		this.capacidadMax = capacidadMax;

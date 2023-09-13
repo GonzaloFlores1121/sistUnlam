@@ -165,35 +165,7 @@ public class TestUniversidad {
 		assertFalse(op2);
 	}
 
-	@Test
-	public void queNoSePuedaRegistrarCicloLectivoMismoID() {
-		Integer id_cicloLectivo = 1;
-		Integer id_cicloLectivo1 = 1;
-		LocalDate fechaInicioCicloLectivo = LocalDate.of(2023, 8, 14);
-		LocalDate fechaFinalizacionCicloLectivo = LocalDate.of(2023, 12, 1);
-		LocalDate fechaDeInicioInscripcion = LocalDate.of(2023, 7, 28);
-		LocalDate fechaFinalizacionInscripcion = LocalDate.of(2023, 7, 29);
-		LocalDate fechaInicioCicloLectivo1 = LocalDate.of(2024, 8, 14);
-		LocalDate fechaFinalizacionCicloLectivo1 = LocalDate.of(2024, 12, 1);
-		LocalDate fechaDeInicioInscripcion1 = LocalDate.of(2024, 7, 28);
-		LocalDate fechaFinalizacionInscripcion1 = LocalDate.of(2024, 7, 29);
-		Cuatrimestre cuatri = Cuatrimestre.PRIMER_CUATRIMESTRE;
-		Cuatrimestre cuatri2 = Cuatrimestre.SEGUNDO_CUATRIMESTRE;
-		Universidad unlam = new Universidad();
-		Boolean operacion = false;
-		Boolean operacion1 = false;
-		CicloLectivo ciclo = new CicloLectivo(id_cicloLectivo, fechaFinalizacionCicloLectivo, fechaInicioCicloLectivo,
-				fechaDeInicioInscripcion, fechaFinalizacionInscripcion, cuatri);
-		CicloLectivo ciclo2 = new CicloLectivo(id_cicloLectivo1, fechaFinalizacionCicloLectivo1,
-				fechaInicioCicloLectivo1, fechaDeInicioInscripcion1, fechaFinalizacionInscripcion1, cuatri2);
-
-		operacion = unlam.registrarCicloLectivo(ciclo);
-		operacion1 = unlam.registrarCicloLectivo(ciclo2);
-
-		assertTrue(operacion);
-		assertFalse(operacion1);
-
-	}
+	
 
 	@Test
 	public void queNoSePuedaRegistrarCicloLectivoDondeFechasSeSuperpongan() {
@@ -428,6 +400,9 @@ public class TestUniversidad {
 		Boolean operacion = unlam.inscribirAlumnoCurso(dniAlumno, codigoMateria, comision3,
 				codigoCurso3);
 
+		AsignacionCursoAlumno asign=unlam.buscarAsignacionAlumnoCurso(codigoCurso3, dniAlumno);
+
+		assertNotNull(asign);
 		assertTrue(operacion);
 
 	}
@@ -611,8 +586,9 @@ public class TestUniversidad {
 		
 		
 		Boolean operacion=unlam.inscribirAlumnoCurso(1234,codigoCurso,inscribirse);
+		AsignacionCursoAlumno asig=unlam.buscarAsignacionAlumnoCurso(5,1234);
 		
-		
+		assertNotNull(asig);
 		assertTrue(operacion);
 	}
 

@@ -4,12 +4,26 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 public class CicloLectivo {
-	private Integer id;
+	
 	private LocalDate fechaFinalizacionCicloLectivo;
 	private LocalDate fechaInicioCicloLectivo;
 	private LocalDate fechaDeInicioInscripcion;
 	private LocalDate fechaFinalizacionInscripcion;
 	private Cuatrimestre cuatri;
+	private static Integer id=0;
+
+	
+	
+
+	public CicloLectivo( LocalDate fechaFinalizacionCicloLectivo, LocalDate fechaInicioCicloLectivo,
+			LocalDate fechaDeInicioInscripcion, LocalDate fechaFinalizacionInscripcion, Cuatrimestre cuatri) {
+		this.id= ++id;
+		this.fechaFinalizacionCicloLectivo = fechaFinalizacionCicloLectivo;
+		this.fechaInicioCicloLectivo = fechaInicioCicloLectivo;
+		this.fechaDeInicioInscripcion = fechaDeInicioInscripcion;
+		this.fechaFinalizacionInscripcion = fechaFinalizacionInscripcion;
+		this.cuatri = cuatri;
+	}
 
 	public CicloLectivo(Integer id, LocalDate fechaFinalizacionCicloLectivo, LocalDate fechaInicioCicloLectivo,
 			LocalDate fechaDeInicioInscripcion, LocalDate fechaFinalizacionInscripcion, Cuatrimestre cuatri) {
@@ -32,10 +46,12 @@ public class CicloLectivo {
 	}
 
 
+	
+	
 	@Override
 	public int hashCode() {
 		return Objects.hash(cuatri, fechaDeInicioInscripcion, fechaFinalizacionCicloLectivo,
-				fechaFinalizacionInscripcion, fechaInicioCicloLectivo, id);
+				fechaFinalizacionInscripcion, fechaInicioCicloLectivo);
 	}
 
 	@Override
@@ -47,14 +63,12 @@ public class CicloLectivo {
 		if (getClass() != obj.getClass())
 			return false;
 		CicloLectivo other = (CicloLectivo) obj;
-
 		return cuatri == other.cuatri && Objects.equals(fechaDeInicioInscripcion, other.fechaDeInicioInscripcion)
 				&& Objects.equals(fechaFinalizacionCicloLectivo, other.fechaFinalizacionCicloLectivo)
 				&& Objects.equals(fechaFinalizacionInscripcion, other.fechaFinalizacionInscripcion)
-				&& Objects.equals(fechaInicioCicloLectivo, other.fechaInicioCicloLectivo)
-				|| Objects.equals(id, other.id);
+				&& Objects.equals(fechaInicioCicloLectivo, other.fechaInicioCicloLectivo);
 	}
-	
+
 	public Integer getId() {
 		return id;
 	}

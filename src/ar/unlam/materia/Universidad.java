@@ -12,6 +12,8 @@ public class Universidad {
 	private ArrayList<CicloLectivo> ciclosLectivos;
 	private ArrayList<Comision> comisiones;
 	private ArrayList<Aula> aulas;
+	private ArrayList<AsignacionCursoAlumno> cursoAlumno;
+	private ArrayList<AsignacionCursoProfe> cursoProfe;
 
 	public Universidad() {
 		this.materias = new ArrayList<>();
@@ -21,9 +23,31 @@ public class Universidad {
 		this.comisiones = new ArrayList<>();
 		this.ciclosLectivos = new ArrayList<>();
 		this.aulas = new ArrayList<>();
+		this.cursoAlumno=new ArrayList<>();
+		this.cursoProfe=new ArrayList<>();
 	}
 
 	// Metodos para registrar
+
+	public Boolean registrarAsignacionCursoProfe(AsignacionCursoProfe asignacion) {
+		Boolean existe=existeAsignacionCursoProfe(asignacion);
+		if(!existe) {
+			cursoProfe.add(asignacion);
+			return true;
+		}
+		return false;
+	}
+	
+
+	public Boolean registrarAsignacionCursoAlumno(AsignacionCursoAlumno asignacion) {
+		Boolean existe=existeAsignacionCursoAlumno(asignacion);
+		if(!existe) {
+			cursoAlumno.add(asignacion);
+			return true;
+		}
+		return false;
+	}
+	
 
 	public Boolean registrarComision(Comision comision) {
 		Boolean existe = existeComision(comision);
@@ -275,6 +299,7 @@ public class Universidad {
 			Boolean verificarCapacidadAula=verificarCapacidadAula(numeroAula);
 			if (curso != null && alumno != null && verificarCapacidadAula) {
 				AsignacionCursoAlumno asignacion = new AsignacionCursoAlumno(codigoCurso, dniAlumno);
+				cursoAlumno.add(asignacion);
 				curso.setAsignacionAlumno(asignacion);
 				return true;
 
@@ -290,6 +315,7 @@ public class Universidad {
 				comision.getCiclo().getFechaFinalizacionInscripcion(), fechaInscripto);
 		if (curso != null && alumno != null && validar) {
 			AsignacionCursoAlumno asignacion = new AsignacionCursoAlumno(codigoCurso, dniAlumno);
+			cursoAlumno.add(asignacion);
 			curso.setAsignacionAlumno(asignacion);
 			return true;
 
@@ -303,6 +329,7 @@ public class Universidad {
 		Alumno alumno = buscarAlumnoRegistrado(dniAlumno);
 		if (curso != null && alumno != null) {
 			AsignacionCursoAlumno asignacion = new AsignacionCursoAlumno(codigoCurso, dniAlumno);
+			cursoAlumno.add(asignacion);
 			curso.setAsignacionAlumno(asignacion);
 			return true;
 
@@ -322,6 +349,7 @@ public class Universidad {
 		Boolean capacidad = verificarCapacidadAula(numeroAula);
 		if (verificarMateriasCorrelativas && capacidad && verificarFecha) {
 			AsignacionCursoAlumno asignacion = new AsignacionCursoAlumno(codigoCurso, dniAlumno);
+			cursoAlumno.add(asignacion);
 
 			Curso curso = new Curso(codigoCurso, comision, asignacion);
 			registrarCurso(curso);
@@ -338,6 +366,7 @@ public class Universidad {
 		Boolean verificacion = verificarCorrelativasAprobadas(dniAlumno, codigoMateriaInscripcion);
 		if (verificacion) {
 			AsignacionCursoAlumno asignacion = new AsignacionCursoAlumno(codigoCurso, dniAlumno);
+			cursoAlumno.add(asignacion);
 
 			Curso curso = new Curso(codigoCurso, comision, asignacion);
 			registrarCurso(curso);
@@ -356,6 +385,8 @@ public class Universidad {
 			if (!verificar) {
 				registrarCurso(inscribirse);
 				AsignacionCursoAlumno asignacion = new AsignacionCursoAlumno(inscribirse.getCodigo_curso(), dniAlumno);
+				
+				cursoAlumno.add(asignacion);
 				inscribirse.setAsignacionAlumno(asignacion);
 				return true;
 
@@ -470,6 +501,22 @@ public class Universidad {
 				return true;
 			}
 
+		}
+		return false;
+	}
+	private Boolean existeAsignacionCursoProfe(AsignacionCursoProfe asignacion) {
+		for(AsignacionCursoProfe asig : cursoProfe) {
+			if(asig.equals(asignacion)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	private Boolean existeAsignacionCursoAlumno(AsignacionCursoAlumno asignacion) {
+		for (AsignacionCursoAlumno asig : cursoAlumno) {
+			if(asig.equals(asignacion)) {
+				return true;
+			}
 		}
 		return false;
 	}

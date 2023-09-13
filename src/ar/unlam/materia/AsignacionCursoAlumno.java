@@ -1,7 +1,9 @@
 package ar.unlam.materia;
 
+import java.util.Objects;
+
 public class AsignacionCursoAlumno {
-	
+	private static Integer id = 0;
 	private Integer codigo_curso;
 	private Integer dniAlumno;
 	private Nota parcial1;
@@ -10,7 +12,7 @@ public class AsignacionCursoAlumno {
 
 	
 	public AsignacionCursoAlumno( Integer codigo_curso, Integer dniAlumno) {
-		
+		this.id = ++id;
 		this.codigo_curso = codigo_curso;
 		this.dniAlumno = dniAlumno;
 
@@ -46,6 +48,21 @@ public class AsignacionCursoAlumno {
 	}
 	public Nota getParcial2() {
 		return parcial2;
+	}
+	@Override
+	public int hashCode() {
+		return Objects.hash(codigo_curso, dniAlumno);
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		AsignacionCursoAlumno other = (AsignacionCursoAlumno) obj;
+		return Objects.equals(codigo_curso, other.codigo_curso) && Objects.equals(dniAlumno, other.dniAlumno);
 	}
 	
 }

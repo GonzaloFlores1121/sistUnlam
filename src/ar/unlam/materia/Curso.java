@@ -1,7 +1,7 @@
 package ar.unlam.materia;
 
 public class Curso {
-
+	private static Integer id = 0;
 	private Integer codigo_curso;
 	private Comision comision;
 	private Aula aula;
@@ -9,21 +9,25 @@ public class Curso {
 	private AsignacionCursoProfe asignacionProfe;
 
 	public Curso(Integer codigo_curso) {
+		this.id = ++id;
 		this.codigo_curso = codigo_curso;
 	}
 
 	public Curso(Integer codigo_curso, Comision comision, AsignacionCursoAlumno asignacionAlumno) {
+		this.id = ++id;
 		this.codigo_curso = codigo_curso;
 		this.comision = comision;
 		this.asignacionAlumno = asignacionAlumno;
 	}
 
 	public Curso(Integer codigo_curso, Comision comision) {
+		this.id = ++id;
 		this.codigo_curso = codigo_curso;
 		this.comision = comision;
 	}
 
 	public Curso(Integer codigo_curso, Comision comision, Aula aula) {
+		this.id = ++id;
 		this.codigo_curso = codigo_curso;
 		this.comision = comision;
 		this.aula = aula;
@@ -32,6 +36,7 @@ public class Curso {
 
 	public Curso(Integer codigo_curso, Comision comision, Aula aula, AsignacionCursoAlumno asignacionAlumno,
 			AsignacionCursoProfe asignacionProfe) {
+		this.id = ++id;
 		this.comision = comision;
 		this.codigo_curso = codigo_curso;
 		this.aula = aula;
