@@ -8,18 +8,16 @@ public class AsignacionCursoProfe {
 	private Integer dniProfesor;
 
 	public AsignacionCursoProfe(Integer codigo_curso, Integer dniProfesor) {
-		this.id = ++id;
-		this.codigo_curso=codigo_curso;
-		this.dniProfesor=dniProfesor;
-				
+		id++;
+		this.codigo_curso = codigo_curso;
+		this.dniProfesor = dniProfesor;
+
 	}
-	
-	
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(codigo_curso, dniProfesor);
 	}
-
 
 	@Override
 	public boolean equals(Object obj) {
@@ -33,10 +31,9 @@ public class AsignacionCursoProfe {
 		return Objects.equals(codigo_curso, other.codigo_curso) && Objects.equals(dniProfesor, other.dniProfesor);
 	}
 
-
 	@Override
 	public String toString() {
-		return "AsignacionCursoProfe [codigo_curso=" + codigo_curso + ", dniProfesor=" + dniProfesor + "]";
+		return "AsignacionCursoProfe ID " + id + " codigo_curso=" + codigo_curso + ", dniProfesor=" + dniProfesor + "]";
 	}
 
 }

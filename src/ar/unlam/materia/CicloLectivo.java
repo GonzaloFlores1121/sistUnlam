@@ -10,14 +10,14 @@ public class CicloLectivo {
 	private LocalDate fechaDeInicioInscripcion;
 	private LocalDate fechaFinalizacionInscripcion;
 	private Cuatrimestre cuatri;
-	private static Integer id=0;
+	private static Integer idCiclo=0;
 
 	
 	
 
 	public CicloLectivo( LocalDate fechaFinalizacionCicloLectivo, LocalDate fechaInicioCicloLectivo,
 			LocalDate fechaDeInicioInscripcion, LocalDate fechaFinalizacionInscripcion, Cuatrimestre cuatri) {
-		this.id= ++id;
+		idCiclo++;
 		this.fechaFinalizacionCicloLectivo = fechaFinalizacionCicloLectivo;
 		this.fechaInicioCicloLectivo = fechaInicioCicloLectivo;
 		this.fechaDeInicioInscripcion = fechaDeInicioInscripcion;
@@ -27,7 +27,7 @@ public class CicloLectivo {
 
 	public CicloLectivo(Integer id, LocalDate fechaFinalizacionCicloLectivo, LocalDate fechaInicioCicloLectivo,
 			LocalDate fechaDeInicioInscripcion, LocalDate fechaFinalizacionInscripcion, Cuatrimestre cuatri) {
-		this.id = id;
+		idCiclo++;
 		this.fechaFinalizacionCicloLectivo = fechaFinalizacionCicloLectivo;
 		this.fechaInicioCicloLectivo = fechaInicioCicloLectivo;
 		this.fechaDeInicioInscripcion = fechaDeInicioInscripcion;
@@ -70,13 +70,13 @@ public class CicloLectivo {
 	}
 
 	public Integer getId() {
-		return id;
+		return idCiclo;
 	}
 
 
 	@Override
 	public String toString() {
-		return "CicloLectivo [id=" + id + ", fechaFinalizacionCicloLectivo=" + fechaFinalizacionCicloLectivo
+		return "CicloLectivo [id=" + idCiclo + ", fechaFinalizacionCicloLectivo=" + fechaFinalizacionCicloLectivo
 				+ ", fechaInicioCicloLectivo=" + fechaInicioCicloLectivo + ", fechaDeInicioInscripcion="
 				+ fechaDeInicioInscripcion + ", fechaFinalizacionInscripcion=" + fechaFinalizacionInscripcion
 				+ ", cuatri=" + cuatri + "]";

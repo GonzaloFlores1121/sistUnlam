@@ -11,7 +11,7 @@ public class Aula {
 
 
 	public Aula(Integer numero, Integer capacidadActual, Integer capacidadMax) {
-		this.id = ++id;
+		id++;
 		this.numero = numero;
 		this.capacidadActual = capacidadActual;
 		this.capacidadMax = capacidadMax;
@@ -19,7 +19,7 @@ public class Aula {
 
 	@Override
 	public String toString() {
-		return "Aula [numero=" + numero + ", capacidadMax=" + capacidadMax + "]";
+		return "Aula [ID "+id+ " numero=" + numero + ", capacidadMax=" + capacidadMax + "]";
 	}
 
 	public void setCapacidadActual(Integer capacidadActual) {

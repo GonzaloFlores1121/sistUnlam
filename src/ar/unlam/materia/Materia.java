@@ -4,13 +4,13 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class Materia {
-	private static Integer id=0;
+	private static Integer id = 0;
 	private Integer codigo_materia;
 	private String nombre;
 	private ArrayList<Integer> codigoCorrelativa;
 
 	public Materia(String nombre, Integer codigo) {
-		this.id=++id;
+		id++;
 		this.nombre = nombre;
 		this.codigo_materia = codigo;
 		this.codigoCorrelativa = new ArrayList<>();
@@ -44,10 +44,10 @@ public class Materia {
 	public void removerCorrelativa(Integer codigoCorrelativa) {
 		this.codigoCorrelativa.remove(codigoCorrelativa);
 	}
+
 	public Integer cantidadCorrelativas() {
 		return codigoCorrelativa.size();
-				
-				
+
 	}
 
 	@Override
@@ -69,7 +69,7 @@ public class Materia {
 
 	@Override
 	public String toString() {
-		return "Materia [codigo_materia=" + codigo_materia + ", nombre=" + nombre + ", codigoCorrelativa="
+		return "Materia ID " + id + " codigo_materia=" + codigo_materia + ", nombre=" + nombre + ", codigoCorrelativa="
 				+ codigoCorrelativa + "]";
 	}
 
@@ -78,14 +78,14 @@ public class Materia {
 	}
 
 	public Integer buscarCorrelativa(Integer codigo_materia2) {
-			Integer operacion=0;
-			
-			for (Integer integer : codigoCorrelativa) {
-				if(integer.equals(codigo_materia2)) {
-					operacion=1;
-					return operacion;
-				}
+		Integer operacion = 0;
+
+		for (Integer integer : codigoCorrelativa) {
+			if (integer.equals(codigo_materia2)) {
+				operacion = 1;
+				return operacion;
 			}
+		}
 		return operacion;
 	}
 

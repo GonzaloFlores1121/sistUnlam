@@ -1,26 +1,35 @@
 package ar.unlam.materia;
 
+import java.time.LocalDate;
 import java.util.Objects;
 
 public class Alumno {
-	
+
 	private String nombre;
 	private String apellido;
 	private Integer dni;
 	private static Integer id = 0;
-	
-	
+	private LocalDate fechaNacimiento;
+	private LocalDate fechaIngreso;
 
 	public Alumno(Integer dni, String apellido, String nombre) {
-		this.id=++id;
-		this.nombre=nombre;
-		this.apellido=apellido;
-		this.dni=dni;
+		id++;
+		this.nombre = nombre;
+		this.apellido = apellido;
+		this.dni = dni;
 	}
-	
 
-	public String  getNombre() {
-		// TODO Auto-generated method stub
+	public Alumno(String nombre, String apellido, Integer dni, LocalDate fechaNacimiento, LocalDate fechaIngreso) {
+		id++;
+		this.nombre = nombre;
+		this.apellido = apellido;
+		this.dni = dni;
+		this.fechaNacimiento = fechaNacimiento;
+		this.fechaIngreso = fechaIngreso;
+	}
+
+	public String getNombre() {
+
 		return this.nombre;
 	}
 
@@ -61,7 +70,10 @@ public class Alumno {
 		return Objects.equals(dni, other.dni);
 	}
 
-	
-	
+	@Override
+	public String toString() {
+		return "Alumno [ID " + id + " nombre=" + nombre + ", apellido=" + apellido + ", dni=" + dni
+				+ ", fechaNacimiento=" + fechaNacimiento + ", fechaIngreso=" + fechaIngreso + "]";
+	}
 
 }

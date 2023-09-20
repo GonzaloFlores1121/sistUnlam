@@ -11,7 +11,7 @@ public class Comision {
 	private static Integer id = 0;
 
 	public Comision(Integer codigo, Turno turno, CicloLectivo ciclo, Materia materia) {
-		this.id = ++id;
+		id++;
 		this.codigo = codigo;
 		this.turno = turno;
 		this.ciclo = ciclo;
@@ -20,20 +20,20 @@ public class Comision {
 
 	public Comision(Integer codigo, Materia materia, Dia dia, Turno turno) {
 		
-		this.id = ++id;
+		id++;
 		this.codigo = codigo;
 		this.dia = dia;
 		this.turno = turno;
 	}
 
 	public Comision(Integer codigo, Materia materia) {
-		this.id = ++id;
+		id++;
 		this.codigo = codigo;
 		this.materia = materia;
 	}
 
 	public Comision(Integer codigo, CicloLectivo ciclo, Materia materia) {
-		this.id = ++id;
+		id++;
 		this.codigo= codigo;
 		this.ciclo = ciclo;
 		this.materia = materia;
@@ -50,8 +50,13 @@ public class Comision {
 	public Turno getTurno() {
 		return turno;
 	}
+	
 
 	
+
+	public Integer getCodigo() {
+		return codigo;
+	}
 
 	@Override
 	public int hashCode() {
