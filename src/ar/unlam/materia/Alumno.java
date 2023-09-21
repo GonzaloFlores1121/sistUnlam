@@ -5,13 +5,21 @@ import java.util.Objects;
 
 public class Alumno {
 
+	//Datos
 	private String nombre;
 	private String apellido;
 	private Integer dni;
+	//IDs
 	private static Integer id = 0;
+	private Integer indicador = 0;
+	//Fechas
 	private LocalDate fechaNacimiento;
 	private LocalDate fechaIngreso;
 
+<<<<<<< HEAD
+=======
+	// Constructor innecesario
+>>>>>>> ramaDiego
 //	public Alumno(Integer dni, String apellido, String nombre) {
 //		id++;
 //		this.nombre = nombre;
@@ -19,8 +27,24 @@ public class Alumno {
 //		this.dni = dni;
 //	}
 
+<<<<<<< HEAD
 	public Alumno(String nombre, String apellido, Integer dni, LocalDate fechaNacimiento, LocalDate fechaIngreso) {
 		id++;
+=======
+	//ID estatico
+	public Alumno(String nombre, String apellido, Integer dni, LocalDate fechaNacimiento, LocalDate fechaIngreso) {
+		id++;
+		this.nombre = nombre;
+		this.apellido = apellido;
+		this.dni = dni;
+		this.fechaNacimiento = fechaNacimiento;
+		this.fechaIngreso = fechaIngreso;
+	}
+	
+	//Id por parametro
+	public Alumno(Integer indicador,String nombre, String apellido, Integer dni, LocalDate fechaNacimiento, LocalDate fechaIngreso) {
+		this.indicador=indicador;
+>>>>>>> ramaDiego
 		this.nombre = nombre;
 		this.apellido = apellido;
 		this.dni = dni;
@@ -77,6 +101,17 @@ public class Alumno {
 		this.fechaIngreso = fechaIngreso;
 	}
 
+<<<<<<< HEAD
+=======
+	public Integer getIndicador() {
+		return indicador;
+	}
+
+	public void setIndicador(Integer indicador) {
+		this.indicador = indicador;
+	}
+
+>>>>>>> ramaDiego
 	@Override
 	public int hashCode() {
 		return Objects.hash(dni);
