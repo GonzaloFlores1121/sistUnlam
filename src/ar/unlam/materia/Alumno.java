@@ -12,12 +12,12 @@ public class Alumno {
 	private LocalDate fechaNacimiento;
 	private LocalDate fechaIngreso;
 
-	public Alumno(Integer dni, String apellido, String nombre) {
-		id++;
-		this.nombre = nombre;
-		this.apellido = apellido;
-		this.dni = dni;
-	}
+//	public Alumno(Integer dni, String apellido, String nombre) {
+//		id++;
+//		this.nombre = nombre;
+//		this.apellido = apellido;
+//		this.dni = dni;
+//	}
 
 	public Alumno(String nombre, String apellido, Integer dni, LocalDate fechaNacimiento, LocalDate fechaIngreso) {
 		id++;
@@ -51,6 +51,30 @@ public class Alumno {
 
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
+	}
+
+	public static Integer getId() {
+		return id;
+	}
+
+	public LocalDate getFechaNacimiento() {
+		return fechaNacimiento;
+	}
+
+	public LocalDate getFechaIngreso() {
+		return fechaIngreso;
+	}
+
+	public static void setId(Integer id) {
+		Alumno.id = id;
+	}
+
+	public void setFechaNacimiento(LocalDate fechaNacimiento) {
+		this.fechaNacimiento = fechaNacimiento;
+	}
+
+	public void setFechaIngreso(LocalDate fechaIngreso) {
+		this.fechaIngreso = fechaIngreso;
 	}
 
 	@Override
