@@ -354,18 +354,17 @@ public class Universidad {
 	}
 
 	// Sobrecargaa de metodos
-	public Boolean inscribirAlumnoComisionSiEstaDentroDeLasFechasInscripcion(Integer dniAlumno, Integer codigoComision,
-			Integer idComision, LocalDate fechaInscripcion) {
-		Comision buscar = buscarComisionPorCodigoYID(codigoComision, idComision);
+	public Boolean inscribirAlumnoComisionVerificandoQueNoSeSuperpongan(Integer dniAlumno, Comision comision) {
 
-		if (buscar != null) {
-			Boolean verificar = verificarSiFechaEstaDentroDelRango(buscar.getCiclo().getFechaDeInicioInscripcion(),
-					buscar.getCiclo().getFechaFinalizacionInscripcion(), fechaInscripcion);
-			if (verificar) {
-				AsignacionComisionAlumno asignacion = new AsignacionComisionAlumno(codigoComision, dniAlumno);
+		if (comision != null) {
+			Boolean verificar = verificarCursosSuperpuestos(dniAlumno, comision);
+			if (!verificar) {
+				registrarComision(comision);
+				AsignacionComisionAlumno asignacion = new AsignacionComisionAlumno(comision.getCodigo_comision(),
+						dniAlumno);
 
 				comisionesAlumno.add(asignacion);
-				buscar.setAsignacionAlumno(asignacion);
+				comision.setAsignacionAlumno(asignacion);
 				return true;
 
 			}
@@ -374,6 +373,21 @@ public class Universidad {
 	}
 
 	// Verificaciones
+	public Boolean verificarCursosSuperpuestos(Integer dniAlumno, Comision inscribirse) {
+		ArrayList<Comision> c = buscarComisionesDeUnAlumno(dniAlumno);
+
+		if (c != null) {
+			for (Comision comision : c) {
+				if (comision.getDia().equals(inscribirse.getDia())
+						&& comision.getTurno().equals(inscribirse.getTurno())) {
+					return true;
+				}
+			}
+		}
+		return false;
+
+	}
+
 	public Boolean verificarSiFechaEstaDentroDelRango(LocalDate fechaInicioInscripcion, LocalDate fechaFinInscripcion,
 			LocalDate fechaInscripto) {
 
