@@ -16,6 +16,7 @@ public class Alumno {
 	private LocalDate fechaNacimiento;
 	private LocalDate fechaIngreso;
 
+
 	// Constructor innecesario
 //	public Alumno(Integer dni, String apellido, String nombre) {
 //		id++;
