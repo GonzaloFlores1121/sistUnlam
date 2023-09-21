@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 public class CicloLectivo {
-
+	
 	//CicloLectivo 
 	private LocalDate fechaFinalizacionCicloLectivo;
 	private LocalDate fechaInicioCicloLectivo;
