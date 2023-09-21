@@ -5,22 +5,38 @@ import java.util.Objects;
 
 public class Alumno {
 
+	//Datos
 	private String nombre;
 	private String apellido;
 	private Integer dni;
+	//IDs
 	private static Integer id = 0;
+	private Integer indicador = 0;
+	//Fechas
 	private LocalDate fechaNacimiento;
 	private LocalDate fechaIngreso;
 
-	public Alumno(Integer dni, String apellido, String nombre) {
+	// Constructor innecesario
+//	public Alumno(Integer dni, String apellido, String nombre) {
+//		id++;
+//		this.nombre = nombre;
+//		this.apellido = apellido;
+//		this.dni = dni;
+//	}
+
+	//ID estatico
+	public Alumno(String nombre, String apellido, Integer dni, LocalDate fechaNacimiento, LocalDate fechaIngreso) {
 		id++;
 		this.nombre = nombre;
 		this.apellido = apellido;
 		this.dni = dni;
+		this.fechaNacimiento = fechaNacimiento;
+		this.fechaIngreso = fechaIngreso;
 	}
-
-	public Alumno(String nombre, String apellido, Integer dni, LocalDate fechaNacimiento, LocalDate fechaIngreso) {
-		id++;
+	
+	//Id por parametro
+	public Alumno(Integer indicador,String nombre, String apellido, Integer dni, LocalDate fechaNacimiento, LocalDate fechaIngreso) {
+		this.indicador=indicador;
 		this.nombre = nombre;
 		this.apellido = apellido;
 		this.dni = dni;
@@ -51,6 +67,38 @@ public class Alumno {
 
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
+	}
+
+	public static Integer getId() {
+		return id;
+	}
+
+	public LocalDate getFechaNacimiento() {
+		return fechaNacimiento;
+	}
+
+	public LocalDate getFechaIngreso() {
+		return fechaIngreso;
+	}
+
+	public static void setId(Integer id) {
+		Alumno.id = id;
+	}
+
+	public void setFechaNacimiento(LocalDate fechaNacimiento) {
+		this.fechaNacimiento = fechaNacimiento;
+	}
+
+	public void setFechaIngreso(LocalDate fechaIngreso) {
+		this.fechaIngreso = fechaIngreso;
+	}
+
+	public Integer getIndicador() {
+		return indicador;
+	}
+
+	public void setIndicador(Integer indicador) {
+		this.indicador = indicador;
 	}
 
 	@Override
