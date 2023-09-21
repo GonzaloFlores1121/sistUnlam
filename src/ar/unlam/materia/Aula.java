@@ -4,36 +4,34 @@ import java.util.Objects;
 
 public class Aula {
 	private static Integer id=0;
+	
 	private Integer numeroDeAula;
 	private Integer capacidadActual;
-	private final Integer capacidadMax;
+	private final Integer CAPACIDADMAX;
 
-
-
-	public Aula(Integer capacidadActual, Integer capacidadMax) {
+	public Aula(Integer numeroDeAula, Integer capacidadActual, Integer capacidadMax) {
 		id++;
-//		this.numeroDeAula = numeroDeAula;
+		this.numeroDeAula = numeroDeAula;
 		this.capacidadActual = capacidadActual;
-		this.capacidadMax = capacidadMax;
+		this.CAPACIDADMAX = capacidadMax;
 	}
 	//Constructor Diego
 	public Aula(Integer numeroDeAula, Integer capacidadMax) {
 		this.numeroDeAula = numeroDeAula;
 //		this.capacidadActual = capacidadActual;
-		this.capacidadMax = capacidadMax;
+		this.CAPACIDADMAX = capacidadMax;
 	}
 
-	
 	public Integer getNumero() {
 		return numeroDeAula;
 	}
 
+	public Integer getCapacidadMax() {
+		return CAPACIDADMAX;
+	}
+	
 	public void setCapacidadActual(Integer capacidadActual) {
 		this.capacidadActual = capacidadActual;
-	}
-
-	public Integer getCapacidadMax() {
-		return capacidadMax;
 	}
 
 	public Integer getCapacidadActual() {
@@ -59,7 +57,7 @@ public class Aula {
 	
 	@Override
 	public String toString() {
-		return "Aula [ID "+id+ " numero=" + numeroDeAula + ", capacidadMax=" + capacidadMax + "]";
+		return "Aula [ID "+id+ " numero=" + numeroDeAula + ", capacidadMax=" + CAPACIDADMAX + "]";
 	}
 	
 
