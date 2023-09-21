@@ -22,7 +22,7 @@ public class CicloLectivo {
 	// Constructor pero con ID estatico en incremento
 	public CicloLectivo(LocalDate fechaFinalizacionCicloLectivo, LocalDate fechaInicioCicloLectivo,
 			LocalDate fechaDeInicioInscripcion, LocalDate fechaFinalizacionInscripcion, Cuatrimestre cuatri) {
-		idCiclo = id++;
+		idCiclo = ++id;
 		this.fechaFinalizacionCicloLectivo = fechaFinalizacionCicloLectivo;
 		this.fechaInicioCicloLectivo = fechaInicioCicloLectivo;
 		this.fechaDeInicioInscripcion = fechaDeInicioInscripcion;
@@ -73,7 +73,7 @@ public class CicloLectivo {
 
 	@Override
 	public String toString() {
-		return "CicloLectivo [id=" + id + ", fechaFinalizacionCicloLectivo=" + fechaFinalizacionCicloLectivo
+		return "CicloLectivo [id=" + idCiclo + ", fechaFinalizacionCicloLectivo=" + fechaFinalizacionCicloLectivo
 				+ ", fechaInicioCicloLectivo=" + fechaInicioCicloLectivo + ", fechaDeInicioInscripcion="
 				+ fechaDeInicioInscripcion + ", fechaFinalizacionInscripcion=" + fechaFinalizacionInscripcion
 				+ ", cuatri=" + cuatri + "]";
