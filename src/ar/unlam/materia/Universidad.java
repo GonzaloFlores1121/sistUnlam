@@ -8,10 +8,10 @@ public class Universidad {
 	private ArrayList<Materia> materias;
 	private ArrayList<Alumno> alumnos;
 	private ArrayList<Profesor> profes;
-	private ArrayList<Curso> cursos;
-	private ArrayList<CicloLectivo> ciclosLectivos;
-	private ArrayList<Comision> comisiones;
 	private ArrayList<Aula> aulas;
+	private ArrayList<CicloLectivo> ciclosLectivos;
+	private ArrayList<Curso> cursos;
+	private ArrayList<Comision> comisiones;
 	private ArrayList<AsignacionCursoAlumno> cursoAlumno;
 	private ArrayList<AsignacionCursoProfe> cursoProfe;
 
