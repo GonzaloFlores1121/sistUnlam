@@ -16,10 +16,8 @@ public class Alumno {
 	private LocalDate fechaNacimiento;
 	private LocalDate fechaIngreso;
 
-<<<<<<< HEAD
-=======
+
 	// Constructor innecesario
->>>>>>> ramaDiego
 //	public Alumno(Integer dni, String apellido, String nombre) {
 //		id++;
 //		this.nombre = nombre;
@@ -27,10 +25,6 @@ public class Alumno {
 //		this.dni = dni;
 //	}
 
-<<<<<<< HEAD
-	public Alumno(String nombre, String apellido, Integer dni, LocalDate fechaNacimiento, LocalDate fechaIngreso) {
-		id++;
-=======
 	//ID estatico
 	public Alumno(String nombre, String apellido, Integer dni, LocalDate fechaNacimiento, LocalDate fechaIngreso) {
 		id++;
@@ -44,7 +38,6 @@ public class Alumno {
 	//Id por parametro
 	public Alumno(Integer indicador,String nombre, String apellido, Integer dni, LocalDate fechaNacimiento, LocalDate fechaIngreso) {
 		this.indicador=indicador;
->>>>>>> ramaDiego
 		this.nombre = nombre;
 		this.apellido = apellido;
 		this.dni = dni;
@@ -101,8 +94,6 @@ public class Alumno {
 		this.fechaIngreso = fechaIngreso;
 	}
 
-<<<<<<< HEAD
-=======
 	public Integer getIndicador() {
 		return indicador;
 	}
@@ -111,7 +102,6 @@ public class Alumno {
 		this.indicador = indicador;
 	}
 
->>>>>>> ramaDiego
 	@Override
 	public int hashCode() {
 		return Objects.hash(dni);
