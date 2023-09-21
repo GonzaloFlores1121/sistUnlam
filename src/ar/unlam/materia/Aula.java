@@ -8,18 +8,8 @@ public class Aula {
 	private Integer capacidadActual;
 	private final Integer capacidadMax;
 
-
-
-	public Aula(Integer capacidadActual, Integer capacidadMax) {
-		id++;
-//		this.numeroDeAula = numeroDeAula;
-		this.capacidadActual = capacidadActual;
-		this.capacidadMax = capacidadMax;
-	}
-	//Constructor Diego
 	public Aula(Integer numeroDeAula, Integer capacidadMax) {
 		this.numeroDeAula = numeroDeAula;
-//		this.capacidadActual = capacidadActual;
 		this.capacidadMax = capacidadMax;
 	}
 

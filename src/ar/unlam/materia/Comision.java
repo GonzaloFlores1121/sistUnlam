@@ -3,40 +3,62 @@ package ar.unlam.materia;
 import java.util.Objects;
 
 public class Comision {
-	private Integer codigo;
+	private static Integer idComisiones = 0;
+	private Integer id;
+	private Integer codigo_comision;
 	private Dia dia;
 	private Turno turno;
 	private CicloLectivo ciclo;
 	private Materia materia;
-	private static Integer id = 0;
+	private Aula aula;
+	private AsignacionComisionAlumno asignacionAlumno;
+	private AsignacionComisionProfe asignacionProfe;
 
-	public Comision(Integer codigo, Turno turno, CicloLectivo ciclo, Materia materia) {
-		id++;
-		this.codigo = codigo;
-		this.turno = turno;
-		this.ciclo = ciclo;
-		this.materia = materia;
-	}
-
-	public Comision(Integer codigo, Materia materia, Dia dia, Turno turno) {
-		
-		id++;
-		this.codigo = codigo;
+	public Comision(Integer codigo_comision, Dia dia, Turno turno, CicloLectivo ciclo, Materia materia, Aula aula,
+			AsignacionComisionAlumno asignacionAlumno, AsignacionComisionProfe asignacionProfe) {
+		this.id = ++idComisiones;
+		this.codigo_comision = codigo_comision;
 		this.dia = dia;
 		this.turno = turno;
-	}
-
-	public Comision(Integer codigo, Materia materia) {
-		id++;
-		this.codigo = codigo;
-		this.materia = materia;
-	}
-
-	public Comision(Integer codigo, CicloLectivo ciclo, Materia materia) {
-		id++;
-		this.codigo= codigo;
 		this.ciclo = ciclo;
 		this.materia = materia;
+		this.aula = aula;
+		this.asignacionAlumno = asignacionAlumno;
+		this.asignacionProfe = asignacionProfe;
+	}
+
+	public Comision(Integer codigo_comision, Turno turno, CicloLectivo ciclo, Materia materia) {
+		this.id = ++idComisiones;
+		this.codigo_comision = codigo_comision;
+		this.turno = turno;
+		this.ciclo = ciclo;
+		this.materia = materia;
+	}
+
+	public Comision(Integer codigo_comision, Dia dia, Turno turno, Materia materia) {
+		this.id = ++idComisiones;
+		this.codigo_comision = codigo_comision;
+		this.dia = dia;
+		this.turno = turno;
+		this.materia = materia;
+	}
+
+	public Comision(Integer codigo_comision, Materia materia) {
+		this.id = ++idComisiones;
+		this.codigo_comision = codigo_comision;
+		this.materia = materia;
+	}
+
+	public Comision(Integer codigo_comision, CicloLectivo ciclo, Materia materia) {
+		this.id = ++idComisiones;
+		this.codigo_comision = codigo_comision;
+		this.ciclo = ciclo;
+		this.materia = materia;
+	}
+
+	public Comision(Integer codigoCurso) {
+		this.id = ++idComisiones;
+		this.codigo_comision=codigoCurso;
 	}
 
 	public Integer getId() {
@@ -50,12 +72,38 @@ public class Comision {
 	public Turno getTurno() {
 		return turno;
 	}
+
+	public CicloLectivo getCiclo() {
+		return ciclo;
+	}
+
+	public Materia getMateria() {
+		return materia;
+	}
+
+	public Integer getCodigo_comision() {
+		return codigo_comision;
+	}
+
+	public AsignacionComisionAlumno getAsignacionAlumno() {
+		return asignacionAlumno;
+	}
+
+	public void setAsignacionAlumno(AsignacionComisionAlumno asignacionAlumno) {
+		this.asignacionAlumno = asignacionAlumno;
+	}
+
+	public AsignacionComisionProfe getAsignacionProfe() {
+		return asignacionProfe;
+	}
+
+	public void setAsignacionProfe(AsignacionComisionProfe asignacionProfe) {
+		this.asignacionProfe = asignacionProfe;
+	}
 	
 
-	
-
-	public Integer getCodigo() {
-		return codigo;
+	public void setAula(Aula aula) {
+		this.aula = aula;
 	}
 
 	@Override
@@ -75,18 +123,11 @@ public class Comision {
 		return Objects.equals(ciclo, other.ciclo) && Objects.equals(materia, other.materia) && turno == other.turno;
 	}
 
-	public CicloLectivo getCiclo() {
-		return ciclo;
-	}
-
-	public Materia getMateria() {
-		return materia;
-	}
-
 	@Override
 	public String toString() {
-		return "Comision [id=" + id + ", dia=" + dia + ", turno=" + turno + ", ciclo=" + ciclo + ", materia=" + materia
-				+ "]";
+		return "Comision [codigo_comision=" + codigo_comision + ", dia=" + dia + ", turno=" + turno + ", ciclo=" + ciclo
+				+ ", materia=" + materia + ", aula=" + aula + ", asignacionAlumno=" + asignacionAlumno
+				+ ", asignacionProfe=" + asignacionProfe + "]";
 	}
 
 }

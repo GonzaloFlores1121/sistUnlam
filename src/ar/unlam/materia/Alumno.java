@@ -18,12 +18,12 @@ public class Alumno {
 
 
 	// Constructor innecesario
-//	public Alumno(Integer dni, String apellido, String nombre) {
-//		id++;
-//		this.nombre = nombre;
-//		this.apellido = apellido;
-//		this.dni = dni;
-//	}
+	public Alumno(Integer dni, String apellido, String nombre) {
+		id++;
+		this.nombre = nombre;
+		this.apellido = apellido;
+		this.dni = dni;
+	}
 
 	//ID estatico
 	public Alumno(String nombre, String apellido, Integer dni, LocalDate fechaNacimiento, LocalDate fechaIngreso) {

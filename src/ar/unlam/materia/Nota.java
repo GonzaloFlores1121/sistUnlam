@@ -1,17 +1,23 @@
 package ar.unlam.materia;
 
 public class Nota {
-	private static Integer id=0;
+
 	private Double valor;
+	private TipoNota tipo;
 
 	public Nota() {
-		id++;
+
 		this.valor = 0.0;
 	}
 
 	public Nota(Double valor) {
-		id++;
+
 		this.valor = valor;
+	}
+
+	public Nota(Double valor, TipoNota tipo) {
+		this.valor = valor;
+		this.tipo = tipo;
 	}
 
 	public Double getValor() {
@@ -27,7 +33,7 @@ public class Nota {
 
 	@Override
 	public String toString() {
-		return "Nota [ID "+id+ " valor=" + valor + "]";
+		return "Nota [valor=" + valor + ", tipo=" + tipo + "]";
 	}
 
 }
