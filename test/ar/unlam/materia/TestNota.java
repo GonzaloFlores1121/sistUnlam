@@ -7,7 +7,7 @@ import org.junit.Test;
 public class TestNota {
 
 	@Test
-	public void queALCrearUnaNotaSuValordeNotaPorDefectoSeaCero() {
+	public void queALCrearUnaNotaSuValordeNotaPorDefectoSeaCeroYTipoNull() {
 
 		Nota nota = new Nota();
 
@@ -15,6 +15,7 @@ public class TestNota {
 		Double vo = nota.getValor();
 
 		assertEquals(ve, vo);
+		assertNull(nota.getTipoDeNota());
 
 	}
 
@@ -46,6 +47,24 @@ public class TestNota {
 
 		assertEquals(ve, vo);
 
+	}
+	
+	@Test
+	public void queTengaUnaNotaValidaYUnTipoDeParcialValido() {
+		
+		ClaseDeNota primerParcial= ClaseDeNota.PRIMER_PARCIAL;
+		
+		Nota nota = new Nota(); // valor =0
+		Double valor = 7.0;
+		nota.registrarNota(valor, primerParcial);
+		
+		Double vo = nota.getValor();
+		ClaseDeNota tipo= nota.getTipoDeNota();
+		
+		assertEquals(valor, vo);
+		assertEquals(primerParcial, tipo);
+		
+		
 	}
 
 }

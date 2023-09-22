@@ -42,4 +42,30 @@ public class TestAula {
 		
 		assertNotEquals(uno, dos);
 	}
+	@Test
+	public void queSePuedaCrearMasAulasConMismoId() {
+		//Preparacion
+		Integer numeroDeAula=1;
+		Integer cantidadMaxDeAlumnos=30;
+		Aula uno=new Aula(numeroDeAula, cantidadMaxDeAlumnos);
+		Aula dos=new Aula(numeroDeAula, cantidadMaxDeAlumnos);
+		
+		//Ejecucion
+		Boolean resultado=uno!=null;
+		Boolean resultado2=dos!=null;
+		
+		Integer identificador=uno.getNumero();
+		Integer identificador2=dos.getNumero();
+		Boolean resultadoIds=identificador==identificador2;
+		//Prueba
+		
+		assertTrue(resultado);
+		assertTrue(resultado2);
+		assertTrue(resultadoIds);
+		assertNotNull(uno);
+		
+		assertNotNull(dos); 
+		assertEquals(uno, dos);
+		
+	}
 }
