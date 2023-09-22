@@ -13,22 +13,7 @@ public class AsignacionComisionProfe {
 		this.dniProfesor = dniProfesor;
 	}
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(codigo_comision, dniProfesor);
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		AsignacionComisionProfe other = (AsignacionComisionProfe) obj;
-		return Objects.equals(codigo_comision, other.codigo_comision) && Objects.equals(dniProfesor, other.dniProfesor);
-	}
+	
 
 	public Integer getIdComision() {
 		return idComision;
@@ -52,6 +37,28 @@ public class AsignacionComisionProfe {
 
 	public void setDniProfesor(Integer dniProfesor) {
 		this.dniProfesor = dniProfesor;
+	}
+
+
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(codigo_comision, dniProfesor, idComision);
+	}
+
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		AsignacionComisionProfe other = (AsignacionComisionProfe) obj;
+		return Objects.equals(codigo_comision, other.codigo_comision) && Objects.equals(dniProfesor, other.dniProfesor)
+				&& Objects.equals(idComision, other.idComision);
 	}
 
 	

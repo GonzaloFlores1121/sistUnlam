@@ -152,11 +152,13 @@ public class Comision {
 		return Objects.equals(id, other.id);
 	}
 
+	
+
 	@Override
 	public String toString() {
-		return "Comision [codigo_comision=" + codigo_comision + ", dia=" + dia + ", turno=" + turno + ", ciclo=" + ciclo
-				+ ", materia=" + materia + ", aula=" + aula;
-
+		return "Comision [id=" + id + ", codigo_comision=" + codigo_comision + ", dia=" + dia + ", turno=" + turno
+				+ ", ciclo=" + ciclo + ", materia=" + materia + ", aula=" + aula + ", profes=" + profes + ", alumnos="
+				+ alumnos + "]";
 	}
 
 	private Boolean existeAlumno(Alumno alumno) {

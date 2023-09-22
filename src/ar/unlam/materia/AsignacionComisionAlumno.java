@@ -93,10 +93,12 @@ public class AsignacionComisionAlumno {
 		this.notas = notas;
 	}
 
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(codigo_comision, dniAlumno);
+		return Objects.hash(codigo_comision, dniAlumno, idComision);
 	}
+
 
 	@Override
 	public boolean equals(Object obj) {
@@ -107,7 +109,8 @@ public class AsignacionComisionAlumno {
 		if (getClass() != obj.getClass())
 			return false;
 		AsignacionComisionAlumno other = (AsignacionComisionAlumno) obj;
-		return Objects.equals(codigo_comision, other.codigo_comision) && Objects.equals(dniAlumno, other.dniAlumno);
+		return Objects.equals(codigo_comision, other.codigo_comision) && Objects.equals(dniAlumno, other.dniAlumno)
+				&& Objects.equals(idComision, other.idComision);
 	}
 
 
