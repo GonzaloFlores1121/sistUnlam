@@ -134,9 +134,10 @@ public class Comision {
 		this.aula = aula;
 	}
 
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(ciclo, materia, turno);
+		return Objects.hash(id);
 	}
 
 	@Override
@@ -148,7 +149,7 @@ public class Comision {
 		if (getClass() != obj.getClass())
 			return false;
 		Comision other = (Comision) obj;
-		return Objects.equals(ciclo, other.ciclo) && Objects.equals(materia, other.materia) && turno == other.turno;
+		return Objects.equals(id, other.id);
 	}
 
 	@Override

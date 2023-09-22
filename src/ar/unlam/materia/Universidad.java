@@ -47,9 +47,8 @@ public class Universidad {
 
 	public Boolean registrarComision(Comision comision) {
 		Boolean existe = existeComision(comision);
-//		Boolean verificarCondiciones = verificarQueEsteRegistradoMateriaYCiclo(comision.getMateria(),
-//				comision.getCiclo());
-		if (!existe) {// verificarCondiciones) {
+
+		if (!existe) {
 			comisiones.add(comision);
 			return true;
 		}
@@ -404,14 +403,6 @@ public class Universidad {
 		}
 
 		return false;
-	}
-
-	public Boolean verificarQueEsteRegistradoMateriaYCiclo(Materia materia, CicloLectivo ciclo) {
-
-		Materia existeMateria = buscarMateria(materia.getCodigo_materia());
-		CicloLectivo existeCiclo = buscarCicloLectivoPorID(ciclo.getId());
-
-		return existeMateria != null && existeCiclo != null;
 	}
 
 	public Boolean verificarCorrelativasAprobadas(Integer dniAlumno, Integer codigoMateriaInscribir) {

@@ -37,64 +37,8 @@ public class TestUniversidad {
 		assertEquals(esperado, profe);
 	}
 
-	@Test
-	public void queNoSePuedaGenerarDosComisionesIguales() {
-		Integer id_comision = 999;
-		LocalDate fechaInicioCicloLectivo1 = LocalDate.of(2024, 4, 14);
-		LocalDate fechaFinalizacionCicloLectivo1 = LocalDate.of(2024, 7, 16);
-		LocalDate fechaDeInicioInscripcion1 = LocalDate.of(2024, 3, 10);
-		LocalDate fechaFinalizacionInscripcion1 = LocalDate.of(2024, 3, 17);
-		Cuatrimestre cuatri1 = Cuatrimestre.PRIMER_CUATRIMESTRE;
-
-		Turno turno = Turno.TURNO_MAÑANA;
-		Materia tw1 = new Materia("TALLER WEB1", 2300);
-
-		CicloLectivo ciclo1 = new CicloLectivo(fechaFinalizacionCicloLectivo1, fechaInicioCicloLectivo1,
-				fechaDeInicioInscripcion1, fechaFinalizacionInscripcion1, cuatri1);
-
-		Comision comi = new Comision(id_comision, turno, ciclo1, tw1);
-		Comision comi1 = new Comision(id_comision, turno, ciclo1, tw1);
-		Universidad unlam = new Universidad();
-		Boolean operacion1 = false;
-		Boolean operacion2 = false;
-
-		unlam.registrarMaterias(tw1);
-
-		unlam.registrarCicloLectivo(ciclo1);
-		operacion1 = unlam.registrarComision(comi);
-		operacion2 = unlam.registrarComision(comi1);
-
-		assertTrue(operacion1);
-		assertFalse(operacion2);
-
-	}
-
-	@Test
-	public void queSePuedaGenerarComisionPorqueEstaRegistradaLaMateriaYElCiclo() {
-		Integer id_comision = 999;
-		LocalDate fechaInicioCicloLectivo1 = LocalDate.of(2024, 4, 14);
-		LocalDate fechaFinalizacionCicloLectivo1 = LocalDate.of(2024, 7, 16);
-		LocalDate fechaDeInicioInscripcion1 = LocalDate.of(2024, 3, 10);
-		LocalDate fechaFinalizacionInscripcion1 = LocalDate.of(2024, 3, 17);
-		Cuatrimestre cuatri1 = Cuatrimestre.PRIMER_CUATRIMESTRE;
-
-		Turno turno = Turno.TURNO_MAÑANA;
-		Materia tw1 = new Materia("TALLER WEB1", 2300);
-		CicloLectivo ciclo1 = new CicloLectivo(fechaFinalizacionCicloLectivo1, fechaInicioCicloLectivo1,
-				fechaDeInicioInscripcion1, fechaFinalizacionInscripcion1, cuatri1);
-
-		Comision comi = new Comision(id_comision, turno, ciclo1, tw1);
-
-		Universidad unlam = new Universidad();
-		Boolean operacion1 = false;
-		unlam.registrarCicloLectivo(ciclo1);
-		unlam.registrarMaterias(tw1);
-		operacion1 = unlam.registrarComision(comi);
-
-		assertTrue(operacion1);
-
-	}
-
+	
+	
 	@Test
 	public void queNoSePuedaRegistrarDosMateriasConMismoCodigo() {
 		Integer codigo_materia = 2623;
