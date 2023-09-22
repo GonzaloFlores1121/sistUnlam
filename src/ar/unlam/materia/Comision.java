@@ -1,5 +1,6 @@
 package ar.unlam.materia;
 
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class Comision {
@@ -11,11 +12,10 @@ public class Comision {
 	private CicloLectivo ciclo;
 	private Materia materia;
 	private Aula aula;
-	private AsignacionComisionAlumno asignacionAlumno;
-	private AsignacionComisionProfe asignacionProfe;
+	private ArrayList<Profesor> profes;
+	private ArrayList<Alumno> alumnos;
 
-	public Comision(Integer codigo_comision, Dia dia, Turno turno, CicloLectivo ciclo, Materia materia, Aula aula,
-			AsignacionComisionAlumno asignacionAlumno, AsignacionComisionProfe asignacionProfe) {
+	public Comision(Integer codigo_comision, Dia dia, Turno turno, CicloLectivo ciclo, Materia materia, Aula aula) {
 		this.id = ++idComisiones;
 		this.codigo_comision = codigo_comision;
 		this.dia = dia;
@@ -23,8 +23,8 @@ public class Comision {
 		this.ciclo = ciclo;
 		this.materia = materia;
 		this.aula = aula;
-		this.asignacionAlumno = asignacionAlumno;
-		this.asignacionProfe = asignacionProfe;
+		this.profes=new ArrayList<>();
+		this.alumnos=new ArrayList<>();
 	}
 
 	public Comision(Integer codigo_comision, Turno turno, CicloLectivo ciclo, Materia materia) {
@@ -60,6 +60,20 @@ public class Comision {
 		this.id = ++idComisiones;
 		this.codigo_comision=codigoCurso;
 	}
+	public void inscribirProfesor(Profesor profe) {
+		if (!profes.contains(profe)) {
+			profes.add(profe);
+		}
+
+	}
+	public Boolean inscribirAlumno(Alumno alumno) {
+		Boolean existe = existeAlumno(alumno);
+		if (!existe) {
+			return alumnos.add(alumno);
+		}
+		return false;
+
+	}
 
 	public Integer getId() {
 		return id;
@@ -85,22 +99,6 @@ public class Comision {
 		return codigo_comision;
 	}
 
-	public AsignacionComisionAlumno getAsignacionAlumno() {
-		return asignacionAlumno;
-	}
-
-	public void setAsignacionAlumno(AsignacionComisionAlumno asignacionAlumno) {
-		this.asignacionAlumno = asignacionAlumno;
-	}
-
-	public AsignacionComisionProfe getAsignacionProfe() {
-		return asignacionProfe;
-	}
-
-	public void setAsignacionProfe(AsignacionComisionProfe asignacionProfe) {
-		this.asignacionProfe = asignacionProfe;
-	}
-	
 
 	public void setAula(Aula aula) {
 		this.aula = aula;
@@ -126,8 +124,17 @@ public class Comision {
 	@Override
 	public String toString() {
 		return "Comision [codigo_comision=" + codigo_comision + ", dia=" + dia + ", turno=" + turno + ", ciclo=" + ciclo
-				+ ", materia=" + materia + ", aula=" + aula + ", asignacionAlumno=" + asignacionAlumno
-				+ ", asignacionProfe=" + asignacionProfe + "]";
+				+ ", materia=" + materia + ", aula=" + aula ;
+				
+	}
+	private Boolean existeAlumno(Alumno alumno) {
+		for (Alumno a : alumnos) {
+			if (a.equals(alumno)) {
+				return true;
+			}
+
+		}
+		return false;
 	}
 
 }

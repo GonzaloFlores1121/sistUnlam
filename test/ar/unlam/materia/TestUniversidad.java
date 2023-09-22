@@ -198,10 +198,10 @@ public class TestUniversidad {
 				fechaDeInicioInscripcion, fechaFinalizacionInscripcion, cuatri);
 		Alumno alm = new Alumno(dniAlumno, "F", "G");
 		Profesor profe = new Profesor(dniProfesor, "F", "G", 0.0);
-		AsignacionComisionProfe asignacionProfe = new AsignacionComisionProfe(codigoComision, dniProfesor);
-		AsignacionComisionAlumno asignacionAlumno = new AsignacionComisionAlumno(codigoComision, dniAlumno);
-		Comision comision = new Comision(codigoComision, dia, turno, ciclo, tw1, aula, asignacionAlumno,
-				asignacionProfe);
+		Comision comision = new Comision(codigoComision, dia, turno, ciclo, tw1, aula);
+		AsignacionComisionProfe asignacionProfe = new AsignacionComisionProfe(comision.getId(),codigoComision, dniProfesor);
+		AsignacionComisionAlumno asignacionAlumno = new AsignacionComisionAlumno(comision.getId(),codigoComision, dniAlumno);
+	
 		Integer id_comision = comision.getId();
 
 		Comision esperada = null;
