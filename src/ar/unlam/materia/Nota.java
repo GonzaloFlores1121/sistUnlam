@@ -1,9 +1,15 @@
 package ar.unlam.materia;
 
 public class Nota {
+<<<<<<< HEAD
 	private static Integer id = 0;
 	private Double valor;
 	private ClaseDeNota TipoDeNota;
+=======
+
+	private Double valor;
+	private TipoNota tipo;
+>>>>>>> 26e45b5a2e55ccc2a581c750d242c4df4c8f60fb
 
 //	public Nota() {
 //		id++;
@@ -11,10 +17,15 @@ public class Nota {
 //	}
 //	
 	public Nota() {
+<<<<<<< HEAD
+=======
+
+>>>>>>> 26e45b5a2e55ccc2a581c750d242c4df4c8f60fb
 		this.valor = 0.0;
 		this.TipoDeNota = null;
 	}
 
+<<<<<<< HEAD
 	public Nota(Double nota, ClaseDeNota tipo) {
 		this.valor = nota;
 		this.TipoDeNota = tipo;
@@ -24,6 +35,17 @@ public class Nota {
 //		id++;
 //		this.valor = valor;
 //	}
+=======
+	public Nota(Double valor) {
+
+		this.valor = valor;
+	}
+
+	public Nota(Double valor, TipoNota tipo) {
+		this.valor = valor;
+		this.tipo = tipo;
+	}
+>>>>>>> 26e45b5a2e55ccc2a581c750d242c4df4c8f60fb
 
 	public Double getValor() {
 
@@ -66,7 +88,11 @@ public class Nota {
 
 	@Override
 	public String toString() {
+<<<<<<< HEAD
 		return "Nota [ID " + id + " valor=" + valor + "]";
+=======
+		return "Nota [valor=" + valor + ", tipo=" + tipo + "]";
+>>>>>>> 26e45b5a2e55ccc2a581c750d242c4df4c8f60fb
 	}
 
 }

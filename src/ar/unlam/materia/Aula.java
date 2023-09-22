@@ -9,6 +9,7 @@ public class Aula {
 	private Integer capacidadActual;
 	private final Integer CAPACIDADMAX;
 
+<<<<<<< HEAD
 	public Aula(Integer numeroDeAula, Integer capacidadActual, Integer capacidadMax) {
 		id++;
 		this.numeroDeAula = numeroDeAula;
@@ -20,6 +21,11 @@ public class Aula {
 		this.numeroDeAula = numeroDeAula;
 //		this.capacidadActual = capacidadActual;
 		this.CAPACIDADMAX = capacidadMax;
+=======
+	public Aula(Integer numeroDeAula, Integer capacidadMax) {
+		this.numeroDeAula = numeroDeAula;
+		this.capacidadMax = capacidadMax;
+>>>>>>> 26e45b5a2e55ccc2a581c750d242c4df4c8f60fb
 	}
 
 	public Integer getNumero() {
