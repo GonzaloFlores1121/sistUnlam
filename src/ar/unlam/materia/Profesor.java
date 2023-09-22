@@ -3,7 +3,7 @@ package ar.unlam.materia;
 import java.time.LocalDate;
 
 public class Profesor {
-	private static Integer id=0;
+	
 	private Integer dni;
 	private String nombre;
 	private String apellido;
@@ -12,7 +12,7 @@ public class Profesor {
 	private LocalDate fechaIngreso;
 
 	public Profesor(Integer dni, String nombre, String apellido, Double saldo) {
-		id++;
+		
 		this.dni=dni;
 		this.nombre=nombre;
 		this.apellido=apellido;
@@ -22,7 +22,7 @@ public class Profesor {
 
 	public Profesor(Integer dni, String nombre, String apellido, Double saldo, LocalDate fechaNacimiento,
 			LocalDate fechaIngreso) {
-		id++;
+		
 		this.dni = dni;
 		this.nombre = nombre;
 		this.apellido = apellido;
@@ -39,7 +39,7 @@ public class Profesor {
 
 	@Override
 	public String toString() {
-		return "Profesor [id "+id+" dni=" + dni + ", nombre=" + nombre + ", apellido=" + apellido + ", saldo=" + saldo
+		return "Profesor  dni=" + dni + ", nombre=" + nombre + ", apellido=" + apellido + ", saldo=" + saldo
 				+ ", fechaNacimiento=" + fechaNacimiento + ", fechaIngreso=" + fechaIngreso + "]";
 	}
 

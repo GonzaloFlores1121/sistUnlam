@@ -277,7 +277,7 @@ public class Universidad {
 	// si no estaba ya en el array.
 	// Tambien registra la asignacion de ComisionAlumno en el array que tiene
 	// universidad si es que se pudo inscribir.
-	public Boolean inscribirAlumnoComision(Comision comision, AsignacionComisionAlumno asignacion, Integer dniAlumno) {
+	public Boolean agregarAlumnoALaComision(Comision comision, AsignacionComisionAlumno asignacion, Integer dniAlumno) {
 		Alumno buscado = buscarAlumnoRegistrado(dniAlumno);
 		if (comision.inscribirAlumno(buscado) == true) {
 			comisionesAlumno.add(asignacion);
@@ -286,21 +286,38 @@ public class Universidad {
 		return false;
 	}
 
-	// Sobrecargaa de metodos
-	public Boolean inscribirAlumnoComisionVerificandoCapacidadAula(Integer id, Integer codigoComision,
-			Integer dniAlumno, Integer numeroAula) {
+	// Sobrecargaa de metodos para testear lo basico
+	public Boolean inscribirAlumnoComision(Integer id, Integer codigoComision, Integer dniAlumno) {
 		Comision comision = buscarComisionPorCodigoYID(codigoComision, id);
 		Alumno alumno = buscarAlumnoRegistrado(dniAlumno);
-		Boolean verificarCapacidadAula = verificarCapacidadAula(numeroAula);
-		if (comision != null && alumno != null && verificarCapacidadAula) {
-			AsignacionComisionAlumno asignacion = new AsignacionComisionAlumno(comision.getId(), codigoComision,
-					dniAlumno);
+		if (comision != null && alumno != null) {
+			AsignacionComisionAlumno asignacion = new AsignacionComisionAlumno(id, codigoComision, dniAlumno);
 
-			if (inscribirAlumnoComision(comision, asignacion, dniAlumno)) {
+			if (agregarAlumnoALaComision(comision, asignacion, dniAlumno)) {
 				return true;
 			}
 
 		}
+		return false;
+	}
+
+	// Sobrecargaa de metodos
+	public Boolean inscribirAlumnoComisionVerificandoCapacidadAula(Integer id, Integer codigoComision,
+			Integer dniAlumno) {
+		Comision comision = buscarComisionPorCodigoYID(codigoComision, id);
+		Alumno alumno = buscarAlumnoRegistrado(dniAlumno);
+		if (comision != null && alumno != null) {
+			if (verificarCapacidadAula(comision)) {
+				AsignacionComisionAlumno asignacion = new AsignacionComisionAlumno(comision.getId(), codigoComision,
+						dniAlumno);
+
+				if (agregarAlumnoALaComision(comision, asignacion, dniAlumno)) {
+					return true;
+				}
+
+			}
+		}
+
 		return false;
 	}
 
@@ -315,49 +332,12 @@ public class Universidad {
 			AsignacionComisionAlumno asignacion = new AsignacionComisionAlumno(comision.getId(), codigoComision,
 					dniAlumno);
 
-			if (inscribirAlumnoComision(comision, asignacion, dniAlumno)) {
+			if (agregarAlumnoALaComision(comision, asignacion, dniAlumno)) {
 				return true;
 			}
 
 		}
 		return false;
-	}
-
-	// Sobrecargaa de metodos para testear lo basico
-	public Boolean inscribirAlumnoComision(Integer id, Integer codigoComision, Integer dniAlumno) {
-		Comision comision = buscarComisionPorCodigoYID(codigoComision, id);
-		Alumno alumno = buscarAlumnoRegistrado(dniAlumno);
-		if (comision != null && alumno != null) {
-			AsignacionComisionAlumno asignacion = new AsignacionComisionAlumno(comision.getId(), codigoComision,
-					dniAlumno);
-
-			if (inscribirAlumnoComision(comision, asignacion, dniAlumno)) {
-				return true;
-			}
-
-		}
-		return false;
-	}
-
-	public Boolean inscribirAlumnoComision(Integer dniAlumno, Integer codigoMateriaInscripcion, Comision comision,
-			Integer codigoCurso, LocalDate fechainscripto, Integer numeroAula) {
-		Boolean operacion = false;
-
-		Boolean verificarFecha = verificarSiFechaEstaDentroDelRango(comision.getCiclo().getFechaDeInicioInscripcion(),
-				comision.getCiclo().getFechaFinalizacionInscripcion(), fechainscripto);
-		Boolean verificarMateriasCorrelativas = verificarCorrelativasAprobadas(dniAlumno, codigoMateriaInscripcion);
-
-		Boolean capacidad = verificarCapacidadAula(numeroAula);
-		if (verificarMateriasCorrelativas && capacidad && verificarFecha) {
-			AsignacionCursoAlumno asignacion = new AsignacionCursoAlumno(codigoCurso, dniAlumno);
-			cursoAlumno.add(asignacion);
-
-			Curso curso = new Curso(codigoCurso, comision, asignacion);
-			registrarCurso(curso);
-			operacion = true;
-
-		}
-		return operacion;
 	}
 
 	public Boolean inscribirAlumnoComisionConCorrelativasAprobadas(Integer idComision, Integer codigoComision,
@@ -369,7 +349,7 @@ public class Universidad {
 
 			AsignacionComisionAlumno asignacion = new AsignacionComisionAlumno(buscar.getId(), codigoComision,
 					dniAlumno);
-			if (inscribirAlumnoComision(buscar, asignacion, dniAlumno)) {
+			if (agregarAlumnoALaComision(buscar, asignacion, dniAlumno)) {
 				operacion = true;
 			}
 
@@ -377,7 +357,6 @@ public class Universidad {
 		return operacion;
 	}
 
-	// Sobrecargaa de metodos
 	public Boolean inscribirAlumnoComisionVerificandoQueNoSeSuperpongan(Integer dniAlumno, Comision comision) {
 
 		if (comision != null) {
@@ -386,7 +365,7 @@ public class Universidad {
 				registrarComision(comision);
 				AsignacionComisionAlumno asignacion = new AsignacionComisionAlumno(comision.getId(),
 						comision.getCodigo_comision(), dniAlumno);
-				if (inscribirAlumnoComision(comision, asignacion, dniAlumno)) {
+				if (agregarAlumnoALaComision(comision, asignacion, dniAlumno)) {
 					return true;
 				}
 
@@ -418,14 +397,10 @@ public class Universidad {
 
 	}
 
-	public Boolean verificarCapacidadAula(Integer numero) {
-
-		Aula a = buscarAulaPorNumero(numero);
-		if (a != null) {
-			Integer capacidadActual = a.getCapacidadActual();
-			if (capacidadActual < a.getCapacidadMax()) {
-				return true;
-			}
+	public Boolean verificarCapacidadAula(Comision comision) {
+		Integer capacidadActual = comision.obtenerCantidadDeAlumnosInscriptos();
+		if (capacidadActual < comision.getAula().getCapacidadMax()) {
+			return true;
 		}
 
 		return false;
