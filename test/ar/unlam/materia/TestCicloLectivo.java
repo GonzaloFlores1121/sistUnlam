@@ -10,7 +10,7 @@ public class TestCicloLectivo {
 	
 	@Test
 	public void queSeCreeUnCicloElectivo() {
-		Integer id1 = 1;
+//		Integer id1 = 1;
 		
 		// CicloLectivo
 		LocalDate fechaInicioCicloLectivo1 = LocalDate.of(2024, 4, 14);
@@ -20,7 +20,7 @@ public class TestCicloLectivo {
 		LocalDate fechaFinalizacionInscripcion1 = LocalDate.of(2024, 3, 17);
 		Cuatrimestre cuatri1 = Cuatrimestre.PRIMER_CUATRIMESTRE;
 		
-		CicloLectivo ciclo = new CicloLectivo(id1, fechaFinalizacionCicloLectivo1, fechaInicioCicloLectivo1,
+		CicloLectivo ciclo = new CicloLectivo( fechaFinalizacionCicloLectivo1, fechaInicioCicloLectivo1,
 				fechaDeInicioInscripcion1, fechaFinalizacionInscripcion1, cuatri1);
 
 		assertNotNull(ciclo);
