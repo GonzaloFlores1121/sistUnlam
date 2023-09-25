@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class AsignacionComisionAlumno {
-	private static Integer id = 0;
+	private Integer idComision;
 	private Integer codigo_comision;
 	private Integer dniAlumno;
 	// ideal usar el array de notas
@@ -13,13 +13,24 @@ public class AsignacionComisionAlumno {
 	private Nota parcial1;
 	private Nota parcial2;
 
-	public AsignacionComisionAlumno(Integer codigo_comision, Integer dniAlumno) {
+	public AsignacionComisionAlumno(Integer idComision,Integer codigo_comision, Integer dniAlumno) {
+		this.idComision=idComision;
 		this.codigo_comision = codigo_comision;
 		this.dniAlumno = dniAlumno;
 		this.notas = new ArrayList<>();
 	}
 	
 	
+	public Integer getIdComision() {
+		return idComision;
+	}
+
+
+	public void setIdComision(Integer idComision) {
+		this.idComision = idComision;
+	}
+
+
 	public Nota getParcial1() {
 		return parcial1;
 	}
@@ -56,9 +67,7 @@ public class AsignacionComisionAlumno {
 
 	}
 
-	public static Integer getId() {
-		return id;
-	}
+	
 
 	public Integer getCodigo_comision() {
 		return codigo_comision;
@@ -84,10 +93,12 @@ public class AsignacionComisionAlumno {
 		this.notas = notas;
 	}
 
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(codigo_comision, dniAlumno);
+		return Objects.hash(codigo_comision, dniAlumno, idComision);
 	}
+
 
 	@Override
 	public boolean equals(Object obj) {
@@ -98,7 +109,17 @@ public class AsignacionComisionAlumno {
 		if (getClass() != obj.getClass())
 			return false;
 		AsignacionComisionAlumno other = (AsignacionComisionAlumno) obj;
-		return Objects.equals(codigo_comision, other.codigo_comision) && Objects.equals(dniAlumno, other.dniAlumno);
+		return Objects.equals(codigo_comision, other.codigo_comision) && Objects.equals(dniAlumno, other.dniAlumno)
+				&& Objects.equals(idComision, other.idComision);
 	}
+
+
+	@Override
+	public String toString() {
+		return "AsignacionComisionAlumno [idComision=" + idComision + ", codigo_comision=" + codigo_comision
+				+ ", dniAlumno=" + dniAlumno + ", notas=" + notas + ", parcial1=" + parcial1 + ", parcial2=" + parcial2
+				+ "]";
+	}
+	
 
 }

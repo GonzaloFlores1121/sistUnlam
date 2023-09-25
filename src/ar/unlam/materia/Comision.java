@@ -1,5 +1,6 @@
 package ar.unlam.materia;
 
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class Comision {
@@ -11,11 +12,10 @@ public class Comision {
 	private CicloLectivo ciclo;
 	private Materia materia;
 	private Aula aula;
-	private AsignacionComisionAlumno asignacionAlumno;
-	private AsignacionComisionProfe asignacionProfe;
+	private ArrayList<Profesor> profes;
+	private ArrayList<Alumno> alumnos;
 
-	public Comision(Integer codigo_comision, Dia dia, Turno turno, CicloLectivo ciclo, Materia materia, Aula aula,
-			AsignacionComisionAlumno asignacionAlumno, AsignacionComisionProfe asignacionProfe) {
+	public Comision(Integer codigo_comision, Dia dia, Turno turno, CicloLectivo ciclo, Materia materia, Aula aula) {
 		this.id = ++idComisiones;
 		this.codigo_comision = codigo_comision;
 		this.dia = dia;
@@ -23,8 +23,8 @@ public class Comision {
 		this.ciclo = ciclo;
 		this.materia = materia;
 		this.aula = aula;
-		this.asignacionAlumno = asignacionAlumno;
-		this.asignacionProfe = asignacionProfe;
+		this.profes = new ArrayList<>();
+		this.alumnos = new ArrayList<>();
 	}
 
 	public Comision(Integer codigo_comision, Turno turno, CicloLectivo ciclo, Materia materia) {
@@ -33,6 +33,8 @@ public class Comision {
 		this.turno = turno;
 		this.ciclo = ciclo;
 		this.materia = materia;
+		this.profes = new ArrayList<>();
+		this.alumnos = new ArrayList<>();
 	}
 
 	public Comision(Integer codigo_comision, Dia dia, Turno turno, Materia materia) {
@@ -41,12 +43,16 @@ public class Comision {
 		this.dia = dia;
 		this.turno = turno;
 		this.materia = materia;
+		this.profes = new ArrayList<>();
+		this.alumnos = new ArrayList<>();
 	}
 
 	public Comision(Integer codigo_comision, Materia materia) {
 		this.id = ++idComisiones;
 		this.codigo_comision = codigo_comision;
 		this.materia = materia;
+		this.profes = new ArrayList<>();
+		this.alumnos = new ArrayList<>();
 	}
 
 	public Comision(Integer codigo_comision, CicloLectivo ciclo, Materia materia) {
@@ -54,11 +60,50 @@ public class Comision {
 		this.codigo_comision = codigo_comision;
 		this.ciclo = ciclo;
 		this.materia = materia;
+		this.profes = new ArrayList<>();
+		this.alumnos = new ArrayList<>();
 	}
 
 	public Comision(Integer codigoCurso) {
 		this.id = ++idComisiones;
-		this.codigo_comision=codigoCurso;
+		this.codigo_comision = codigoCurso;
+		this.profes = new ArrayList<>();
+		this.alumnos = new ArrayList<>();
+	}
+
+	public Comision(Integer codigo_comision, CicloLectivo ciclo, Materia materia, Aula aula) {
+		this.id = ++idComisiones;
+		this.codigo_comision = codigo_comision;
+		this.ciclo = ciclo;
+		this.materia = materia;
+		this.aula = aula;
+		this.profes = new ArrayList<>();
+		this.alumnos = new ArrayList<>();
+
+	}
+
+	public Aula getAula() {
+		return aula;
+	}
+
+	public Integer obtenerCantidadDeAlumnosInscriptos() {
+		return alumnos.size();
+	}
+
+	public void inscribirProfesor(Profesor profe) {
+		if (!profes.contains(profe)) {
+			profes.add(profe);
+		}
+
+	}
+
+	public Boolean inscribirAlumno(Alumno alumno) {
+		Boolean existe = existeAlumno(alumno);
+		if (!existe) {
+			return alumnos.add(alumno);
+		}
+		return false;
+
 	}
 
 	public Integer getId() {
@@ -85,30 +130,14 @@ public class Comision {
 		return codigo_comision;
 	}
 
-	public AsignacionComisionAlumno getAsignacionAlumno() {
-		return asignacionAlumno;
-	}
-
-	public void setAsignacionAlumno(AsignacionComisionAlumno asignacionAlumno) {
-		this.asignacionAlumno = asignacionAlumno;
-	}
-
-	public AsignacionComisionProfe getAsignacionProfe() {
-		return asignacionProfe;
-	}
-
-	public void setAsignacionProfe(AsignacionComisionProfe asignacionProfe) {
-		this.asignacionProfe = asignacionProfe;
-	}
-	
-
 	public void setAula(Aula aula) {
 		this.aula = aula;
 	}
 
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(ciclo, materia, turno);
+		return Objects.hash(id);
 	}
 
 	@Override
@@ -120,14 +149,26 @@ public class Comision {
 		if (getClass() != obj.getClass())
 			return false;
 		Comision other = (Comision) obj;
-		return Objects.equals(ciclo, other.ciclo) && Objects.equals(materia, other.materia) && turno == other.turno;
+		return Objects.equals(id, other.id);
 	}
+
+	
 
 	@Override
 	public String toString() {
-		return "Comision [codigo_comision=" + codigo_comision + ", dia=" + dia + ", turno=" + turno + ", ciclo=" + ciclo
-				+ ", materia=" + materia + ", aula=" + aula + ", asignacionAlumno=" + asignacionAlumno
-				+ ", asignacionProfe=" + asignacionProfe + "]";
+		return "Comision [id=" + id + ", codigo_comision=" + codigo_comision + ", dia=" + dia + ", turno=" + turno
+				+ ", ciclo=" + ciclo + ", materia=" + materia + ", aula=" + aula + ", profes=" + profes + ", alumnos="
+				+ alumnos + "]";
+	}
+
+	private Boolean existeAlumno(Alumno alumno) {
+		for (Alumno a : alumnos) {
+			if (a.equals(alumno)) {
+				return true;
+			}
+
+		}
+		return false;
 	}
 
 }

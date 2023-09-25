@@ -5,39 +5,35 @@ import java.util.Objects;
 
 public class Alumno {
 
-	//Datos
+	// Datos
 	private String nombre;
 	private String apellido;
 	private Integer dni;
-	//IDs
-	private static Integer id = 0;
-	private Integer indicador = 0;
-	//Fechas
+
+	// Fechas
 	private LocalDate fechaNacimiento;
 	private LocalDate fechaIngreso;
 
-
 	// Constructor innecesario
 	public Alumno(Integer dni, String apellido, String nombre) {
-		id++;
+
 		this.nombre = nombre;
 		this.apellido = apellido;
 		this.dni = dni;
 	}
 
-	//ID estatico
 	public Alumno(String nombre, String apellido, Integer dni, LocalDate fechaNacimiento, LocalDate fechaIngreso) {
-		id++;
+
 		this.nombre = nombre;
 		this.apellido = apellido;
 		this.dni = dni;
 		this.fechaNacimiento = fechaNacimiento;
 		this.fechaIngreso = fechaIngreso;
 	}
-	
-	//Id por parametro
-	public Alumno(Integer indicador,String nombre, String apellido, Integer dni, LocalDate fechaNacimiento, LocalDate fechaIngreso) {
-		this.indicador=indicador;
+
+	public Alumno(Integer indicador, String nombre, String apellido, Integer dni, LocalDate fechaNacimiento,
+			LocalDate fechaIngreso) {
+
 		this.nombre = nombre;
 		this.apellido = apellido;
 		this.dni = dni;
@@ -70,10 +66,6 @@ public class Alumno {
 		this.nombre = nombre;
 	}
 
-	public static Integer getId() {
-		return id;
-	}
-
 	public LocalDate getFechaNacimiento() {
 		return fechaNacimiento;
 	}
@@ -82,24 +74,12 @@ public class Alumno {
 		return fechaIngreso;
 	}
 
-	public static void setId(Integer id) {
-		Alumno.id = id;
-	}
-
 	public void setFechaNacimiento(LocalDate fechaNacimiento) {
 		this.fechaNacimiento = fechaNacimiento;
 	}
 
 	public void setFechaIngreso(LocalDate fechaIngreso) {
 		this.fechaIngreso = fechaIngreso;
-	}
-
-	public Integer getIndicador() {
-		return indicador;
-	}
-
-	public void setIndicador(Integer indicador) {
-		this.indicador = indicador;
 	}
 
 	@Override
@@ -122,7 +102,7 @@ public class Alumno {
 
 	@Override
 	public String toString() {
-		return "Alumno [ID " + id + " nombre=" + nombre + ", apellido=" + apellido + ", dni=" + dni
+		return "Alumno   nombre=" + nombre + ", apellido=" + apellido + ", dni=" + dni
 				+ ", fechaNacimiento=" + fechaNacimiento + ", fechaIngreso=" + fechaIngreso + "]";
 	}
 
