@@ -196,10 +196,13 @@ public class Universidad {
 		Materia correlativa = buscarMateria(codigoMateriaCorrelativa);
 
 		if (materia != null && correlativa != null) {
-			materia.removerCorrelativa(codigoMateriaCorrelativa);
-			return true;
+			if (materia.getCodigoCorrelativa().contains(correlativa.getCodigo_materia())) {
+
+				materia.removerCorrelativa(codigoMateriaCorrelativa);
+				return true;
+			}
 		}
-		return null;
+		return false;
 	}
 
 	public Boolean asignarAulaAComision(Integer id, Integer codigoComision, Aula aula) {
@@ -494,5 +497,34 @@ public class Universidad {
 			return true;
 		}
 		return false;
+	}
+
+	public Boolean registrarNota(Integer idComision, Integer codigoComision1, Integer dni, Nota nota) {
+		Boolean resultado = false;
+		Comision comision = buscarComisionPorCodigoYID(codigoComision1, idComision);
+		if (comision != null) {
+			ArrayList<Integer> correlativas = comision.getMateria().getCodigoCorrelativa();
+			if (correlativas.size() == 0) {
+				AsignacionComisionAlumno asignacion = buscarAsignacionAlumnoComision(idComision, codigoComision1, dni);
+				if (asignacion != null) {
+					Boolean operacion = asignacion.agregarParcial(nota);
+					if (operacion) {
+						resultado = true;
+					}
+				}
+			} else {
+				// si tiene mas correlativas que busque y vea si estan aprobadas
+			}
+		}
+
+		return resultado;
+	}
+
+	public Nota buscarNotaPorTipo(Integer idComision, Integer codigoComision1, Integer dni, TipoNota tipo) {
+		AsignacionComisionAlumno asignacion = buscarAsignacionAlumnoComision(idComision, codigoComision1, dni);
+		if (asignacion != null) {
+			return asignacion.obtenerNota(tipo);
+		}
+		return null;
 	}
 }
