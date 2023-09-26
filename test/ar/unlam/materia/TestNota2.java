@@ -71,21 +71,21 @@ public class TestNota2 {
 //
 //	}
 	 
-//	@Test
-//	public void queAlAsignarUnValorQueNoEsteEntreUnoYDiezNoSeLeAsigneELValorALaNotaNiElTipo() {
-//		
-//		Nota nota = new Nota(); // valor =0
-//		
-//		Double valor = 11.0;
-//		ClaseDeNota parcial=ClaseDeNota.values()[1];
-//		nota.asignarValor(valor); // valor = 0
-//		nota.asignarTipoDeNota(parcial);
-//		Double ve = 0.0;
-//		Double vo = nota.getValor();
-//		
-//		assertEquals(ve, vo);
-//		
-//	}
+	@Test
+	public void queAlAsignarUnValorQueNoEsteEntreUnoYDiezNoSeLeAsigneELValorALaNotaNiElTipo() {
+		
+		Nota nota = new Nota(); // valor =0
+		
+		Double valor = 11.0;
+		ClaseDeNota parcial=ClaseDeNota.values()[1];
+		nota.asignarValor(valor); // valor = 0
+		nota.asignarTipoDeNota(parcial);
+		Double ve = 0.0;
+		Double vo = nota.getValor();
+		
+		assertEquals(ve, vo);
+		
+	}
 	
 	@Test
 	public void queTengaUnaNotaValidaYUnTipoDeParcialValido() {

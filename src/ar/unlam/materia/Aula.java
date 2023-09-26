@@ -3,17 +3,11 @@ package ar.unlam.materia;
 import java.util.Objects;
 
 public class Aula {
-<<<<<<< HEAD
 	private static Integer id=0;
 	
 	private Integer numeroDeAula;
 	private Integer capacidadActual;
 	private final Integer CAPACIDADMAX;
-=======
-
-	private Integer numeroDeAula;
-	private final Integer capacidadMax;
->>>>>>> main
 
 	public Aula(Integer numeroDeAula, Integer capacidadActual, Integer capacidadMax) {
 		id++;
@@ -27,17 +21,12 @@ public class Aula {
 //		this.capacidadActual = capacidadActual;
 		this.CAPACIDADMAX = capacidadMax;
 	}
-<<<<<<< HEAD
-	
-=======
->>>>>>> main
 
 	public Integer getNumero() {
 		return numeroDeAula;
 	}
 
 	public Integer getCapacidadMax() {
-<<<<<<< HEAD
 		return CAPACIDADMAX;
 	}
 	
@@ -47,9 +36,6 @@ public class Aula {
 
 	public Integer getCapacidadActual() {
 		return capacidadActual;
-=======
-		return capacidadMax;
->>>>>>> main
 	}
 
 	@Override
@@ -71,11 +57,7 @@ public class Aula {
 
 	@Override
 	public String toString() {
-<<<<<<< HEAD
-		return "Aula [ID "+id+ " numero=" + numeroDeAula + ", capacidadMax=" + CAPACIDADMAX + "]";
-=======
-		return "Aula [numeroDeAula=" + numeroDeAula + ", capacidadMax=" + capacidadMax + "]";
->>>>>>> main
+		return "Aula [numeroDeAula=" + numeroDeAula + ", capacidadMax=" + CAPACIDADMAX + "]";
 	}
 
 
