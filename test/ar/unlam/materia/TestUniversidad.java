@@ -325,7 +325,7 @@ public class TestUniversidad {
 
 		Nota parcial1 = new Nota(7.5, TipoNota.PARCIAL_UNO);
 		Nota parcial2 = new Nota(9.5, TipoNota.PARCIAL_DOS);
-		Nota parcialError = new Nota(2.0, TipoNota.PARCIAL_UNO);
+		Nota parcialError = new Nota(2.0, TipoNota.PARCIAL_UNO);//corregir con clases de nota
 		Integer idComision1 = comision1.getId();
 		Integer idComision2 = comision2.getId();
 		Integer idComision3 = comision3.getId();
