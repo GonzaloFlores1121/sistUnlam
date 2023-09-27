@@ -29,8 +29,10 @@ public class Universidad {
 
 	public Boolean registrarAsignacionComisionProfe(AsignacionComisionProfe asignacion) {
 		Boolean existe = existeAsignacionComisionProfe(asignacion);
+
 		if (!existe) {
 			comisionesProfe.add(asignacion);
+
 			return true;
 		}
 		return false;
@@ -501,22 +503,39 @@ public class Universidad {
 
 	public Boolean registrarNota(Integer idComision, Integer codigoComision1, Integer dni, Nota nota) {
 		Boolean resultado = false;
+		// Se busca la comision para obtener la materia
 		Comision comision = buscarComisionPorCodigoYID(codigoComision1, idComision);
 		if (comision != null) {
 			ArrayList<Integer> correlativas = comision.getMateria().getCodigoCorrelativa();
+			AsignacionComisionAlumno asignacion = buscarAsignacionAlumnoComision(idComision, codigoComision1, dni);
+			// Si la materia no tiene correlativas entra en este if
 			if (correlativas.size() == 0) {
-				AsignacionComisionAlumno asignacion = buscarAsignacionAlumnoComision(idComision, codigoComision1, dni);
+
 				if (asignacion != null) {
-					Boolean operacion = asignacion.agregarParcial(nota);
-					if (operacion) {
+
+					if (asignacion.agregarParcial(nota)) {
 						resultado = true;
 					}
 				}
-			} else {
 				// si tiene mas correlativas que busque y vea si estan aprobadas
+			} else {
+				
+				if (verificarCorrelativasAprobadas(dni, comision.getMateria().getCodigo_materia())) {
+
+					// Si no tiene las correlativas aprobadas,las condiciones paraa sus notas seran
+					// ded 1-6,si es >6 su nota se seteara en 6
+					// Si la nota es <,se seteara la correspondiente
+				 if (nota.getValor() > 6) {
+						nota.setValor(6.0);
+						if(asignacion.agregarParcial(nota));
+						resultado=true;
+					} else if (nota.getValor() <= 6) {
+						if(asignacion.agregarParcial(nota));
+						resultado=true;
+					}
+				}
 			}
 		}
-
 		return resultado;
 	}
 

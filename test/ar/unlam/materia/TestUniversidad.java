@@ -101,6 +101,7 @@ public class TestUniversidad {
 
 		operacion = unlam.registrarCicloLectivo(ciclo);
 		operacion1 = unlam.registrarCicloLectivo(ciclo2);
+		
 
 		assertTrue(operacion);
 		assertFalse(operacion1);
@@ -786,35 +787,35 @@ public class TestUniversidad {
 
 	}
 
-//	@Test
-//	public void queSePuedaRegistrarUnaNotaEnAsignacionComisionAlumno() {
-//		Alumno alumno = new Alumno(1234, "f", "g");
-//		Integer codigoMateria1 = 2500, codigoMateria2 = 2627, codigoMateria3 = 4321, codigoComision2 = 2900,
-//				codigoComision1 = 2626;
-//		Materia pb1 = new Materia("pb1", codigoMateria1);
-//		// Materia pb2 = new Materia("Programacion basica 2", codigoMateria1);
-//		// Materia tw1 = new Materia("Programacion Web 1", codigoMateria2);
-//		// Materia bdd1= new Materia("Base de datos 1", codigoMateria3);
-//
-//		Comision comision1 = new Comision(codigoComision1, Dia.JUEVES, Turno.TURNO_MAÑANA, pb1);
-//		Integer idComision = comision1.getId();
-//		Universidad unlam = new Universidad();
-//
-//		Nota nota = new Nota(10.0, TipoNota.PARCIAL_UNO);
-//
-//		unlam.registrarAlumno(alumno);
-//		unlam.registrarMaterias(pb1);
-//		unlam.registrarComision(comision1);
-//		unlam.inscribirAlumnoComision(idComision, codigoComision1, 1234);
-//
-//		Boolean operacion = unlam.registrarNota(idComision, codigoComision1, 1234, nota);
-//
-//		TipoNota tipo = TipoNota.PARCIAL_UNO;
-//		Nota notaBuscada = unlam.buscarNotaPorTipo(idComision, codigoComision1, 1234, tipo);
-//
-//		assertNotNull(notaBuscada);
-//		assertTrue(operacion);
-//
-//	}
+	@Test
+	public void queSePuedaRegistrarUnaNotaEnAsignacionComisionAlumno() {
+		Alumno alumno = new Alumno(1234, "f", "g");
+		Integer codigoMateria1 = 2500, codigoMateria2 = 2627, codigoMateria3 = 4321, codigoComision2 = 2900,
+				codigoComision1 = 2626;
+		Materia pb1 = new Materia("pb1", codigoMateria1);
+		// Materia pb2 = new Materia("Programacion basica 2", codigoMateria1);
+		// Materia tw1 = new Materia("Programacion Web 1", codigoMateria2);
+		// Materia bdd1= new Materia("Base de datos 1", codigoMateria3);
+
+		Comision comision1 = new Comision(codigoComision1, Dia.JUEVES, Turno.TURNO_MAÑANA, pb1);
+		Integer idComision = comision1.getId();
+		Universidad unlam = new Universidad();
+
+		Nota nota = new Nota(10.0, TipoNota.PARCIAL_UNO);
+
+		unlam.registrarAlumno(alumno);
+		unlam.registrarMaterias(pb1);
+		unlam.registrarComision(comision1);
+		unlam.inscribirAlumnoComision(idComision, codigoComision1, 1234);
+
+		Boolean operacion = unlam.registrarNota(idComision, codigoComision1, 1234, nota);
+
+		TipoNota tipo = TipoNota.PARCIAL_UNO;
+		Nota notaBuscada = unlam.buscarNotaPorTipo(idComision, codigoComision1, 1234, tipo);
+
+		assertNotNull(notaBuscada);
+		assertTrue(operacion);
+
+	}
 
 }
