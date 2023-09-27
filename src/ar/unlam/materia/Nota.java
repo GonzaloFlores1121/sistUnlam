@@ -5,6 +5,7 @@ public class Nota {
 	private Integer id;
 	private Double valor;
 	private TipoNota tipo;
+	private Boolean esParcial1;
 
 	public Nota() {
 		id=++idNota;
@@ -22,6 +23,23 @@ public class Nota {
 		this.tipo = tipo;
 	}
 
+
+	public Nota(Double valor, TipoNota tipo, Boolean esParcial1) {
+		id=++idNota;
+		this.valor = valor;
+		this.tipo = tipo;
+		this.esParcial1 = esParcial1;
+	}
+	
+
+	public Boolean getEsParcial1() {
+		return esParcial1;
+	}
+
+	public void setEsParcial1(Boolean esParcial1) {
+		this.esParcial1 = esParcial1;
+	}
+
 	public Double getValor() {
 
 		return this.valor;
@@ -32,7 +50,8 @@ public class Nota {
 		if (valor >= 1 && valor <= 10)
 			this.valor = valor;
 	}
-
+	
+	
 	
 	public TipoNota getTipo() {
 		return tipo;

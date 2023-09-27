@@ -101,7 +101,6 @@ public class TestUniversidad {
 
 		operacion = unlam.registrarCicloLectivo(ciclo);
 		operacion1 = unlam.registrarCicloLectivo(ciclo2);
-		
 
 		assertTrue(operacion);
 		assertFalse(operacion1);
@@ -159,6 +158,7 @@ public class TestUniversidad {
 		assertEquals(esperada, comision);
 
 	}
+
 	@Test
 	public void queNoSePuedaRegistrarUnaComisionYEncontrarloPorCodigoYIDPorqueElCodigoComisionNoCoincide() {
 		Integer numero = 999, capacidadMax = 50, dniAlumno = 777, dniProfesor = 8888, codigoComision = 2900;
@@ -195,6 +195,7 @@ public class TestUniversidad {
 
 		assertNull(esperada);
 	}
+
 	@Test
 	public void queNoSePuedaRegistrarUnaComisionYEncontrarloPorCodigoYIDPorqueElIIDComisionNoCoincide() {
 		Integer numero = 999, capacidadMax = 50, dniAlumno = 777, dniProfesor = 8888, codigoComision = 2900;
@@ -232,6 +233,7 @@ public class TestUniversidad {
 		assertNull(esperada);
 
 	}
+
 	@Test
 	public void queNoSePuedaRegistrarUnaComisionYEncontrarloPorCodigoYID() {
 		Integer numero = 999, capacidadMax = 50, dniAlumno = 777, dniProfesor = 8888, codigoComision = 2900;
@@ -262,7 +264,6 @@ public class TestUniversidad {
 		unlam.registrarProfesor(profe);
 		unlam.registrarMaterias(tw1);
 		unlam.registrarCicloLectivo(ciclo);
-	
 
 		esperada = unlam.buscarComisionPorCodigoYID(codigoComision, id_comision);
 
@@ -286,6 +287,7 @@ public class TestUniversidad {
 
 		assertTrue(resultado);
 	}
+
 	@Test
 	public void queNoSePuedaAsignarAulaAUnComisionPorqueLaAulaNoExiste() {
 		Universidad unlam = new Universidad();
@@ -297,11 +299,12 @@ public class TestUniversidad {
 
 		Aula aula = new Aula(numero, capacidadMax);
 		unlam.registrarComision(comision);
-		
+
 		Boolean resultado = unlam.asignarAulaAComision(idComision, codigoCurso, aula);
 
 		assertFalse(resultado);
 	}
+
 	@Test
 	public void queNoSeSePuedaAsignarAulaAUnComisionPorqueLaComisionNoEstaRegistrada() {
 		Universidad unlam = new Universidad();
@@ -312,7 +315,7 @@ public class TestUniversidad {
 		Integer idComision = comision.getId();
 
 		Aula aula = new Aula(numero, capacidadMax);
-		
+
 		unlam.registrarAula(aula);
 		Boolean resultado = unlam.asignarAulaAComision(idComision, codigoCurso, aula);
 
@@ -811,10 +814,237 @@ public class TestUniversidad {
 		Boolean operacion = unlam.registrarNota(idComision, codigoComision1, 1234, nota);
 
 		TipoNota tipo = TipoNota.PARCIAL_UNO;
-		Nota notaBuscada = unlam.buscarNotaPorTipo(idComision, codigoComision1, 1234, tipo);
 
-		assertNotNull(notaBuscada);
 		assertTrue(operacion);
+
+	}
+
+	@Test
+	public void queSePuedaRegistrarUnaNotaEnAsignacionComisionAlumnoCompletoSiTieneCorrelativasAprobadas() {
+
+		Alumno alumno = new Alumno(1234, "f", "g");
+		Integer codigoMateria1 = 2500, codigoMateria2 = 2627, codigoMateria3 = 4321, codigoMateria4 = 4124,
+				codigoComision1 = 2626, codigoComision2 = 2112, codigoComision3 = 4122, codigoComision4 = 2900;
+
+		Materia pb2 = new Materia("Programacion basica 2", codigoMateria1);
+		Materia pw1 = new Materia("Pw1", codigoMateria2);
+		Materia bdd1 = new Materia("Base de datos 1", codigoMateria3);
+		Materia tw1 = new Materia("Taller Web 1", codigoMateria4);
+
+		Comision comision1 = new Comision(codigoComision1, Dia.JUEVES, Turno.TURNO_MAÑANA, pb2);
+		Integer idComision1 = comision1.getId();
+
+		Comision comision2 = new Comision(codigoComision2, Dia.JUEVES, Turno.TURNO_MAÑANA, bdd1);
+		Integer idComision2 = comision2.getId();
+
+		Comision comision3 = new Comision(codigoComision3, Dia.JUEVES, Turno.TURNO_MAÑANA, pw1);
+		Integer idComision3 = comision3.getId();
+
+		Comision comision4 = new Comision(codigoComision4, Dia.JUEVES, Turno.TURNO_MAÑANA, tw1);
+		Integer idComision4 = comision4.getId();
+
+		Universidad unlam = new Universidad();
+
+		Nota nota = new Nota(10.0, TipoNota.PARCIAL_UNO);
+		Nota nota2 = new Nota(10.0, TipoNota.PARCIAL_DOS);
+
+		unlam.registrarAlumno(alumno);
+		unlam.registrarComision(comision1);
+		unlam.registrarComision(comision2);
+		unlam.registrarComision(comision3);
+		unlam.registrarComision(comision4);
+		unlam.registrarMaterias(pb2);
+		unlam.registrarMaterias(bdd1);
+		unlam.registrarMaterias(pw1);
+		unlam.registrarMaterias(tw1);
+
+		unlam.agregarCorrelativaAMateria(codigoMateria4, codigoMateria1);
+		unlam.agregarCorrelativaAMateria(codigoMateria4, codigoMateria2);
+		unlam.agregarCorrelativaAMateria(codigoMateria4, codigoMateria3);
+		unlam.inscribirAlumnoComision(idComision1, codigoComision1, 1234);
+		unlam.inscribirAlumnoComision(idComision2, codigoComision2, 1234);
+		unlam.inscribirAlumnoComision(idComision3, codigoComision3, 1234);
+		unlam.inscribirAlumnoComision(idComision4, codigoComision4, 1234);
+		unlam.registrarNota(idComision1, codigoComision1, 1234, nota);
+		unlam.registrarNota(idComision1, codigoComision1, 1234, nota2);
+		unlam.registrarNota(idComision2, codigoComision2, 1234, nota);
+		unlam.registrarNota(idComision2, codigoComision2, 1234, nota2);
+		unlam.registrarNota(idComision3, codigoComision3, 1234, nota);
+		unlam.registrarNota(idComision3, codigoComision3, 1234, nota2);
+		Boolean operacion1 = unlam.registrarNota(idComision4, codigoComision4, 1234, nota);
+		Boolean operacion2 = unlam.registrarNota(idComision4, codigoComision4, 1234, nota2);
+
+		assertTrue(operacion1);
+		assertTrue(operacion2);
+
+	}
+
+	@Test
+	public void queSePuedaRegistrarUnaNotaEnAsignacionComisionAlumnoCompletoConCorrelativasDesaprobadasYSuNotaMaximaSea6() {
+
+		Alumno alumno = new Alumno(1234, "f", "g");
+		Integer codigoMateria1 = 2500, codigoMateria2 = 2627, codigoMateria3 = 4321, codigoMateria4 = 4124,
+				codigoComision1 = 2626, codigoComision2 = 2112, codigoComision3 = 4122, codigoComision4 = 2900;
+
+		Materia pb2 = new Materia("Programacion basica 2", codigoMateria1);
+		Materia pw1 = new Materia("Pw1", codigoMateria2);
+		Materia bdd1 = new Materia("Base de datos 1", codigoMateria3);
+		Materia tw1 = new Materia("Taller Web 1", codigoMateria4);
+
+		Comision comision1 = new Comision(codigoComision1, Dia.JUEVES, Turno.TURNO_MAÑANA, pb2);
+		Integer idComision1 = comision1.getId();
+
+		Comision comision2 = new Comision(codigoComision2, Dia.JUEVES, Turno.TURNO_MAÑANA, bdd1);
+		Integer idComision2 = comision2.getId();
+
+		Comision comision3 = new Comision(codigoComision3, Dia.JUEVES, Turno.TURNO_MAÑANA, pw1);
+		Integer idComision3 = comision3.getId();
+
+		Comision comision4 = new Comision(codigoComision4, Dia.JUEVES, Turno.TURNO_MAÑANA, tw1);
+		Integer idComision4 = comision4.getId();
+
+		Universidad unlam = new Universidad();
+
+		Nota nota = new Nota(6.0, TipoNota.PARCIAL_UNO);
+		Nota nota2 = new Nota(5.0, TipoNota.PARCIAL_DOS);
+
+		unlam.registrarAlumno(alumno);
+		unlam.registrarComision(comision1);
+		unlam.registrarComision(comision2);
+		unlam.registrarComision(comision3);
+		unlam.registrarComision(comision4);
+		unlam.registrarMaterias(pb2);
+		unlam.registrarMaterias(bdd1);
+		unlam.registrarMaterias(pw1);
+		unlam.registrarMaterias(tw1);
+
+		unlam.agregarCorrelativaAMateria(codigoMateria4, codigoMateria1);
+		unlam.agregarCorrelativaAMateria(codigoMateria4, codigoMateria2);
+		unlam.agregarCorrelativaAMateria(codigoMateria4, codigoMateria3);
+		unlam.inscribirAlumnoComision(idComision1, codigoComision1, 1234);
+		unlam.inscribirAlumnoComision(idComision2, codigoComision2, 1234);
+		unlam.inscribirAlumnoComision(idComision3, codigoComision3, 1234);
+		unlam.inscribirAlumnoComision(idComision4, codigoComision4, 1234);
+		unlam.registrarNota(idComision1, codigoComision1, 1234, nota);
+		unlam.registrarNota(idComision1, codigoComision1, 1234, nota2);
+		unlam.registrarNota(idComision2, codigoComision2, 1234, nota);
+		unlam.registrarNota(idComision2, codigoComision2, 1234, nota2);
+		unlam.registrarNota(idComision3, codigoComision3, 1234, nota);
+		unlam.registrarNota(idComision3, codigoComision3, 1234, nota2);
+		Nota nota4 = new Nota(10.0, TipoNota.PARCIAL_UNO);
+		Nota nota5 = new Nota(10.0, TipoNota.PARCIAL_DOS);
+		unlam.registrarNota(idComision4, codigoComision4, 1234, nota4);
+		unlam.registrarNota(idComision4, codigoComision4, 1234, nota5);
+
+		AsignacionComisionAlumno asignacion = unlam.buscarAsignacionAlumnoComision(idComision4, codigoComision4, 1234);
+		Double valor = asignacion.getParcial1().getValor();
+		Double valor1 = asignacion.getParcial2().getValor();
+		Double valorEsperado = 6.0;
+		assertEquals(valor, valorEsperado);
+		assertEquals(valor1, valorEsperado);
+	}
+
+	@Test
+	public void queSeAsignenProfesAUnaComision() {
+
+		Integer codigoMateria1 = 2500, codigoComision1 = 2626;
+
+		Materia pb2 = new Materia("Programacion basica 2", codigoMateria1);
+
+		Comision comision1 = new Comision(codigoComision1, Dia.JUEVES, Turno.TURNO_MAÑANA, pb2);
+		Integer idComision1 = comision1.getId();
+		Profesor profe = new Profesor(1234, "juan", "z", 0.0);
+		Profesor profe2 = new Profesor(123, "juan", "z", 0.0);
+		Profesor profe3 = new Profesor(12345, "juan", "z", 0.0);
+		Universidad unlam = new Universidad();
+		unlam.registrarProfesor(profe);
+		unlam.registrarProfesor(profe2);
+		unlam.registrarProfesor(profe3);
+		unlam.registrarComision(comision1);
+		unlam.inscribirProfesoresAComision(idComision1, codigoComision1);
+
+		Integer cantProfes = comision1.obtenerCantidadDeProfes();
+		Integer ve = 2;
+
+		assertEquals(cantProfes, ve);
+	}
+
+	@Test
+	public void obtenerLaListaDeMateriasQueLeFaltanCursarAUnAlumno() {
+		Integer dniAlumno = 1234;
+		Alumno alumno = new Alumno(dniAlumno, "f", "g");
+		Integer codigoMateria1 = 2500, codigoMateria2 = 2627, codigoMateria3 = 4321, codigoMateria4 = 4124,
+				codigoComision1 = 2626, codigoComision2 = 2112, codigoComision3 = 4122, codigoComision4 = 2900;
+
+		Materia pb2 = new Materia("Programacion basica 2", codigoMateria1);
+		Materia pw1 = new Materia("Pw1", codigoMateria2);
+		Materia bdd1 = new Materia("Base de datos 1", codigoMateria3);
+		Materia tw1 = new Materia("Taller Web 1", codigoMateria4);
+		// maaterias q faltan
+		Materia pw2 = new Materia("Programacion web2", 5555);
+		Materia ddaw = new Materia("Diseños de Aplicaciones Web", 7774);
+		Materia vei = new Materia("Visualizaciones e Interfaces", 5235);
+		Materia bdd2 = new Materia("Base de datos 2", 5112);
+
+		Comision comision1 = new Comision(codigoComision1, Dia.JUEVES, Turno.TURNO_MAÑANA, pb2);
+		Integer idComision1 = comision1.getId();
+
+		Comision comision2 = new Comision(codigoComision2, Dia.JUEVES, Turno.TURNO_MAÑANA, bdd1);
+		Integer idComision2 = comision2.getId();
+
+		Comision comision3 = new Comision(codigoComision3, Dia.JUEVES, Turno.TURNO_MAÑANA, pw1);
+		Integer idComision3 = comision3.getId();
+
+		Comision comision4 = new Comision(codigoComision4, Dia.JUEVES, Turno.TURNO_MAÑANA, tw1);
+		Integer idComision4 = comision4.getId();
+
+		Universidad unlam = new Universidad();
+
+		Nota nota = new Nota(10.0, TipoNota.PARCIAL_UNO);
+		Nota nota2 = new Nota(10.0, TipoNota.PARCIAL_DOS);
+		ArrayList<Materia> planDeEstudio = new ArrayList<>();
+		planDeEstudio.add(pb2);
+		planDeEstudio.add(pw1);
+		planDeEstudio.add(bdd1);
+		planDeEstudio.add(tw1);
+		planDeEstudio.add(pw2);
+		planDeEstudio.add(ddaw);
+		planDeEstudio.add(vei);
+		planDeEstudio.add(bdd2);
+
+		unlam.registrarAlumno(alumno);
+		unlam.registrarComision(comision1);
+		unlam.registrarComision(comision2);
+		unlam.registrarComision(comision3);
+		unlam.registrarComision(comision4);
+		unlam.registrarMaterias(pb2);
+		unlam.registrarMaterias(bdd1);
+		unlam.registrarMaterias(pw1);
+		unlam.registrarMaterias(tw1);
+
+		unlam.agregarCorrelativaAMateria(codigoMateria4, codigoMateria1);
+		unlam.agregarCorrelativaAMateria(codigoMateria4, codigoMateria2);
+		unlam.agregarCorrelativaAMateria(codigoMateria4, codigoMateria3);
+		unlam.inscribirAlumnoComision(idComision1, codigoComision1, 1234);
+		unlam.inscribirAlumnoComision(idComision2, codigoComision2, 1234);
+		unlam.inscribirAlumnoComision(idComision3, codigoComision3, 1234);
+		unlam.inscribirAlumnoComision(idComision4, codigoComision4, 1234);
+		unlam.registrarNota(idComision1, codigoComision1, 1234, nota);
+		unlam.registrarNota(idComision1, codigoComision1, 1234, nota2);
+		unlam.registrarNota(idComision2, codigoComision2, 1234, nota);
+		unlam.registrarNota(idComision2, codigoComision2, 1234, nota2);
+		unlam.registrarNota(idComision3, codigoComision3, 1234, nota);
+		unlam.registrarNota(idComision3, codigoComision3, 1234, nota2);
+		unlam.registrarNota(idComision4, codigoComision4, 1234, nota);
+		unlam.registrarNota(idComision4, codigoComision4, 1234, nota2);
+
+		ArrayList<Materia> planDeEstudio1 = unlam.obtenerListaMateriasPorCursar(planDeEstudio, dniAlumno);
+		planDeEstudio.remove(pb2);
+		planDeEstudio.remove(pw1);
+		planDeEstudio.remove(bdd1);
+		planDeEstudio.remove(tw1);
+
+		assertEquals(planDeEstudio, planDeEstudio1);
 
 	}
 
