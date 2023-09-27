@@ -86,6 +86,10 @@ public class Comision {
 		return aula;
 	}
 
+	public Integer obtenerCantidadDeProfes() {
+		return profes.size();
+	}
+
 	public Integer obtenerCantidadDeAlumnosInscriptos() {
 		return alumnos.size();
 	}
@@ -134,7 +138,6 @@ public class Comision {
 		this.aula = aula;
 	}
 
-
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
@@ -151,8 +154,6 @@ public class Comision {
 		Comision other = (Comision) obj;
 		return Objects.equals(id, other.id);
 	}
-
-	
 
 	@Override
 	public String toString() {

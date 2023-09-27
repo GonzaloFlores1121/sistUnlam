@@ -7,50 +7,46 @@ public class AsignacionComisionAlumno {
 	private Integer idComision;
 	private Integer codigo_comision;
 	private Integer dniAlumno;
-	// ideal usar el array de notas
-	private ArrayList<Nota> notas;
+
 	// pongo los parciales de una para hacer mas facil los test que ya tenia
 	private Nota parcial1;
 	private Nota parcial2;
+	
 
-	public AsignacionComisionAlumno(Integer idComision,Integer codigo_comision, Integer dniAlumno) {
-		this.idComision=idComision;
+	public AsignacionComisionAlumno(Integer idComision, Integer codigo_comision, Integer dniAlumno) {
+		this.idComision = idComision;
 		this.codigo_comision = codigo_comision;
 		this.dniAlumno = dniAlumno;
-		this.notas = new ArrayList<>();
+
 	}
-	
-	
+
 	public Integer getIdComision() {
 		return idComision;
 	}
-
 
 	public void setIdComision(Integer idComision) {
 		this.idComision = idComision;
 	}
 
-
 	public Nota getParcial1() {
 		return parcial1;
 	}
-
 
 	public Nota getParcial2() {
 		return parcial2;
 	}
 
-
-	//Creado para testear solamente
 	public void setParcial1(Nota parcial1) {
+
 		this.parcial1 = parcial1;
+
 	}
 
-	//Creado para testear solamente
 	public void setParcial2(Nota parcial2) {
-		this.parcial2 = parcial2;
-	}
 
+		this.parcial2 = parcial2;
+
+	}
 
 	public void calificarParcial1(Double nota) {
 
@@ -62,12 +58,6 @@ public class AsignacionComisionAlumno {
 		this.parcial2.asignarValor(nota);
 
 	}
-
-	public void agregarParcial(Nota nota) {
-
-	}
-
-	
 
 	public Integer getCodigo_comision() {
 		return codigo_comision;
@@ -85,20 +75,10 @@ public class AsignacionComisionAlumno {
 		this.dniAlumno = dniAlumno;
 	}
 
-	public ArrayList<Nota> getNotas() {
-		return notas;
-	}
-
-	public void setNotas(ArrayList<Nota> notas) {
-		this.notas = notas;
-	}
-
-
 	@Override
 	public int hashCode() {
 		return Objects.hash(codigo_comision, dniAlumno, idComision);
 	}
-
 
 	@Override
 	public boolean equals(Object obj) {
@@ -113,13 +93,11 @@ public class AsignacionComisionAlumno {
 				&& Objects.equals(idComision, other.idComision);
 	}
 
-
 	@Override
 	public String toString() {
 		return "AsignacionComisionAlumno [idComision=" + idComision + ", codigo_comision=" + codigo_comision
-				+ ", dniAlumno=" + dniAlumno + ", notas=" + notas + ", parcial1=" + parcial1 + ", parcial2=" + parcial2
+				+ ", dniAlumno=" + dniAlumno + ", parcial1=" + parcial1 + ", parcial2=" + parcial2
 				+ "]";
 	}
-	
 
 }

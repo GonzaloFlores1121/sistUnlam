@@ -3,6 +3,7 @@ package ar.unlam.materia;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Random;
 
 public class Universidad {
 	private ArrayList<Materia> materias;
@@ -29,8 +30,10 @@ public class Universidad {
 
 	public Boolean registrarAsignacionComisionProfe(AsignacionComisionProfe asignacion) {
 		Boolean existe = existeAsignacionComisionProfe(asignacion);
+
 		if (!existe) {
 			comisionesProfe.add(asignacion);
+
 			return true;
 		}
 		return false;
@@ -196,10 +199,13 @@ public class Universidad {
 		Materia correlativa = buscarMateria(codigoMateriaCorrelativa);
 
 		if (materia != null && correlativa != null) {
-			materia.removerCorrelativa(codigoMateriaCorrelativa);
-			return true;
+			if (materia.getCodigoCorrelativa().contains(correlativa.getCodigo_materia())) {
+
+				materia.removerCorrelativa(codigoMateriaCorrelativa);
+				return true;
+			}
 		}
-		return null;
+		return false;
 	}
 
 	public Boolean asignarAulaAComision(Integer id, Integer codigoComision, Aula aula) {
@@ -252,9 +258,10 @@ public class Universidad {
 		}
 		return asign;
 	}
+
 	// No interesa la comision si las notas se guardan en la
 	// asignacionComisionAlumno
-
+	// metodo para unos test en particular
 	public ArrayList<Materia> listaMateriasAprobadas(Integer dniAlumno) {
 		ArrayList<Materia> lista = new ArrayList<>();
 		Alumno encontrado = buscarAlumnoRegistrado(dniAlumno);
@@ -266,6 +273,8 @@ public class Universidad {
 				if (aCA != null && verificarNotasMayorA7(aCA.getParcial1(), aCA.getParcial2())) {
 					Comision buscar = buscarComisionPorCodigoYID(aCA.getCodigo_comision(), aCA.getIdComision());
 					lista.add(buscar.getMateria());
+				} else {
+					return lista;
 				}
 			}
 		}
@@ -490,9 +499,152 @@ public class Universidad {
 	}
 
 	private boolean verificarNotasMayorA7(Nota parcial1, Nota parcial2) {
-		if (parcial1.getValor() > 7 && parcial2.getValor() > 7) {
-			return true;
+		if (parcial1 != null && parcial2 != null) {
+			if (parcial1.getValor() > 7 && parcial2.getValor() > 7) {
+				return true;
+			}
 		}
 		return false;
 	}
+
+	public Boolean registrarNota(Integer idComision, Integer codigoComision1, Integer dni, Nota nota) {
+		Boolean resultado = false;
+		// Se busca la comision para obtener la materia
+		Comision comision = buscarComisionPorCodigoYID(codigoComision1, idComision);
+		AsignacionComisionAlumno asignacion = buscarAsignacionAlumnoComision(idComision, codigoComision1, dni);
+
+		if (comision != null && buscarMateria(comision.getMateria().getCodigo_materia()) != null) {
+			ArrayList<Integer> correlativas = comision.getMateria().getCodigoCorrelativa();
+
+			// Si la materia no tiene correlativas entra en este if
+
+			if (correlativas.size() == 0) {
+
+				if (asignacion != null) {
+
+					resultado = agregarParcial(asignacion, nota);
+				}
+			} else {
+				// si tiene mas correlativas que busque y vea si estan aprobadas
+				if (!verificarCorrelativasAprobadas(dni, comision.getMateria().getCodigo_materia())) {
+
+					// Si no tiene las correlativas aprobadas,las condiciones paraa sus notas seran
+					// ded 1-6,si es >6 su nota se seteara en 6
+					// Si la nota es <,se seteara la correspondiente
+					resultado = agregarParcialCondicionCorrelativa(asignacion, nota);
+				} else {
+					resultado = agregarParcial(asignacion, nota);
+				}
+			}
+
+		}
+		return resultado;
+
+	}
+
+	public Boolean agregarParcial(AsignacionComisionAlumno asignacion, Nota nota) {
+		Boolean operacion = false;
+		switch (nota.getTipo()) {
+		case PARCIAL_UNO:
+			asignacion.setParcial1(nota);
+			operacion = true;
+			break;
+
+		case PARCIAL_DOS:
+			asignacion.setParcial2(nota);
+			operacion = true;
+			break;
+		case RECUPERATORIO:
+			if (nota.getEsParcial1()) {
+				asignacion.setParcial1(nota);
+				operacion = true;
+			} else {
+				asignacion.setParcial2(nota);
+				operacion = true;
+			}
+			break;
+		}
+		return operacion;
+	}
+
+	public Boolean agregarParcialCondicionCorrelativa(AsignacionComisionAlumno asignacion, Nota nota) {
+		Boolean operacion = false;
+		switch (nota.getTipo()) {
+		case PARCIAL_UNO:
+			if (nota.getValor() > 6) {
+				nota.setValor(6.0);
+				asignacion.setParcial1(nota);
+				operacion = true;
+			} else {
+				asignacion.setParcial1(nota);
+				operacion = true;
+			}
+			break;
+
+		case PARCIAL_DOS:
+			if (nota.getValor() > 6) {
+				nota.setValor(6.0);
+				asignacion.setParcial2(nota);
+				operacion = true;
+			} else {
+				asignacion.setParcial2(nota);
+				operacion = true;
+			}
+			break;
+		case RECUPERATORIO:
+			if (nota.getEsParcial1()) {
+				if (nota.getValor() > 6) {
+					nota.setValor(6.0);
+
+					asignacion.setParcial1(nota);
+					operacion = true;
+				} else {
+					asignacion.setParcial1(nota);
+					operacion = true;
+				}
+			} else {
+				if (nota.getValor() > 6) {
+					nota.setValor(6.0);
+					asignacion.setParcial2(nota);
+					operacion = true;
+				} else {
+					asignacion.setParcial2(nota);
+					operacion = true;
+				}
+			}
+
+		}
+		return operacion;
+	}
+
+	public void inscribirProfesoresAComision(Integer idComision, Integer codigoComision) {
+		Random rand = new Random();
+		Comision comision = buscarComisionPorCodigoYID(codigoComision, idComision);
+		if (comision != null) {
+			Integer cantidadAlumnos = 45;
+			Integer cantidadProfes = cantidadAlumnos / 20;
+			ArrayList<Profesor> profe = profes;
+
+			while (cantidadProfes > 0 || profe.size() == 0) {
+				int indiceAleatorio = rand.nextInt(profe.size());
+				comision.inscribirProfesor(profe.get(indiceAleatorio));
+				profe.remove(indiceAleatorio);
+				cantidadProfes--;
+
+			}
+		}
+
+	}
+
+	public ArrayList<Materia> obtenerListaMateriasPorCursar(ArrayList<Materia> planDeEstudio, Integer dniAlumno) {
+		ArrayList<Materia> mAlumno = listaMateriasAprobadas(dniAlumno);
+
+	planDeEstudio.removeAll(mAlumno);
+	return planDeEstudio;
+		
+		
+	}
+
+	
+
 }
