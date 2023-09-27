@@ -8,6 +8,78 @@ import java.util.ArrayList;
 import org.junit.Test;
 
 public class TestUniversidad {
+	// chau pichu
+	@Test
+	public void queSeCreeLaUniversidad() {
+		Universidad unlam = new Universidad();
+
+		assertNotNull(unlam);
+		assertNotNull(unlam.getMaterias());
+		assertNotNull(unlam.getAlumnos());
+		assertNotNull(unlam.getProfes());
+		assertNotNull(unlam.getAulas());
+		assertNotNull(unlam.getCiclosLectivos());
+		assertNotNull(unlam.getComisiones());
+		assertNotNull(unlam.getComisionesAlumno());// Se crean cuando se inscribe
+		assertNotNull(unlam.getComisionesProfe());// Se crean cuando se inscribe
+	}
+
+	@Test
+	public void queSeCreeMateriasAlumnosProfesAulasComisionesYCicloLectivo() {
+		// Preparacion
+		// Ciclo
+		Integer idCiclo = 0;
+		LocalDate fechaDeInicioInscripcion1 = LocalDate.of(2024, 3, 10);
+		LocalDate fechaFinalizacionInscripcion1 = LocalDate.of(2024, 3, 17);
+		LocalDate fechaInicioCicloLectivo1 = LocalDate.of(2024, 4, 14);
+		LocalDate fechaFinalizacionCicloLectivo1 = LocalDate.of(2024, 7, 16);
+		Cuatrimestre cuatri1 = Cuatrimestre.PRIMER_CUATRIMESTRE;
+
+		CicloLectivo ciclo = new CicloLectivo(idCiclo, fechaFinalizacionCicloLectivo1, fechaInicioCicloLectivo1,
+				fechaDeInicioInscripcion1, fechaFinalizacionInscripcion1, cuatri1);
+
+		// Aula
+		Integer Id_Aula = 1;
+		Integer cantidadMaximaAlumnos = 5;
+
+		Aula aula = new Aula(Id_Aula, cantidadMaximaAlumnos);
+		// Materia
+		String nombreMateria = "PB1";
+		Integer codigoMateria = 1;
+
+		Materia materia = new Materia(nombreMateria, codigoMateria);
+		// Tiempo
+		Turno turno = Turno.TURNO_MAÑANA;
+		Dia day = Dia.LUNES;
+
+		// Comision
+		Integer idComision = 1;
+		Comision comision = new Comision(idComision, day, turno, ciclo, materia, aula);
+		// Alumno
+		Integer dni = 123;
+		String nombre = "Diego";
+		String apellido = "Oliva";
+
+		// fechas
+		LocalDate fechaDeNacimiento = LocalDate.of(2021, 7, 28);
+		LocalDate fechaDeInscripcion = LocalDate.of(2024, 3, 11);
+
+		Alumno alumno = new Alumno(dni, nombre, apellido, fechaDeNacimiento, fechaDeInscripcion);
+		// Profesor
+		Integer dniP = 123;
+		String nombreP = "Gonza";
+		String apellidoP = "Flores";
+
+		// fechas
+		LocalDate fechaDeNacimientoP = LocalDate.of(2000, 1, 28);
+		LocalDate fechaDeInscripcionP = LocalDate.of(2023, 3, 11);
+
+		Profesor profe = new Profesor(dniP, nombreP, apellidoP, fechaDeNacimientoP, fechaDeInscripcionP);
+
+		// Ejecucion
+
+		// Evaluacion
+	}
 
 	@Test
 	public void queSePuedaRegistrarUnaMateriaYEncontrarlaPorCodigo() {
@@ -37,8 +109,6 @@ public class TestUniversidad {
 		assertEquals(esperado, profe);
 	}
 
-	
-	
 	@Test
 	public void queNoSePuedaRegistrarDosMateriasConMismoCodigo() {
 		Integer codigo_materia = 2623;
@@ -178,6 +248,7 @@ public class TestUniversidad {
 		assertTrue(resultado);
 	}
 
+///////////////////////////////////
 	@Test
 	public void queSePuedaAsignarCorrelativasAMateria() {
 
@@ -192,9 +263,7 @@ public class TestUniversidad {
 		unlam.registrarMaterias(pb2);
 
 		operacion = unlam.agregarCorrelativaAMateria(codigoMateria, codigoMateriaCorrelativa);
-
 		assertTrue(operacion);
-
 	}
 
 	@Test
@@ -325,7 +394,7 @@ public class TestUniversidad {
 
 		Nota parcial1 = new Nota(7.5, TipoNota.PARCIAL_UNO);
 		Nota parcial2 = new Nota(9.5, TipoNota.PARCIAL_DOS);
-		Nota parcialError = new Nota(2.0, TipoNota.PARCIAL_UNO);//corregir con clases de nota
+		Nota parcialError = new Nota(2.0, TipoNota.PARCIAL_UNO);// corregir con clases de nota
 		Integer idComision1 = comision1.getId();
 		Integer idComision2 = comision2.getId();
 		Integer idComision3 = comision3.getId();
@@ -391,6 +460,7 @@ public class TestUniversidad {
 		assertTrue(operacion);
 
 	}
+
 	@Test
 	public void queNoSePuedaInscribirAlumnoAUnCursoSiEstaFueraDeLaFechaDeInscripcion() {
 

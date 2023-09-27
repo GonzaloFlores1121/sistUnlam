@@ -5,30 +5,61 @@ import java.util.Objects;
 
 public class CicloLectivo {
 
+	// ID
+	private static Integer id = 1;
+	private Integer idCiclo;
 	// CicloLectivo
-	private LocalDate fechaFinalizacionCicloLectivo;
 	private LocalDate fechaInicioCicloLectivo;
+	private LocalDate fechaFinalizacionCicloLectivo;
 	// Inscripcion
 	private LocalDate fechaDeInicioInscripcion;
 	private LocalDate fechaFinalizacionInscripcion;
 	// Cuatrimestre
 	private Cuatrimestre cuatri;
-	// ID
-	private static Integer id = 0;
-
-//	//ID provisorio, atributo inncesario por el id de arriba
-	private Integer idCiclo;// atributo provisorio
 
 	// Constructor pero con ID estatico en incremento
 	public CicloLectivo(LocalDate fechaFinalizacionCicloLectivo, LocalDate fechaInicioCicloLectivo,
 			LocalDate fechaDeInicioInscripcion, LocalDate fechaFinalizacionInscripcion, Cuatrimestre cuatri) {
-		idCiclo = ++id;
+		this.idCiclo=id++;
 		this.fechaFinalizacionCicloLectivo = fechaFinalizacionCicloLectivo;
 		this.fechaInicioCicloLectivo = fechaInicioCicloLectivo;
 		this.fechaDeInicioInscripcion = fechaDeInicioInscripcion;
 		this.fechaFinalizacionInscripcion = fechaFinalizacionInscripcion;
 		this.cuatri = cuatri;
 	}
+	
+	// Constructor pero con ID como parametro para los test
+	//Para los test el atributo estatico se mantiene
+	public CicloLectivo(Integer id,LocalDate fechaFinalizacionCicloLectivo, LocalDate fechaInicioCicloLectivo,
+			LocalDate fechaDeInicioInscripcion, LocalDate fechaFinalizacionInscripcion, Cuatrimestre cuatri) {
+		this.idCiclo=id;
+		this.fechaFinalizacionCicloLectivo = fechaFinalizacionCicloLectivo;
+		this.fechaInicioCicloLectivo = fechaInicioCicloLectivo;
+		this.fechaDeInicioInscripcion = fechaDeInicioInscripcion;
+		this.fechaFinalizacionInscripcion = fechaFinalizacionInscripcion;
+		this.cuatri = cuatri;
+	}
+	
+	public Integer getId() {
+		return id;
+	}
+	
+	public Integer getIdCiclo() {
+		return idCiclo;
+	}
+	
+	public void setId(Integer id){
+		this.idCiclo=id;
+	}
+
+	public LocalDate getFechaInicioCicloLectivo() {
+		return fechaInicioCicloLectivo;
+	}
+
+	public LocalDate getFechaFinalizacionCicloLectivo() {
+		return fechaFinalizacionCicloLectivo;
+	}
+
 	public LocalDate getFechaDeInicioInscripcion() {
 		return fechaDeInicioInscripcion;
 	}
@@ -37,16 +68,8 @@ public class CicloLectivo {
 		return fechaFinalizacionInscripcion;
 	}
 
-	public Integer getId() {
-		return id;
-	}
-
-	public Integer getIdCiclo() {
-		return idCiclo;
-	}
-
-	public void setIdCiclo(Integer idCiclo) {
-		this.idCiclo = idCiclo;
+	public Cuatrimestre getCuatri() {
+		return cuatri;
 	}
 
 	@Override
@@ -56,7 +79,7 @@ public class CicloLectivo {
 	}
 
 	@Override
-//	Compara fechas de inscripcion y fechas de inicio y fin de ciclo
+//	Compara fechas de inscripcion y fechas de inicio y fin de ciclo, y cuatris
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;

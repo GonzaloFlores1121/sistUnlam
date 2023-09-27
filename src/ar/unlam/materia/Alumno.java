@@ -14,35 +14,16 @@ public class Alumno {
 	private LocalDate fechaNacimiento;
 	private LocalDate fechaIngreso;
 
-	// Constructor innecesario
-	public Alumno(Integer dni, String apellido, String nombre) {
+	public Alumno(Integer dni,String nombre, String apellido, LocalDate fechaNacimiento, LocalDate fechaIngreso) {
 
+		this.dni = dni;
 		this.nombre = nombre;
 		this.apellido = apellido;
-		this.dni = dni;
-	}
-
-	public Alumno(String nombre, String apellido, Integer dni, LocalDate fechaNacimiento, LocalDate fechaIngreso) {
-
-		this.nombre = nombre;
-		this.apellido = apellido;
-		this.dni = dni;
-		this.fechaNacimiento = fechaNacimiento;
-		this.fechaIngreso = fechaIngreso;
-	}
-
-	public Alumno(Integer indicador, String nombre, String apellido, Integer dni, LocalDate fechaNacimiento,
-			LocalDate fechaIngreso) {
-
-		this.nombre = nombre;
-		this.apellido = apellido;
-		this.dni = dni;
 		this.fechaNacimiento = fechaNacimiento;
 		this.fechaIngreso = fechaIngreso;
 	}
 
 	public String getNombre() {
-
 		return this.nombre;
 	}
 
@@ -50,20 +31,8 @@ public class Alumno {
 		return apellido;
 	}
 
-	public void setApellido(String apellido) {
-		this.apellido = apellido;
-	}
-
 	public Integer getDni() {
 		return dni;
-	}
-
-	public void setDni(Integer dni) {
-		this.dni = dni;
-	}
-
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
 	}
 
 	public LocalDate getFechaNacimiento() {
@@ -72,14 +41,6 @@ public class Alumno {
 
 	public LocalDate getFechaIngreso() {
 		return fechaIngreso;
-	}
-
-	public void setFechaNacimiento(LocalDate fechaNacimiento) {
-		this.fechaNacimiento = fechaNacimiento;
-	}
-
-	public void setFechaIngreso(LocalDate fechaIngreso) {
-		this.fechaIngreso = fechaIngreso;
 	}
 
 	@Override

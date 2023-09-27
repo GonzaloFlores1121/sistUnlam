@@ -1,14 +1,8 @@
 package ar.unlam.materia;
 public class Nota {
-//	private static Integer id = 0;
 	private Double valor;
 	private ClaseDeNota TipoDeNota;
-//	private TipoNota tipo;
-//	public Nota() {
-//		id++;
-//		this.valor = 0.0;
-//	}
-//	
+
 	public Nota() {
 		this.valor = 0.0;
 		this.TipoDeNota = null;
@@ -18,23 +12,7 @@ public class Nota {
 		this.valor = nota;
 		this.TipoDeNota = tipo;
 	}
-
-//	public Nota(Double valor) {
-//		id++;
-//		this.valor = valor;
-//	}
-	public Nota(Double valor) {
-
-		this.valor = valor;
-	}
-
-//	public Nota(Double valor, TipoNota tipo) {
-//		this.valor = valor;
-//		this.tipo = tipo;
-//	}
-
 	public Double getValor() {
-
 		return this.valor;
 	}
 
@@ -42,27 +20,39 @@ public class Nota {
 		return TipoDeNota;
 	}
 
-//	public void asignarValor(Double valor) {
-//
-//		if (valor >= 1 && valor <= 10)
-//			this.valor = valor;
-//	}
 	public void asignarValor(Double valor) {
 			this.valor = valor;
 	}
-
+	
 	public void asignarTipoDeNota(ClaseDeNota tipoDeNota) {
 		TipoDeNota = tipoDeNota;
 	}
 
 	public void registrarNota(Double valor, ClaseDeNota tipoDeNota) {
 
-		if (ClaseDeNota.RECUPERATORIO_1 != tipoDeNota && ClaseDeNota.RECUPERATORIO_2 != tipoDeNota && valor >= 1 && valor <= 10) {
+		if (ClaseDeNota.RECUPERATORIO_1 != tipoDeNota && ClaseDeNota.RECUPERATORIO_2 != tipoDeNota && tipoDeNota!=null && valor >= 1 && valor <= 10) {
 			this.asignarValor(valor);
 			this.asignarTipoDeNota(tipoDeNota);
 		}
 	}
 
+	public void recuperarNota(Double nuevoValor) {
+		
+		if (this.TipoDeNota == ClaseDeNota.PRIMER_PARCIAL && nuevoValor >= 1 && nuevoValor <= 10 && this.TipoDeNota!=null) {
+//			nota.asignarTipoDeNota(ClaseDeNota.RECUPERATORIO_1);
+			this.TipoDeNota=ClaseDeNota.RECUPERATORIO_1;
+			this.valor=nuevoValor;
+//			nota.asignarValor(nuevoValor);
+		}
+		if (this.TipoDeNota == ClaseDeNota.SEGUNDO_PARCIAL && nuevoValor >= 1 && nuevoValor <= 10 && this.TipoDeNota!=null) {
+//			nota.asignarTipoDeNota(ClaseDeNota.RECUPERATORIO_2);
+//			nota.asignarValor(nuevoValor);
+			this.TipoDeNota=ClaseDeNota.RECUPERATORIO_2;
+			this.valor=nuevoValor;
+		}
+	}
+	
+	//Evaluar su uso
 	public void recuperarNota(Nota nota, Double nuevoValor) {
 
 		if (nota.getTipoDeNota() == ClaseDeNota.PRIMER_PARCIAL && nuevoValor >= 1 && nuevoValor <= 10) {
