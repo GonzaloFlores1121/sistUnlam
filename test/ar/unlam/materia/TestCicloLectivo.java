@@ -7,6 +7,31 @@ import java.time.LocalDate;
 import org.junit.Test;
 
 public class TestCicloLectivo {
+	
+	@Test
+	public void queSeCreeUnCicloElectivo() {
+//		Integer id1 = 1;
+		
+		// CicloLectivo
+		LocalDate fechaInicioCicloLectivo1 = LocalDate.of(2024, 4, 14);
+		LocalDate fechaFinalizacionCicloLectivo1 = LocalDate.of(2024, 7, 16);
+		// Inscripcion
+		LocalDate fechaDeInicioInscripcion1 = LocalDate.of(2024, 3, 10);
+		LocalDate fechaFinalizacionInscripcion1 = LocalDate.of(2024, 3, 17);
+		Cuatrimestre cuatri1 = Cuatrimestre.PRIMER_CUATRIMESTRE;
+		
+		Integer id=1;
+		
+		CicloLectivo ciclo = new CicloLectivo(id, fechaFinalizacionCicloLectivo1, fechaInicioCicloLectivo1,
+				fechaDeInicioInscripcion1, fechaFinalizacionInscripcion1, cuatri1);
+		
+		assertNotNull(ciclo);
+				
+		Integer vo=ciclo.getIdCiclo();
+		Integer ve=id;
+		
+		assertEquals(ve, vo);
+	}
 
 	@Test
 	public void queDosCiclosLectivosSeanDiferentes() {
@@ -27,58 +52,47 @@ public class TestCicloLectivo {
 		// Cuatri
 		Cuatrimestre cuatri1 = Cuatrimestre.PRIMER_CUATRIMESTRE;
 		Cuatrimestre cuatri2 = Cuatrimestre.SEGUNDO_CUATRIMESTRE;
+		//IDs
+		Integer id1=1;
+		Integer id2=2;
 
-		Boolean operacion = false;
-
-		CicloLectivo ciclo = new CicloLectivo(fechaFinalizacionCicloLectivo1, fechaInicioCicloLectivo1,
+		CicloLectivo ciclo = new CicloLectivo(id1,fechaFinalizacionCicloLectivo1, fechaInicioCicloLectivo1,
 				fechaDeInicioInscripcion1, fechaFinalizacionInscripcion1, cuatri1);
-		CicloLectivo ciclo2 = new CicloLectivo(fechaFinalizacionCicloLectivo2, fechaInicioCicloLectivo2,
+
+		CicloLectivo ciclo2 = new CicloLectivo(id2,fechaFinalizacionCicloLectivo2, fechaInicioCicloLectivo2,
 				fechaDeInicioInscripcion2, fechaFinalizacionInscripcion2, cuatri2);
 
-		operacion = ciclo.equals(ciclo2);
-//
-		assertFalse(operacion);
-
-		Integer id1 = ciclo.getIdCiclo();
-		Integer id2 = ciclo2.getIdCiclo();
-		Boolean sonIguales = id1 == id2;
-
-		assertNotEquals(id1, id2);
-		assertFalse(sonIguales);
+		//IDS
+		Integer vo1=ciclo.getIdCiclo();
+		Integer vo2=ciclo2.getIdCiclo();
+		Integer ve1=1;
+		Integer ve2=2;
+		Boolean noSonIguales=vo1!=vo2;
+		
+		assertTrue(noSonIguales);
+		assertEquals(ve1,vo1 );
+		assertEquals(ve2, vo2);
 	}
 
-	
 	@Test
-	public void queDosCiclosLectivosSeanIgualesSiTienenMismasFechasYDiferenteID() {
+	public void queDosCiclosLectivosNoTenganLaMismaFecha() {
 		
-
 		// CicloLectivo
 		LocalDate fechaInicioCicloLectivo1 = LocalDate.of(2024, 4, 14);
+		LocalDate fechaInicioCicloLectivo2 = LocalDate.of(2024, 4, 12);
 		LocalDate fechaFinalizacionCicloLectivo1 = LocalDate.of(2024, 7, 16);
 		// Inscripcion
 		LocalDate fechaDeInicioInscripcion1 = LocalDate.of(2024, 3, 10);
 		LocalDate fechaFinalizacionInscripcion1 = LocalDate.of(2024, 3, 17);
 		Cuatrimestre cuatri1 = Cuatrimestre.PRIMER_CUATRIMESTRE;
 
-		Boolean operacionFechas = false;
-		Boolean operacionID = false;
-
-		CicloLectivo ciclo = new CicloLectivo(fechaFinalizacionCicloLectivo1, fechaInicioCicloLectivo1,
-				fechaDeInicioInscripcion1, fechaFinalizacionInscripcion1, cuatri1);
 //		CicloLectivo ciclo = new CicloLectivo(fechaFinalizacionCicloLectivo1, fechaInicioCicloLectivo1,
 //				fechaDeInicioInscripcion1, fechaFinalizacionInscripcion1, cuatri1);
+		CicloLectivo ciclo = new CicloLectivo(fechaFinalizacionCicloLectivo1, fechaInicioCicloLectivo2,
+				fechaDeInicioInscripcion1, fechaFinalizacionInscripcion1, cuatri1);
 		CicloLectivo ciclo2 = new CicloLectivo(fechaFinalizacionCicloLectivo1, fechaInicioCicloLectivo1,
 				fechaDeInicioInscripcion1, fechaFinalizacionInscripcion1, cuatri1);
-//		CicloLectivo ciclo2 = new CicloLectivo(fechaFinalizacionCicloLectivo1, fechaInicioCicloLectivo1,
-//				fechaDeInicioInscripcion1, fechaFinalizacionInscripcion1, cuatri1);
 
-		operacionFechas = ciclo.equals(ciclo2);
-		operacionID = ciclo.getIdCiclo() == ciclo2.getIdCiclo();
-
-		assertFalse(operacionID);
-		assertTrue(operacionFechas);
+		assertNotEquals(ciclo, ciclo2);
 	}
-
-	// NOTA
-	// QUIZAS VALIDAR LOS MESES SEGUN EL CUATRIMESTRO QUIZAS!!
 }
