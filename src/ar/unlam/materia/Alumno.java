@@ -23,6 +23,12 @@ public class Alumno {
 		this.fechaIngreso = fechaIngreso;
 	}
 
+	public Alumno(Integer dniAlumno, String nombre, String apellido) {
+		this.dni=dniAlumno;
+		this.nombre=nombre;
+		this.apellido=apellido;
+	}
+
 	public String getNombre() {
 		return this.nombre;
 	}

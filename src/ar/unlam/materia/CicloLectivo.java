@@ -75,11 +75,25 @@ public class CicloLectivo {
 	@Override
 	public int hashCode() {
 		return Objects.hash(cuatri, fechaDeInicioInscripcion, fechaFinalizacionCicloLectivo,
-				fechaFinalizacionInscripcion, fechaInicioCicloLectivo);
+				fechaFinalizacionInscripcion, fechaInicioCicloLectivo, idCiclo);
 	}
 
+//	@Override
+////	Compara fechas de inscripcion y fechas de inicio y fin de ciclo, y cuatris
+//	public boolean equals(Object obj) {
+//		if (this == obj)
+//			return true;
+//		if (obj == null)
+//			return false;
+//		if (getClass() != obj.getClass())
+//			return false;
+//		CicloLectivo other = (CicloLectivo) obj;
+//		return cuatri == other.cuatri && Objects.equals(fechaDeInicioInscripcion, other.fechaDeInicioInscripcion)
+//				&& Objects.equals(fechaFinalizacionCicloLectivo, other.fechaFinalizacionCicloLectivo)
+//				&& Objects.equals(fechaFinalizacionInscripcion, other.fechaFinalizacionInscripcion)
+//				&& Objects.equals(fechaInicioCicloLectivo, other.fechaInicioCicloLectivo);
+//	}
 	@Override
-//	Compara fechas de inscripcion y fechas de inicio y fin de ciclo, y cuatris
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
@@ -91,8 +105,10 @@ public class CicloLectivo {
 		return cuatri == other.cuatri && Objects.equals(fechaDeInicioInscripcion, other.fechaDeInicioInscripcion)
 				&& Objects.equals(fechaFinalizacionCicloLectivo, other.fechaFinalizacionCicloLectivo)
 				&& Objects.equals(fechaFinalizacionInscripcion, other.fechaFinalizacionInscripcion)
-				&& Objects.equals(fechaInicioCicloLectivo, other.fechaInicioCicloLectivo);
+				&& Objects.equals(fechaInicioCicloLectivo, other.fechaInicioCicloLectivo)
+				|| Objects.equals(idCiclo, other.idCiclo);
 	}
+	
 
 	@Override
 	public String toString() {
@@ -101,5 +117,7 @@ public class CicloLectivo {
 				+ fechaDeInicioInscripcion + ", fechaFinalizacionInscripcion=" + fechaFinalizacionInscripcion
 				+ ", cuatri=" + cuatri + "]";
 	}
+
+
 
 }

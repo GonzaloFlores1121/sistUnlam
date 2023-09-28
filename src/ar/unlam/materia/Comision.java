@@ -46,6 +46,11 @@ public class Comision {
 		this.alumnos = new ArrayList<>();
 	}
 
+	public Comision(Integer codigoCurso) {
+		this.codigo_comision=codigoCurso;
+		this.aula=null;
+	}
+
 	// Getters
 	public Integer getCodigo_comision() {
 		return codigo_comision;
