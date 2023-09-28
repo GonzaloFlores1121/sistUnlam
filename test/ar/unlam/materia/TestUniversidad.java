@@ -27,34 +27,12 @@ public class TestUniversidad {
 	@Test
 	public void queSeCreeMateriasAlumnosProfesAulasComisionesYCicloLectivo() {
 		// Preparacion
-		// Ciclo
-		Integer idCiclo = 0;
-		LocalDate fechaDeInicioInscripcion1 = LocalDate.of(2024, 3, 10);
-		LocalDate fechaFinalizacionInscripcion1 = LocalDate.of(2024, 3, 17);
-		LocalDate fechaInicioCicloLectivo1 = LocalDate.of(2024, 4, 14);
-		LocalDate fechaFinalizacionCicloLectivo1 = LocalDate.of(2024, 7, 16);
-		Cuatrimestre cuatri1 = Cuatrimestre.PRIMER_CUATRIMESTRE;
-
-		CicloLectivo ciclo = new CicloLectivo(idCiclo, fechaFinalizacionCicloLectivo1, fechaInicioCicloLectivo1,
-				fechaDeInicioInscripcion1, fechaFinalizacionInscripcion1, cuatri1);
-
-		// Aula
-		Integer Id_Aula = 1;
-		Integer cantidadMaximaAlumnos = 5;
-
-		Aula aula = new Aula(Id_Aula, cantidadMaximaAlumnos);
 		// Materia
 		String nombreMateria = "PB1";
 		Integer codigoMateria = 1;
 
 		Materia materia = new Materia(nombreMateria, codigoMateria);
-		// Tiempo
-		Turno turno = Turno.TURNO_MAÑANA;
-		Dia day = Dia.LUNES;
 
-		// Comision
-		Integer idComision = 1;
-		Comision comision = new Comision(idComision, day, turno, ciclo, materia, aula);
 		// Alumno
 		Integer dni = 123;
 		String nombre = "Diego";
@@ -65,6 +43,8 @@ public class TestUniversidad {
 		LocalDate fechaDeInscripcion = LocalDate.of(2024, 3, 11);
 
 		Alumno alumno = new Alumno(dni, nombre, apellido, fechaDeNacimiento, fechaDeInscripcion);
+		////////////////
+
 		// Profesor
 		Integer dniP = 123;
 		String nombreP = "Gonza";
@@ -76,11 +56,60 @@ public class TestUniversidad {
 
 		Profesor profe = new Profesor(dniP, nombreP, apellidoP, fechaDeNacimientoP, fechaDeInscripcionP);
 
-		// Ejecucion
+		// Aula
+		Integer Id_Aula = 1;
+		Integer cantidadMaximaAlumnos = 5;
 
+		Aula aula = new Aula(Id_Aula, cantidadMaximaAlumnos);
+
+		// Ciclo
+		Integer idCiclo = 0;
+		LocalDate fechaDeInicioInscripcion1 = LocalDate.of(2024, 3, 10);
+		LocalDate fechaFinalizacionInscripcion1 = LocalDate.of(2024, 3, 17);
+		LocalDate fechaInicioCicloLectivo1 = LocalDate.of(2024, 4, 14);
+		LocalDate fechaFinalizacionCicloLectivo1 = LocalDate.of(2024, 7, 16);
+		Cuatrimestre cuatri1 = Cuatrimestre.PRIMER_CUATRIMESTRE;
+
+		CicloLectivo ciclo = new CicloLectivo(idCiclo, fechaFinalizacionCicloLectivo1, fechaInicioCicloLectivo1,
+				fechaDeInicioInscripcion1, fechaFinalizacionInscripcion1, cuatri1);
+
+		// Tiempo
+		Turno turno = Turno.TURNO_MAÑANA;
+		Dia day = Dia.LUNES;
+
+		// Comision
+		Integer idComision = 1;
+		Comision comision = new Comision(idComision, day, turno, ciclo, materia, aula);
+
+		Universidad unlam = new Universidad();
+		// Ejecucion
+		unlam.registrarMaterias(materia);
+		// Yo puedo registrar a un alumno en la facu que no esta cursando?
+		unlam.registrarAlumno(alumno);
+		////////////////////////////////
+		unlam.registrarProfesor(profe);
+		unlam.registrarAula(aula);
+		unlam.registrarCicloLectivo(ciclo);
+		unlam.registrarComision(comision);
+
+		Integer ve = 1;
 		// Evaluacion
+
+		Integer vo = unlam.getMaterias().size();
+		assertEquals(ve, vo);
+		vo = unlam.getAlumnos().size();
+		assertEquals(ve, vo);
+		vo = unlam.getProfes().size();
+		assertEquals(ve, vo);
+		vo = unlam.getAulas().size();
+		assertEquals(ve, vo);
+		vo = unlam.getCiclosLectivos().size();
+		assertEquals(ve, vo);
+		vo = unlam.getComisiones().size();
+		assertEquals(ve, vo);
 	}
 
+	// MetodoGonza
 	@Test
 	public void queSePuedaRegistrarUnaMateriaYEncontrarlaPorCodigo() {
 		Integer codigo_materia = 2623;
@@ -94,6 +123,7 @@ public class TestUniversidad {
 		assertEquals(materia, esperada);
 	}
 
+	// Metodo Gonza
 	@Test
 	public void queSePuedaRegistrarUnProfesor() {
 		Integer dni = 444;
@@ -109,6 +139,7 @@ public class TestUniversidad {
 		assertEquals(esperado, profe);
 	}
 
+	// MetodoGonza
 	@Test
 	public void queNoSePuedaRegistrarDosMateriasConMismoCodigo() {
 		Integer codigo_materia = 2623;
@@ -125,6 +156,7 @@ public class TestUniversidad {
 		assertFalse(operacion);
 	}
 
+	// MetodoGonza
 	@Test
 	public void queSePuedaRegistrarUnAlumnoYEncontrarloPorDni() {
 		Integer dni = 777;
@@ -138,6 +170,7 @@ public class TestUniversidad {
 		assertEquals(alm, esperada);
 	}
 
+	// MetodoGonza
 	@Test
 	public void queNoSePuedaRegistrarUnAlumnoConMismoDni() {
 		Integer dni = 777;
@@ -154,6 +187,7 @@ public class TestUniversidad {
 		assertFalse(op2);
 	}
 
+	// MetodoGonza
 	@Test
 	public void queNoSePuedaRegistrarCicloLectivoDondeFechasSeSuperpongan() {
 
@@ -179,6 +213,7 @@ public class TestUniversidad {
 
 	}
 
+	// MetodoGonza
 	@Test
 	public void queSePuedaRegistrarUnProfesorYEncontrarloPorDni() {
 		Integer dni = 777;
@@ -193,6 +228,7 @@ public class TestUniversidad {
 		assertEquals(profe, esperado);
 	}
 
+	// MetodoGonza
 	@Test
 	public void queSePuedaRegistrarUnaComisionYEncontrarloPorCodigoYID() {
 		Integer numero = 999, capacidadMax = 50, dniAlumno = 777, dniProfesor = 8888, codigoComision = 2900;
@@ -231,6 +267,7 @@ public class TestUniversidad {
 
 	}
 
+	// MetodoGonza
 	@Test
 	public void queSePuedaAsignarAulaAUnComision() {
 		Universidad unlam = new Universidad();
@@ -249,6 +286,7 @@ public class TestUniversidad {
 	}
 
 ///////////////////////////////////
+	//MetodoGonza
 	@Test
 	public void queSePuedaAsignarCorrelativasAMateria() {
 
@@ -266,6 +304,7 @@ public class TestUniversidad {
 		assertTrue(operacion);
 	}
 
+	//MetodoGonza
 	@Test
 	public void queSePuedaEliminarCorrelativasAMateria() {
 
@@ -287,6 +326,7 @@ public class TestUniversidad {
 
 	}
 
+	//MetodoGonza
 	@Test
 	public void queSePuedaInscribirAlumnoAUnCurso() {
 		Integer dniAlumno = 412421, codigoComision = 1;
@@ -303,6 +343,7 @@ public class TestUniversidad {
 		assertTrue(exitoso);
 	}
 
+	//MetodoGonza
 	@Test
 	public void queSePuedaInscribirAlumnoAUnCursoSiTieneLasCorrelativasAprobadas() {
 		Integer codigoMateria = 2300;
@@ -366,6 +407,7 @@ public class TestUniversidad {
 
 	}
 
+	//MetodoGonza
 	@Test
 	public void queNoSePuedaInscribirAlumnoAUnCursoSiNoTieneLasCorrelativasAprobadas() {
 		Integer codigoMateria = 2300;
@@ -426,6 +468,7 @@ public class TestUniversidad {
 		assertFalse(operacion);
 	}
 
+	//MetodoGonza
 	@Test
 	public void queSePuedaInscribirAlumnoAUnCursoSiEstaDentroDeLaFechaDeInscripcion() {
 
@@ -461,6 +504,7 @@ public class TestUniversidad {
 
 	}
 
+	//MetodoGonza
 	@Test
 	public void queNoSePuedaInscribirAlumnoAUnCursoSiEstaFueraDeLaFechaDeInscripcion() {
 
@@ -496,6 +540,7 @@ public class TestUniversidad {
 
 	}
 
+	//MetodoGonza
 	@Test
 	public void queNoSePuedaInscribirAlumnoAUnCursoSiEstaElCupoLLeno() {
 		Integer codigoMateria1 = 2626;
@@ -535,6 +580,7 @@ public class TestUniversidad {
 
 	}
 
+	//MetodoGonza
 	@Test
 	public void queSePuedaInscribirAlumnoAUnCursoSiHayCupo() {
 		Integer codigoMateria1 = 2626;
@@ -570,7 +616,8 @@ public class TestUniversidad {
 		assertTrue(operacion);
 
 	}
-
+	
+	//MetodoGonza
 	@Test
 	public void queNoPuedaInscribirseAUnCursoPorqueSeSuperponeConOtroCursoYSusHorarios() {
 		Alumno alumno = new Alumno(1234, "f", "g");
@@ -595,6 +642,8 @@ public class TestUniversidad {
 
 		assertFalse(operacion);
 	}
+
+	//MetodoGonza
 
 	@Test
 	public void queSePuedaInscribirAUnCursoPorqueNoSeSuperponeConOtroCursoYSusHorarios() {
