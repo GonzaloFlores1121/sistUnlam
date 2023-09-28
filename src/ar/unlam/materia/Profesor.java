@@ -8,7 +8,6 @@ public class Profesor {
 	private Integer dni;
 	private String nombre;
 	private String apellido;
-//	private Double saldo;// REVISAR
 	private LocalDate fechaNacimiento;
 	private LocalDate fechaIngreso;
 
@@ -20,26 +19,10 @@ public class Profesor {
 		this.fechaNacimiento = fechaNacimiento;
 		this.fechaIngreso = fechaIngreso;
 	}
-//	REVISAR CONSTRUCTORES
-//	public Profesor(Integer dni, String nombre, String apellido, Double saldo) {
-//		
-//		this.dni=dni;
-//		this.nombre=nombre;
-//		this.apellido=apellido;
-//		this.saldo=saldo;
-//	}
-//	
-//	public Profesor(Integer dni, String nombre, String apellido, Double saldo, LocalDate fechaNacimiento,
-//			LocalDate fechaIngreso) {
-//		
-//		this.dni = dni;
-//		this.nombre = nombre;
-//		this.apellido = apellido;
-//		this.saldo = saldo;
-//		this.fechaNacimiento = fechaNacimiento;
-//		this.fechaIngreso = fechaIngreso;
-//	}
 
+	public Profesor(Integer dniProfesor, String string, String string2, double d) {
+		// TODO Auto-generated constructor stub
+	}
 
 	public Integer getDni() {
 		return dni;
@@ -52,10 +35,6 @@ public class Profesor {
 	public String getApellido() {
 		return apellido;
 	}
-
-//	public Double getSaldo() {
-//		return saldo;
-//	}
 
 	public LocalDate getFechaNacimiento() {
 		return fechaNacimiento;

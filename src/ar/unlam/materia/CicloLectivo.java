@@ -78,21 +78,6 @@ public class CicloLectivo {
 				fechaFinalizacionInscripcion, fechaInicioCicloLectivo, idCiclo);
 	}
 
-//	@Override
-////	Compara fechas de inscripcion y fechas de inicio y fin de ciclo, y cuatris
-//	public boolean equals(Object obj) {
-//		if (this == obj)
-//			return true;
-//		if (obj == null)
-//			return false;
-//		if (getClass() != obj.getClass())
-//			return false;
-//		CicloLectivo other = (CicloLectivo) obj;
-//		return cuatri == other.cuatri && Objects.equals(fechaDeInicioInscripcion, other.fechaDeInicioInscripcion)
-//				&& Objects.equals(fechaFinalizacionCicloLectivo, other.fechaFinalizacionCicloLectivo)
-//				&& Objects.equals(fechaFinalizacionInscripcion, other.fechaFinalizacionInscripcion)
-//				&& Objects.equals(fechaInicioCicloLectivo, other.fechaInicioCicloLectivo);
-//	}
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)

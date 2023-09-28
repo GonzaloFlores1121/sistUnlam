@@ -19,6 +19,7 @@ public class Comision {
 	// Personas
 	private ArrayList<Profesor> profes;
 	private ArrayList<Alumno> alumnos;
+	private Integer id;
 
 	// Constructor diego
 	public Comision(Integer codigo_comision, Dia dia, Turno turno, CicloLectivo ciclo, Materia materia, Aula aula) {
@@ -46,16 +47,66 @@ public class Comision {
 		this.alumnos = new ArrayList<>();
 	}
 
+	public Comision(Integer codigo_comision, Turno turno, CicloLectivo ciclo, Materia materia) {
+		this.id = ++idComisiones;
+		this.codigo_comision = codigo_comision;
+		this.turno = turno;
+		this.ciclo = ciclo;
+		this.materia = materia;
+		this.profes = new ArrayList<>();
+		this.alumnos = new ArrayList<>();
+	}
+
+	public Comision(Integer codigo_comision, Dia dia, Turno turno, Materia materia) {
+		this.id = ++idComisiones;
+		this.codigo_comision = codigo_comision;
+		this.dia = dia;
+		this.turno = turno;
+		this.materia = materia;
+		this.profes = new ArrayList<>();
+		this.alumnos = new ArrayList<>();
+	}
+
+	public Comision(Integer codigo_comision, Materia materia) {
+		this.id = ++idComisiones;
+		this.codigo_comision = codigo_comision;
+		this.materia = materia;
+		this.profes = new ArrayList<>();
+		this.alumnos = new ArrayList<>();
+	}
+
+	public Comision(Integer codigo_comision, CicloLectivo ciclo, Materia materia) {
+		this.id = ++idComisiones;
+		this.codigo_comision = codigo_comision;
+		this.ciclo = ciclo;
+		this.materia = materia;
+		this.profes = new ArrayList<>();
+		this.alumnos = new ArrayList<>();
+	}
+
 	public Comision(Integer codigoCurso) {
-		this.codigo_comision=codigoCurso;
-		this.aula=null;
+		this.id = ++idComisiones;
+		this.codigo_comision = codigoCurso;
+		this.profes = new ArrayList<>();
+		this.alumnos = new ArrayList<>();
+	}
+
+	public Comision(Integer codigo_comision, CicloLectivo ciclo, Materia materia, Aula aula) {
+		this.id = ++idComisiones;
+		this.codigo_comision = codigo_comision;
+		this.ciclo = ciclo;
+		this.materia = materia;
+		this.aula = aula;
+		this.profes = new ArrayList<>();
+		this.alumnos = new ArrayList<>();
+
 	}
 
 	// Getters
 	public Integer getCodigo_comision() {
 		return codigo_comision;
 	}
-
+	
 	public Dia getDia() {
 		return dia;
 	}
@@ -71,7 +122,7 @@ public class Comision {
 	public Materia getMateria() {
 		return materia;
 	}
-
+	
 	public Aula getAula() {
 		return aula;
 	}
@@ -153,100 +204,20 @@ public class Comision {
 				+ ", materia=" + materia + ", aula=" + aula + ", profes=" + profes + ", alumnos=" + alumnos + "]";
 	}
 
-//	@Override
-//	public boolean equals(Object obj) {
-//		if (this == obj)
-//			return true;
-//		if (obj == null)
-//			return false;
-//		if (getClass() != obj.getClass())
-//			return false;
-//		Comision other = (Comision) obj;
-//		return Objects.equals(id, other.id);
-//	}
+	public static Integer getIdComisiones() {
+		return idComisiones;
+	}
 
-//	@Override
-//	public String toString() {
-//		return "Comision [id=" + id + ", codigo_comision=" + codigo_comision + ", dia=" + dia + ", turno=" + turno
-//				+ ", ciclo=" + ciclo + ", materia=" + materia + ", aula=" + aula + ", profes=" + profes + ", alumnos="
-//				+ alumnos + "]";
-//	}
+	public Integer getId() {
+		return id;
+	}
+	public Integer obtenerCantidadDeProfes() {
+		return profes.size();
+	}
+	
+	public Integer obtenerCantidadDeAlumnosInscriptos() {
+		return alumnos.size();
+	}
 
-//	
-//	CONSTRUCTORES
-//	public Comision(Integer codigo_comision, Dia dia, Turno turno, CicloLectivo ciclo, Materia materia, Aula aula) {
-//		this.id = ++idComisiones;
-//		this.codigo_comision = codigo_comision;
-//		this.dia = dia;
-//		this.turno = turno;
-//		this.ciclo = ciclo;
-//		this.materia = materia;
-//		this.aula = aula;
-//		this.profes = new ArrayList<>();
-//		this.alumnos = new ArrayList<>();
-//	}
-//
-//	public Comision(Integer codigo_comision, Turno turno, CicloLectivo ciclo, Materia materia) {
-//		this.id = ++idComisiones;
-//		this.codigo_comision = codigo_comision;
-//		this.turno = turno;
-//		this.ciclo = ciclo;
-//		this.materia = materia;
-//		this.profes = new ArrayList<>();
-//		this.alumnos = new ArrayList<>();
-//	}
-//
-//	public Comision(Integer codigo_comision, Dia dia, Turno turno, Materia materia) {
-//		this.id = ++idComisiones;
-//		this.codigo_comision = codigo_comision;
-//		this.dia = dia;
-//		this.turno = turno;
-//		this.materia = materia;
-//		this.profes = new ArrayList<>();
-//		this.alumnos = new ArrayList<>();
-//	}
-//
-//	public Comision(Integer codigo_comision, Materia materia) {
-//		this.id = ++idComisiones;
-//		this.codigo_comision = codigo_comision;
-//		this.materia = materia;
-//		this.profes = new ArrayList<>();
-//		this.alumnos = new ArrayList<>();
-//	}
-//
-//	public Comision(Integer codigo_comision, CicloLectivo ciclo, Materia materia) {
-//		this.id = ++idComisiones;
-//		this.codigo_comision = codigo_comision;
-//		this.ciclo = ciclo;
-//		this.materia = materia;
-//		this.profes = new ArrayList<>();
-//		this.alumnos = new ArrayList<>();
-//	}
-//
-//	public Comision(Integer codigoCurso) {
-//		this.id = ++idComisiones;
-//		this.codigo_comision = codigoCurso;
-//		this.profes = new ArrayList<>();
-//		this.alumnos = new ArrayList<>();
-//	}
-//
-//	public Comision(Integer codigo_comision, CicloLectivo ciclo, Materia materia, Aula aula) {
-//		this.id = ++idComisiones;
-//		this.codigo_comision = codigo_comision;
-//		this.ciclo = ciclo;
-//		this.materia = materia;
-//		this.aula = aula;
-//		this.profes = new ArrayList<>();
-//		this.alumnos = new ArrayList<>();
-//
-//	}
-//	@Override
-//	public int hashCode() {
-//		return Objects.hash(id);
-//	}
-
-//	public Integer getId() {
-//		return id;
-//	}
-
+	
 }

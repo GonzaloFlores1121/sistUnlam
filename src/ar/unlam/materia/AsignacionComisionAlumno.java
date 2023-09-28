@@ -11,11 +11,12 @@ public class AsignacionComisionAlumno {
 	private Integer idComisionAlumno;
 	private Integer codigo_comision;
 	private Integer dniAlumno;
-	// ideal usar el array de notas
+//	 ideal usar el array de notas
 	private ArrayList<Nota> notas;
 	// pongo los parciales de una para hacer mas facil los test que ya tenia
-//	private Nota parcial1;
-//	private Nota parcial2;
+	private Nota parcial1;
+	private Nota parcial2;
+	private Integer idComision;
 
 	
 	public AsignacionComisionAlumno(Integer idComisionAlumno,Integer codigo_comision, Integer dniAlumno) {
@@ -26,11 +27,12 @@ public class AsignacionComisionAlumno {
 	}
 	//Constructor conID estatico
 	public AsignacionComisionAlumno(Integer codigo_comision, Integer dniAlumno) {
-		this.idComisionAlumno=id++;
-		this.codigo_comision = codigo_comision;
-		this.dniAlumno = dniAlumno;
-		this.notas = new ArrayList<>();
-	}
+			this.idComisionAlumno=id++;
+			this.codigo_comision = codigo_comision;
+			this.dniAlumno = dniAlumno;
+			this.notas = new ArrayList<>();
+		}
+	
 	
 	public Integer getIdComisionAlumno() {
 		return idComisionAlumno;
@@ -110,7 +112,6 @@ public class AsignacionComisionAlumno {
 			Double nota2=this.notas.get(1).getValor(); 
 			nota=(double) Math.floor((nota1+nota2)/2.0); 
 		}
-		// TODO Auto-generated method stub
 		return nota;
 	}
 	
@@ -130,44 +131,45 @@ public class AsignacionComisionAlumno {
 		return Objects.equals(codigo_comision, other.codigo_comision) && Objects.equals(dniAlumno, other.dniAlumno)
 				|| Objects.equals(idComisionAlumno, other.idComisionAlumno);
 	}
+
 	@Override
 	public String toString() {
 		return "AsignacionComisionAlumno [idComisionAlumno=" + idComisionAlumno + ", codigo_comision=" + codigo_comision
 				+ ", dniAlumno=" + dniAlumno + ", notas=" + notas + "]";
 	}
+	public Nota getParcial1() {
+		return parcial1;
+	}
 
-//	public void setIdComision(Integer idComision) {
-//		this.idComision = idComision;
-//	}
-//
-//	public Nota getParcial1() {
-//		return parcial1;
-//	}
-//
-//	public Nota getParcial2() {
-//		return parcial2;
-//	}
+	public Nota getParcial2() {
+		return parcial2;
+	}
 
-//	//Creado para testear solamente
-//	public void setParcial1(Nota parcial1) {
-//		this.parcial1 = parcial1;
-//	}
-//
-//	//Creado para testear solamente
-//	public void setParcial2(Nota parcial2) {
-//		this.parcial2 = parcial2;
-//	}
+	public void setParcial1(Nota parcial1) {
 
-//	public void calificarParcial1(Double nota) {
-//		this.parcial1.asignarValor(nota);
-//	}
-//
-//	public void calificarParcial2(Double nota) {
-//		this.parcial2.asignarValor(nota);
-//
-//	}
+		this.parcial1 = parcial1;
 
+	}
+
+	public void setParcial2(Nota parcial2) {
+
+		this.parcial2 = parcial2;
+
+	}
+
+	public void calificarParcial1(Double nota) {
+
+		this.parcial1.asignarValor(nota);
+	}
+
+	public void calificarParcial2(Double nota) {
+
+		this.parcial2.asignarValor(nota);
+
+	}
 	
-
+	public Integer getIdComision() {
+		return idComision;
+	}
 
 }

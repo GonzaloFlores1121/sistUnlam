@@ -65,29 +65,8 @@ public class Materia {
 		return codigoCorrelativa.size();
 	}
 	
-	//REVISAR METODO DE GONZA CON SU LOGICA
-	public Integer buscarCorrelativa(Integer codigo_materia2) {
-		Integer operacion = 0;
-
-		if(!this.codigoCorrelativa.isEmpty())
-		for (Integer integer : codigoCorrelativa) {
-			if (integer.equals(codigo_materia2)) {
-				operacion = 1;
-				return operacion;
-			}
-		}
-		return operacion;
-	}
-	//METODO DIEGO PA
 	public Boolean buscarCorrelativaDiego(Integer codigo_correlativa) {
 		Boolean resultado=this.codigoCorrelativa.contains(codigo_correlativa);
-
-//		FOR EACH
-//		for (Integer codigo : codigoCorrelativa) {
-//			if(codigo.equals(codigo_correlativa)) {
-//				resultado=true;
-//			}
-
 		return resultado;
 	}
 
@@ -112,5 +91,17 @@ public class Materia {
 	public String toString() {
 		return "Materia  codigo_materia=" + codigo_materia + ", nombre=" + nombre + ", codigoCorrelativa="
 				+ codigoCorrelativa + "]";
+	}
+	
+	public Integer buscarCorrelativa(Integer codigo_materia2) {
+		Integer operacion = 0;
+
+		for (Integer integer : codigoCorrelativa) {
+			if (integer.equals(codigo_materia2)) {
+				operacion = 1;
+				return operacion;
+			}
+		}
+		return operacion;
 	}
 }

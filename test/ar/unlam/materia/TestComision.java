@@ -120,6 +120,8 @@ public class TestComision {
 		assertNotNull(comision2);
 		assertNotEquals(comision, comision2);
 	}
+	
+	
 
 	@Test
 	public void queSePuedaInscribirUnAlumnoALaComision() {
