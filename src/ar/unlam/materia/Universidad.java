@@ -12,8 +12,8 @@ public class Universidad {
 	private ArrayList<Aula> aulas;
 	private ArrayList<CicloLectivo> ciclosLectivos;
 	private ArrayList<Comision> comisiones;
-	private ArrayList<AsignacionComisionAlumno> comisionesAlumno;
-	private ArrayList<AsignacionComisionProfe> comisionesProfe;
+	private ArrayList<AsignacionComisionAlumno> comisionesAlumno;//Se comprueban con el ingreso a la comision
+	private ArrayList<AsignacionComisionProfe> comisionesProfe;//Se comprueban con el ingreso a la comision
 
 	public Universidad() {
 		this.materias = new ArrayList<>();
@@ -183,7 +183,7 @@ public class Universidad {
 	public CicloLectivo buscarCicloLectivoPorID(Integer id) {
 		CicloLectivo ciclo = null;
 		for (CicloLectivo cicloLectivo : ciclosLectivos) {
-			if (cicloLectivo.getId().equals(id)) {
+			if (cicloLectivo.getIdCiclo().equals(id)) {
 				ciclo = cicloLectivo;
 				return ciclo;
 			}

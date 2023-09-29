@@ -35,6 +35,7 @@ public class CicloLectivo {
 		this.idCiclo=id;
 		this.fechaFinalizacionCicloLectivo = fechaFinalizacionCicloLectivo;
 		this.fechaInicioCicloLectivo = fechaInicioCicloLectivo;
+		
 		this.fechaDeInicioInscripcion = fechaDeInicioInscripcion;
 		this.fechaFinalizacionInscripcion = fechaFinalizacionInscripcion;
 		this.cuatri = cuatri;

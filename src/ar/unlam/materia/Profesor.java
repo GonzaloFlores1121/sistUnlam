@@ -20,9 +20,16 @@ public class Profesor {
 		this.fechaIngreso = fechaIngreso;
 	}
 
+	public Profesor(Integer dni, String nombre, String apellido) {
+		this.dni = dni;
+		this.nombre = nombre;
+		this.apellido = apellido;
+	}
+	
 	public Profesor(Integer dniProfesor, String string, String string2, double d) {
 		// TODO Auto-generated constructor stub
 	}
+
 
 	public Integer getDni() {
 		return dni;

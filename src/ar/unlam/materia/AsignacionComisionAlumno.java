@@ -8,8 +8,8 @@ public class AsignacionComisionAlumno {
 	private static int id=1;
 	private static int cantidadDeParciales=2;
 	
-	private Integer idComisionAlumno;
-	private Integer codigo_comision;
+	private Integer idComisionAlumno;// id propio
+	private Integer codigo_comision;// id de la comision
 	private Integer dniAlumno;
 //	 ideal usar el array de notas
 	private ArrayList<Nota> notas;
@@ -171,5 +171,7 @@ public class AsignacionComisionAlumno {
 	public Integer getIdComision() {
 		return idComision;
 	}
+	
+	
 
 }
