@@ -12,8 +12,8 @@ public class Universidad {
 	private ArrayList<Aula> aulas;
 	private ArrayList<CicloLectivo> ciclosLectivos;
 	private ArrayList<Comision> comisiones;
-	private ArrayList<AsignacionComisionAlumno> comisionesAlumno;//Se comprueban con el ingreso a la comision
-	private ArrayList<AsignacionComisionProfe> comisionesProfe;//Se comprueban con el ingreso a la comision
+	private ArrayList<AsignacionComisionAlumno> comisionesAlumno;// Se comprueban con el ingreso a la comision
+	private ArrayList<AsignacionComisionProfe> comisionesProfe;// Se comprueban con el ingreso a la comision
 
 	public Universidad() {
 		this.materias = new ArrayList<>();
@@ -230,11 +230,23 @@ public class Universidad {
 		Materia correlativa = buscarMateria(codigoMateriaCorrelativa);
 		Boolean sePudo = false;
 
-		if (materia != null && correlativa != null) {
+		Boolean estaRegistrada = this.estaLaCorrelativaEnLaMateria(codigoMateria, codigoMateriaCorrelativa);
+
+		if (materia != null && correlativa != null && !estaRegistrada) {
 			materia.asignarCorrelativa(codigoMateriaCorrelativa);
 			sePudo = true;
 		}
 		return sePudo;
+	}
+
+	public Boolean estaLaCorrelativaEnLaMateria(Integer codigoMateria, Integer codigoMateriaCorrelativa) {
+		Materia materiaEncontrada = this.buscarMateria(codigoMateria);
+		Boolean materiaCorrelativaEncontrada = false;
+
+		if (materiaEncontrada != null)
+			materiaCorrelativaEncontrada = materiaEncontrada.getCodigoCorrelativa().contains(codigoMateriaCorrelativa);
+
+		return materiaCorrelativaEncontrada;
 	}
 
 	public Boolean eliminarCorrelativaDeMateria(Integer codigoMateria, Integer codigoMateriaCorrelativa) {
@@ -242,7 +254,9 @@ public class Universidad {
 		Materia correlativa = buscarMateria(codigoMateriaCorrelativa);
 		Boolean sePudo = false;
 
-		if (materia != null && correlativa != null) {
+		Boolean estaRegistrada = this.estaLaCorrelativaEnLaMateria(codigoMateria, codigoMateriaCorrelativa);
+
+		if (materia != null && correlativa != null && estaRegistrada) {
 			materia.removerCorrelativa(codigoMateriaCorrelativa);
 			sePudo = true;
 		}
@@ -317,7 +331,7 @@ public class Universidad {
 				if (curso.obtenerPromedioFinal() >= 4.0) {
 					Comision buscar = buscarComisionPorCodigo(curso.getCodigo_comision());
 					lista.add(buscar.getMateria());
-				} 
+				}
 			}
 		}
 		return lista;
@@ -348,8 +362,10 @@ public class Universidad {
 		// Condiciones
 //		Boolean resultadoFechas=this.seRegistroDentroDelRangoDeFechas(fechaDeInscripcion,codigoComision );
 		Boolean horariosDisponibles = this.alumnoTieneHorariosDisponible(dniAlumno, codigoComision);
-		Boolean espacioEnLacomision = comision.getAlumnos().size() < comision.getAula().getCapacidadMax();
-		Boolean estaEnLaComision = comision.getAlumnos().contains(alumno);
+//		Boolean espacioEnLacomision = comision.getAlumnos().size() < comision.getAula().getCapacidadMax();
+		Boolean espacioEnLacomision = this.hayEspacioEnLaComision(codigoComision);
+//		Boolean estaEnLaComision = comision.getAlumnos().contains(alumno);
+		Boolean estaEnLaComision = this.estaEnLaComision(codigoComision, alumno);
 		Boolean tieneLasCorrelativasAprobadas = this.siTieneLasCorrelativasAprobadas(codigoComision, dniAlumno);
 		Boolean resultado = false;
 
@@ -366,31 +382,60 @@ public class Universidad {
 		return resultado;
 	}
 
+	private Boolean estaEnLaComision(Integer codigoComision, Alumno alumno) {
+		// TODO Auto-generated method stub
+		Boolean resultado = false;
+		Comision comision = buscarComisionPorCodigo(codigoComision);
+
+		if (comision != null && comision.getAlumnos().contains(alumno))
+			resultado = true;
+
+		return resultado;
+	}
+
+	private Boolean hayEspacioEnLaComision(Integer codigoComision) {
+		Boolean resultado = false;
+		Comision buscado = this.buscarComisionPorCodigo(codigoComision);
+
+		if (buscado != null && buscado.getAlumnos().size() < buscado.getAula().getCapacidadMax()) {
+//			comision.getAlumnos().size() < comision.getAula().getCapacidadMax()
+			resultado = true;
+		}
+
+		return resultado;
+	}
+
 	private Boolean resultadoFechas(LocalDate fechaDeInscripcion, Integer codigoComision) {
 		Boolean resultadoFechas = this.seRegistroDentroDelRangoDeFechas(fechaDeInscripcion, codigoComision);
 		return resultadoFechas;
 	}
 
 	private Boolean siTieneLasCorrelativasAprobadas(Integer codigoComision, Integer dniAlumno) {
-		Boolean tieneLasMateriasAprobadas = true;
+		Boolean tieneLasMateriasAprobadas = false;
 		Comision comision = buscarComisionPorCodigo(codigoComision);
 		ArrayList<Materia> lista = listaMateriasAprobadas(dniAlumno);
-		Materia materia = comision.getMateria();
-		Boolean tieneCorrelativas = materia.cantidadCorrelativas() != 0;
 
-		if (comision != null && tieneCorrelativas) {
-			Integer cant = materia.cantidadCorrelativas();
-			Integer i = 0;
-			for (Integer codCorrelativa : materia.getCodigoCorrelativa()) {
-				for (Materia materias : lista) {
-					if (codCorrelativa.equals(materias.getCodigo_materia())) {
-						i++;
+		if (comision != null) {
+			Materia materia = comision.getMateria();
+			Boolean tieneCorrelativas = materia.cantidadCorrelativas() != 0;
+			if (comision != null && tieneCorrelativas) {
+				Integer cant = materia.cantidadCorrelativas();
+				Integer i = 0;
+				for (Integer codCorrelativa : materia.getCodigoCorrelativa()) {
+					for (Materia materias : lista) {
+						if (codCorrelativa.equals(materias.getCodigo_materia())) {
+							i++;
+						}
 					}
 				}
+				if (i == cant) {
+					tieneLasMateriasAprobadas = true;
+				}
+			}else {
+				tieneLasMateriasAprobadas = true;
 			}
-			if (i != cant) {
-				tieneLasMateriasAprobadas = false;
-			}
+		}else {
+			tieneLasMateriasAprobadas = true;
 		}
 		return tieneLasMateriasAprobadas;
 	}
@@ -402,7 +447,8 @@ public class Universidad {
 			ArrayList<Comision> comisionDelAlumno = obtenerListaComisionesDeUnAlumno(dniAlumno);
 			if (comisionDelAlumno.size() != 0) {
 				for (Comision comisionAlumno : comisionDelAlumno) {
-					if (comisionAlumno.getCiclo() != comision.getCiclo() || (comisionAlumno.getDia() != comision.getDia()
+					if (comisionAlumno.getCiclo() != comision.getCiclo()
+							|| (comisionAlumno.getDia() != comision.getDia()
 									|| comisionAlumno.getTurno() != comision.getTurno())) {
 						tieneTiempo = true;
 					}
@@ -436,8 +482,6 @@ public class Universidad {
 		return VerificadorDeFecha.fechaEnRango(fechaInicioInscripcion, fechaFinInscripcion, fechaInscripto);
 	}
 
-
-
 	// Verificaciones
 	public Boolean verificarCursosSuperpuestos(Integer dniAlumno, Comision inscribirse) {
 		ArrayList<Comision> c = obtenerListaComisionesDeUnAlumno(dniAlumno);
@@ -452,7 +496,7 @@ public class Universidad {
 		}
 		return false;
 	}
-	
+
 	public Boolean verificarCorrelativasAprobadas(Integer dniAlumno, Integer codigoMateriaInscribir) {
 		ArrayList<Materia> lista = listaMateriasAprobadas(dniAlumno);
 		Integer cantidad = 0;
@@ -678,12 +722,11 @@ public class Universidad {
 	public ArrayList<Materia> obtenerListaMateriasPorCursar(ArrayList<Materia> planDeEstudio, Integer dniAlumno) {
 		ArrayList<Materia> mAlumno = listaMateriasAprobadas(dniAlumno);
 
-	planDeEstudio.removeAll(mAlumno);
-	return planDeEstudio;
-		
-		
+		planDeEstudio.removeAll(mAlumno);
+		return planDeEstudio;
+
 	}
-	
+
 	public Comision buscarComisionPorCodigoYID(Integer codigo_comision, Integer id) {
 		for (Comision c : comisiones) {
 			if (c != null && c.getCodigo_comision().equals(codigo_comision) && c.getId().equals(id)) {
@@ -692,7 +735,7 @@ public class Universidad {
 		}
 		return null;
 	}
-	
+
 	public Boolean inscribirAlumnoComision(Integer id, Integer codigoComision, Integer dniAlumno) {
 		Comision comision = buscarComisionPorCodigoYID(codigoComision, id);
 		Alumno alumno = buscarAlumnoRegistrado(dniAlumno);
@@ -706,7 +749,7 @@ public class Universidad {
 		}
 		return false;
 	}
-	
+
 	public AsignacionComisionAlumno buscarAsignacionAlumnoComision(Integer id, Integer codigoComision,
 			Integer dniAlumno) {
 
@@ -721,7 +764,7 @@ public class Universidad {
 		return null;
 
 	}
-	
+
 	public Boolean inscribirAlumnoComisionVerificandoQueNoSeSuperpongan(Integer dniAlumno, Comision comision) {
 
 		if (comision != null) {
@@ -738,7 +781,7 @@ public class Universidad {
 		}
 		return false;
 	}
-	
+
 	public Boolean asignarAulaAComision(Integer id, Integer codigoComision, Aula aula) {
 		Comision comision = buscarComisionPorCodigoYID(codigoComision, id);
 		Aula a = buscarAulaPorNumero(aula.getNumero());
@@ -749,7 +792,7 @@ public class Universidad {
 		return false;
 
 	}
-	
+
 	public void evaluarAlumnoComision(Integer idComision, Integer codigoComision, Integer dniAlumno, Nota parcial1,
 			Nota parcial2) {
 		AsignacionComisionAlumno asignacion = buscarAsignacionAlumnoComision(idComision, codigoComision, dniAlumno);
@@ -780,15 +823,32 @@ public class Universidad {
 		}
 		return operacion;
 	}
-	
+
 	// Sobrecargaa de metodos
-		public Boolean inscribirAlumnoComisionSiSeInscribioDentroDeLasFechas(Integer id, Integer codigoComision,
-				Integer dniAlumno, LocalDate fechaInscripto) {
-			Comision comision = buscarComisionPorCodigoYID(codigoComision, id);
-			Alumno alumno = buscarAlumnoRegistrado(dniAlumno);
-			Boolean validar = verificarSiFechaEstaDentroDelRango(comision.getCiclo().getFechaDeInicioInscripcion(),
-					comision.getCiclo().getFechaFinalizacionInscripcion(), fechaInscripto);
-			if (comision != null && alumno != null && validar) {
+	public Boolean inscribirAlumnoComisionSiSeInscribioDentroDeLasFechas(Integer id, Integer codigoComision,
+			Integer dniAlumno, LocalDate fechaInscripto) {
+		Comision comision = buscarComisionPorCodigoYID(codigoComision, id);
+		Alumno alumno = buscarAlumnoRegistrado(dniAlumno);
+		Boolean validar = verificarSiFechaEstaDentroDelRango(comision.getCiclo().getFechaDeInicioInscripcion(),
+				comision.getCiclo().getFechaFinalizacionInscripcion(), fechaInscripto);
+		if (comision != null && alumno != null && validar) {
+			AsignacionComisionAlumno asignacion = new AsignacionComisionAlumno(comision.getId(), codigoComision,
+					dniAlumno);
+
+			if (agregarAlumnoALaComision(comision, asignacion, dniAlumno)) {
+				return true;
+			}
+
+		}
+		return false;
+	}
+
+	public Boolean inscribirAlumnoComisionVerificandoCapacidadAula(Integer id, Integer codigoComision,
+			Integer dniAlumno) {
+		Comision comision = buscarComisionPorCodigoYID(codigoComision, id);
+		Alumno alumno = buscarAlumnoRegistrado(dniAlumno);
+		if (comision != null && alumno != null) {
+			if (verificarCapacidadAula(comision)) {
 				AsignacionComisionAlumno asignacion = new AsignacionComisionAlumno(comision.getId(), codigoComision,
 						dniAlumno);
 
@@ -797,34 +857,17 @@ public class Universidad {
 				}
 
 			}
-			return false;
 		}
-		
-		public Boolean inscribirAlumnoComisionVerificandoCapacidadAula(Integer id, Integer codigoComision,
-				Integer dniAlumno) {
-			Comision comision = buscarComisionPorCodigoYID(codigoComision, id);
-			Alumno alumno = buscarAlumnoRegistrado(dniAlumno);
-			if (comision != null && alumno != null) {
-				if (verificarCapacidadAula(comision)) {
-					AsignacionComisionAlumno asignacion = new AsignacionComisionAlumno(comision.getId(), codigoComision,
-							dniAlumno);
 
-					if (agregarAlumnoALaComision(comision, asignacion, dniAlumno)) {
-						return true;
-					}
+		return false;
+	}
 
-				}
-			}
-
-			return false;
+	public Boolean verificarCapacidadAula(Comision comision) {
+		Integer capacidadActual = comision.obtenerCantidadDeAlumnosInscriptos();
+		if (capacidadActual < comision.getAula().getCapacidadMax()) {
+			return true;
 		}
-		
-		public Boolean verificarCapacidadAula(Comision comision) {
-			Integer capacidadActual = comision.obtenerCantidadDeAlumnosInscriptos();
-			if (capacidadActual < comision.getAula().getCapacidadMax()) {
-				return true;
-			}
 
-			return false;
-		}
+		return false;
+	}
 }
