@@ -380,11 +380,11 @@ public class TestComision {
 		comision.inscribirAlumno(alumno);
 		comision.inscribirProfesor(profe);
 		
-		Integer ve=comision.cantidadDeProfesPorAula();
+		Double ve=comision.cantidadDeProfesPorAula();
 		Integer vo=comision.getProfes().size();
 		
 		// Validacion
-		assertEquals(ve,vo);
+		assertEquals(ve,vo,0);
 		assertFalse(comision.getProfes().isEmpty());
 	}
 	
@@ -598,11 +598,11 @@ public class TestComision {
 		comision.inscribirProfesor(profe);
 		Boolean resultado=comision.inscribirProfesor(profe2);
 		
-		Integer ve=comision.cantidadDeProfesPorAula();
+		Double ve=comision.cantidadDeProfesPorAula();
 		Integer vo=comision.getProfes().size();
 		
 		// Validacion
-		assertEquals(ve, vo);
+		assertEquals(ve, vo,0);
 		assertTrue(resultado);
 		assertFalse(comision.getProfes().isEmpty());
 	}
@@ -686,11 +686,11 @@ public class TestComision {
 		comision.inscribirProfesor(profe2);
 		Boolean resultado=comision.inscribirProfesor(profe3);
 		
-		Integer ve=comision.cantidadDeProfesPorAula();
+		Double ve=comision.cantidadDeProfesPorAula();
 		Integer vo=comision.getProfes().size();
 		
 		// Validacion
-		assertEquals(ve, vo);
+		assertEquals(ve, vo,0);
 		assertFalse(resultado);
 		assertFalse(comision.getProfes().isEmpty());
 	}
