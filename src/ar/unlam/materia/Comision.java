@@ -142,16 +142,21 @@ public class Comision {
 				profes.add(profe);
 				resultado = true;
 			}
+//			if (this.profes.size() < this.cantidadDeProfesPorAula()) {
+//				profes.add(profe);
+//				resultado = true;
+//			}
 		}
 		return resultado;
 	}
 
-	public Integer cantidadDeProfesPorAula() {
-		Integer cantidadDeProfes = 1;
-		Integer cantidadDeAlumnosXProfe = 2;//aca deberia ir 1 por cada 20 alumnos
+	public Double cantidadDeProfesPorAula() {
+		Double cantidadDeProfes = 1.0;
+		Double cantidadDeAlumnosXProfe = 2.0;//aca deberia ir 1 por cada 20 alumnos
 	
 		if(!this.alumnos.isEmpty() && this.alumnos.size()>=cantidadDeAlumnosXProfe) {
 			cantidadDeProfes=this.alumnos.size()/cantidadDeAlumnosXProfe;
+			
 		}
 
 		return cantidadDeProfes;

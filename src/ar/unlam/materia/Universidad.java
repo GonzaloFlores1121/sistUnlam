@@ -275,13 +275,83 @@ public class Universidad {
 		return sePudo;
 	}
 
+//ORIGINAL
+//	public Boolean evaluarAlumnoComision(Integer idComisionAlumno, Double nota, ClaseDeNota tipo) {
+//		AsignacionComisionAlumno asignacion = buscarAsignacionAlumnoComision(idComisionAlumno);
+//		Boolean resultado = false;
+//		if (asignacion != null) {
+//			resultado = asignacion.registrarNota(nota, tipo);
+//		}
+//		return resultado;
+//	}
+//	
 	public Boolean evaluarAlumnoComision(Integer idComisionAlumno, Double nota, ClaseDeNota tipo) {
 		AsignacionComisionAlumno asignacion = buscarAsignacionAlumnoComision(idComisionAlumno);
 		Boolean resultado = false;
+
 		if (asignacion != null) {
-			resultado = asignacion.registrarNota(nota, tipo);
+			Integer codComision = asignacion.getCodigo_comision();
+			Integer codAlumno = asignacion.getDniAlumno();
+
+			Comision comision = this.buscarComisionPorCodigo(codComision);
+			Integer materia = comision.getMateria().cantidadCorrelativas();
+//			
+			if (materia == 0) {
+				asignacion.registrarNota(nota, tipo);
+				resultado=true;
+			} else if (this.siTieneLasCorrelativasAprobadas(codComision, codAlumno)) {
+				if(this.lasCorreltaivasLasAproboConMasDe7(idComisionAlumno) && nota>=7) {
+					asignacion.registrarNota(nota, tipo);
+					resultado=true;
+				}else if (nota>=7){
+					asignacion.registrarNota(6.0, tipo);
+					resultado=true;
+				}else {
+					asignacion.registrarNota(nota, tipo);
+					resultado=true;
+				}
+			}
+//			if(this.siTieneLasCorrelativasAprobadas(codComision, codAlumno)) {
+//				if()
+//				resultado = asignacion.registrarNota(nota, tipo);
+
+//			}
 		}
 		return resultado;
+	}
+
+	private boolean lasCorreltaivasLasAproboConMasDe7(Integer idComisionAlumno) {
+		// TODO Auto-generated method stub
+		Boolean promocionado=false;
+		AsignacionComisionAlumno buscado=this.buscarAsignacionAlumnoComision(idComisionAlumno);
+		
+		if(buscado!=null) {
+			Comision comision=this.buscarComisionPorCodigo(buscado.getCodigo_comision());
+			Materia materia=comision.getMateria();
+
+			ArrayList<Integer> correlativas= materia.getCodigoCorrelativa();
+//			ArrayList<Materia> lista = listaMateriasAprobadas(buscado.getDniAlumno());
+			
+			ArrayList<AsignacionComisionAlumno> lista = obtenerListaDeAsignacionesComisionAlumno(buscado.getDniAlumno());
+
+			Integer i=0;
+			for (Integer  mat: correlativas) {
+				for (AsignacionComisionAlumno cursado : lista) {
+					Comision alumno=this.buscarComisionPorCodigo(cursado.getCodigo_comision());
+					Materia materiaDeAlumno=alumno.getMateria();
+					
+					if(mat.equals(materiaDeAlumno.getCodigo_materia()) && cursado.obtenerPromedioFinal()>=7.0) {
+						i++;
+						
+					}
+				}
+			}
+			
+			if(i==correlativas.size()) {
+				promocionado=true;
+			}	
+		}
+		return promocionado;
 	}
 
 	public Double promedioFinal(Integer idDeLaAsignacion) {
@@ -392,6 +462,16 @@ public class Universidad {
 
 		return resultado;
 	}
+	private Boolean estaEnLaComision(Integer codigoComision, Profesor profe) {
+		// TODO Auto-generated method stub
+		Boolean resultado = false;
+		Comision comision = buscarComisionPorCodigo(codigoComision);
+		
+		if (comision != null && comision.getProfes().contains(profe))
+			resultado = true;
+		
+		return resultado;
+	}
 
 	private Boolean hayEspacioEnLaComision(Integer codigoComision) {
 		Boolean resultado = false;
@@ -431,10 +511,10 @@ public class Universidad {
 				if (i == cant) {
 					tieneLasMateriasAprobadas = true;
 				}
-			}else {
+			} else {
 				tieneLasMateriasAprobadas = true;
 			}
-		}else {
+		} else {
 			tieneLasMateriasAprobadas = true;
 		}
 		return tieneLasMateriasAprobadas;
@@ -622,7 +702,40 @@ public class Universidad {
 
 		}
 		return resultado;
+	}
 
+	public Boolean registrarNotas(Integer idComision, Integer codigoComisionAlumno, Integer dni, Nota nota) {
+		Boolean resultado = false;
+		// Se busca la comision para obtener la materia
+		Comision comision = buscarComisionPorCodigo(idComision);
+		AsignacionComisionAlumno asignacion = buscarAsignacionAlumnoComision(codigoComisionAlumno);
+
+		if (comision != null && buscarMateria(comision.getMateria().getCodigo_materia()) != null) {
+			ArrayList<Integer> correlativas = comision.getMateria().getCodigoCorrelativa();
+
+			// Si la materia no tiene correlativas entra en este if
+
+			if (correlativas.size() == 0) {
+
+				if (asignacion != null) {
+
+					resultado = agregarParcial(asignacion, nota);
+				}
+			} else {
+				// si tiene mas correlativas que busque y vea si estan aprobadas
+				if (!verificarCorrelativasAprobadas(dni, comision.getMateria().getCodigo_materia())) {
+
+					// Si no tiene las correlativas aprobadas,las condiciones paraa sus notas seran
+					// ded 1-6,si es >6 su nota se seteara en 6
+					// Si la nota es <,se seteara la correspondiente
+					resultado = agregarParcialCondicionCorrelativa(asignacion, nota);
+				} else {
+					resultado = agregarParcial(asignacion, nota);
+				}
+			}
+
+		}
+		return resultado;
 	}
 
 	public Boolean agregarParcial(AsignacionComisionAlumno asignacion, Nota nota) {
@@ -700,7 +813,7 @@ public class Universidad {
 		return operacion;
 	}
 
-	public void inscribirProfesoresAComision(Integer idComision, Integer codigoComision) {
+	public void inscribirProfesoresAComision2(Integer idComision, Integer codigoComision) {
 		Random rand = new Random();
 		Comision comision = buscarComisionPorCodigo(codigoComision);
 		if (comision != null) {
@@ -718,6 +831,24 @@ public class Universidad {
 		}
 
 	}
+	
+	public Boolean inscribirProfesoresAComision(Integer idAsignacionProfe ,Integer idComision, Integer dniProfe) {
+		Boolean resultado=false;
+		Comision comision = buscarComisionPorCodigo(idComision);
+		Profesor buscado=this.buscarProfesorRegistrado(dniProfe);
+		
+		if (comision != null && buscado!=null && !this.estaEnLaComision(idComision, buscado)) {
+				comision.inscribirProfesor(buscado);
+				AsignacionComisionProfe profe=new AsignacionComisionProfe(idAsignacionProfe, idComision, dniProfe);
+				this.registrarAsignacionComisionProfe(profe);
+				resultado=true;
+			}
+		
+		return resultado;
+		}
+	
+
+	
 
 	public ArrayList<Materia> obtenerListaMateriasPorCursar(ArrayList<Materia> planDeEstudio, Integer dniAlumno) {
 		ArrayList<Materia> mAlumno = listaMateriasAprobadas(dniAlumno);
@@ -869,5 +1000,15 @@ public class Universidad {
 		}
 
 		return false;
+	}
+
+	public ArrayList<Nota> obtenerListaDeNotasDeUnAlumno(Integer dni) {
+		ArrayList<Nota> notas=new ArrayList<>();
+		ArrayList<AsignacionComisionAlumno> asig=this.obtenerListaDeAsignacionesComisionAlumno(dni);
+		
+		for (AsignacionComisionAlumno asignacionComisionAlumno : asig) {
+			notas.addAll(asignacionComisionAlumno.getNotas());
+		}
+		return notas;
 	}
 }
